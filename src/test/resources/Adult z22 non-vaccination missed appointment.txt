@@ -1,0 +1,4 @@
+MSH|^~\&|Test EHR Application|X68||NIST Test Iz Reg|20190701082240-0500|I|VXU^V04^VXU_V04|NIST-IZ-001.00|P|2.5.1|||ER|AL|||||Z22^CDCPHINVS|IIPEHRFAC^^^^^IIP-AA-IZ-1^XX^^^100-1|IIPIISFAC^^^^^IIP-AA-IZ-1^XX^^^100-2
+PID|1||123456^^^MYEHR^MR~987633^^^MYIIS^SR||Winchester^Dorothy^Amelia^^^^L|Bruno^Ella^Teresa^^^^M|19840615|F||2106-3^White^CDCREC~2054-5^Black or African American^CDCREC|5 Fifth Street^^Allentown^PA^18103^USA^L^^42003^Allegheny^PHVS_County_FIPS_6-4||^PRN^CP^^1^215^5551213||eng^English^ISO639|||||||2135-2^Hispanic or Latino^CDCREC
+ORC|RE||9999^OP|||||||^Cody^Allison||^Werk^James^^^^^^^L^^^^^^^^^^^MD|||||MOC^Mobile Occupational Clinic^HL70362||||||||||||||
+RXA|0|1|20201215|20201215|24^COVID-19-Substitute^CVX|999||||||||||||02^Missed Appointment^NIP002||RE|A

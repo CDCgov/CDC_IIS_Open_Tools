@@ -1,0 +1,8 @@
+C38238 (Intradermal)
+C28161 (Intramuscular)
+C38284 (Nasal)
+C38276 (Intravenous)
+C38288 (Oral)
+C38676 (Percutaneous)
+C38299 (Subcutaneous)
+C38305 (Transdermal)

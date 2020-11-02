@@ -1,0 +1,4 @@
+2135-2 (Hispanic or Latino)
+2186-5 (Not Hispanic or Latino)
+UNK (Unknown ethnicity)
+POL (Unable to report to do policy/law)

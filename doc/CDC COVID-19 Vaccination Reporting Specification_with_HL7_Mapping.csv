@@ -1,0 +1,168 @@
+﻿FIELD DEFINITIONS,,,,DATA POPULATION REQUIREMENTS,,FIELD-LEVEL TECHNICAL SPECS,,,HL7 V2 Specification,,
+Field Number,COVID-19 Data Element,Variable Name,Data Element Description and Extract Guidance,Vaccination Event Data Population Requirements,Vaccination Refusal Data Population Requirements,Value Set,Data Type,Sample Responses,V2 Field,V2 Field Description,V2 Data Type
+1,Vaccination event ID,vax_event_id,The vaccination event’s unique identifier within the system. This should be a unique identifier for each vaccination event. ,Required,Required,n/a,String,568971356,ORC-3,Filler Order Number,ST
+2,Extract type,ext_type,"Extract type defines whether this file contains completely de-identified data, PPRL ID, or fully identifiable data.",Required. Set to the value 'D',Required. Set to the value 'D',"Locally Defined Value Set:
+D (Deidentified)
+P (PPRL)
+I  (Identified)",Coded Value,D,MSH-8,Security,ST
+3,PPRL generated ID,pprl_id,Privacy Preserving Record Linkage ID.,Do not populate,Do not populate,n/a,String,,PID-3[2]-1,Patient Id,CX
+4,Recipient ID,recip_id,"Unique ID for this recipient. This can be the ID used by your system or a randomly assigned unique identifier. However, the ID must be consistent across reports to allow linking doses to the same recipient ID.",Required,Required,n/a,String,135498413,PID-3[1]-1,Patient Id,CX
+5, Recipient name: first,recip_first_name,Recipient's first name,"Required. Set to the value ""Redacted""","Required. Set to the value ""Redacted""",n/a,String,Redacted,PID-5-1-1,Family Name,ST
+6, Recipient name: middle,recip_middle_name,Recipient's middle name,"Required. Set to the value ""Redacted""","Required. Set to the value ""Redacted""",n/a,String,Redacted,PID-5-3,Second And Further Given Names Or Initials Thereof,ST
+7, Recipient name: last,recip_last_name,Recipient's last name,"Required. Set to the value ""Redacted""","Required. Set to the value ""Redacted""",n/a,String,Redacted,PID-5-2,Given Name,ST
+8, Recipient date of birth,recip_dob,Recipient's date of birth ,Required,Required,n/a,Date,1968-05-27,PID-7-1,Date/Time of Birth,DTM
+9, Recipient sex,recip_sex,Recipient sex,Required,Required,"HL7 User Defined table 0001 
+M (Male)
+F (Female)
+U (Unknown/undifferentiated)",Coded Value,F,PID-8,Administrative Sex,IS
+10, Recipient address: street,recip_address_street,The street component of the recipient's address,"Required. Set to the value ""Redacted""","Required. Set to the value ""Redacted""",n/a,String,Redacted,PID-11[1]-1,Patient Address - Street Address,ST
+11,Recipient address: street 2,recip_address_street_2,The steet 2 component of the recipient's address,"Required. Set to the value ""Redacted""","Required. Set to the value ""Redacted""",n/a,String,Redacted,PID-11[1]-2,Patient Address - Other Designation,ST
+12, Recipient address: city,recip_address_city,The city component of the recipient's address,"Required. Set to the value ""Redacted""","Required. Set to the value ""Redacted""",n/a,String,Redacted,PID-11[1]-3,Patient Address - City,ST
+13, Recipient address:  county,recip_address_county,The county component of the recipient's address,Required if known for this recipient,Required if known for this recipient,FIPS Codes https://www.census.gov/geographies/reference-files/2019/demo/popest/2019-fips.html,Coded Value,13121,PID-11[1]-9,Patient Address - County/Parish Code,IS
+14, Recipient address: state,recip_address_state,The state component of the recipient's address,Required if known for this recipient,Required if known for this recipient,US Postal Service two-character State Codes,Coded Value,GA,PID-11[1]-4,Patient Address - State or Province Code,ST
+15, Recipient address: zip code,recip_address_zip,"The zip code of the recipient's address (5 digit or 10 digits, with hyphen, are acceptable)",Required if known for this recipient,Required if known for this recipient,n/a,String,30301,PID-11[1]-5,Patient Address - Zip or Postal Code,ST
+16, Recipient race 1,recip_race_1,Patient's race,Required,Required,"HL7 User Defined table 0005
+1002-5 (American Indian or Alaska Native)
+2028-9 (Asian)
+2076-8 (Native Hawaiian or Other Pacific Islander)
+2054-5 (Black or African American)
+2106-3 (White)
+2131-1 (Other Race)
+UNK (Unknown)
+POL (Unable to report due to policy/law)",Coded Value,1002-5,PID-10[1]-1,Race - Identifier,ST
+17, Recipient race 2,recip_race_2,Patient's race. Fields recipient race 2-6 support recipients with more than 1 race. (Skip if only one race reported).  ,Required if known for this recipient,Required if known for this recipient,"See Value Set in ""Recipient Race 1"" field",Coded Value,2076-8,PID-10[1]-1,Race - Identifier,ST
+18, Recipient race 3,recip_race_3,Patient's race. Fields recipient race 2-6 support recipients with more than 1 race. (Skip if only one race reported).  ,Required if known for this recipient,Required if known for this recipient,"See Value Set in ""Recipient Race 1"" field",Coded Value,2106-3,PID-10[1]-1,Race - Identifier,ST
+19, Recipient race 4,recip_race_4,Patient's race. Fields recipient race 2-6 support recipients with more than 1 race. (Skip if only one race reported).  ,Required if known for this recipient,Required if known for this recipient,"See Value Set in ""Recipient Race 1"" field",Coded Value,2131-1,PID-10[1]-1,Race - Identifier,ST
+20, Recipient race 5,recip_race_5,Patient's race. Fields recipient race 2-6 support recipients with more than 1 race. (Skip if only one race reported).  ,Required if known for this recipient,Required if known for this recipient,"See Value Set in ""Recipient Race 1"" field",Coded Value,2054-5,PID-10[1]-1,Race - Identifier,ST
+21, Recipient race 6,recip_race_6,Patient's race. Fields recipient race 2-6 support recipients with more than 1 race. (Skip if only one race reported).  ,Required if known for this recipient,Required if known for this recipient,"See Value Set in ""Recipient Race 1"" field",Coded Value,2028-9,PID-10[1]-1,Race - Identifier,ST
+22, Recipient ethnicity,recip_ethnicity,The ancestry of the patient,Required,Required,"HL7 User Defined table 0189
+2135-2 (Hispanic or Latino)
+2186-5 (Not Hispanic or Latino)
+UNK (Unknown ethnicity)
+POL (Unable to report to do policy/law)",Coded Value,2135-2,PID-22-1,Ethnic Group - Identifier,ST
+23, Administration date,admin_date,The date the vaccination event occurred (or was intended to occur),Required,Required. This will represent the date the vaccine was refused.,n/a,Date,2020-12-15,RXA-3-1,Date/Time Start of Administration,DTM
+24, CVX,cvx,The vaccine type that was administered.,Required,Required,"To be updated when COVID vaccine is available.
+Factitious codes for development purposes are provided here:
+900 (COVID-19 Vaccine A)
+901 (COVID-19 Vaccine B)
+902 (COVID-19 Vaccine - Unspecified Formulation)",Coded Value,901,RXA-5[1]-1,Administered Code,ST
+25,NDC,ndc,The vaccine product that was administered. Unit of Use (UoU) is preferred if both UoU and Unit of Sale (UoS) are available.,Required if known for this vaccination event,Do not populate,To be updated when COVID vaccine is available,Coded Value,,RXA-5[2]-1,Administered Code,ST
+26, MVX,mvx,The manufacturer of the vaccine administered,Required if known for this vaccination event,Do not populate,"To be updated when COVID vaccine is available.
+Factitious codes for development purposes are provided here:
+AAA (COVID-19 Manufacturer A)
+BBB (COVID-19 Manufacturer B)",Coded Value,BBB,RXA-17-1,Substance Manufacturer Name,ST
+27, Lot number,lot_number,The lot number of the vaccine administered: Unit of Use (UoU) is preferred if both UoU and Unit of Sale (UoS) are available.,Required if known for this vaccination event,Do not populate,n/a,String,A###A,RXA-15,"Substance Lot Number
+",ST
+28, Vaccine expiration date,vax_expiration,The expiration date of the vaccine administered. This can either be YYYY-MM-DD or YYYY-MM,Required if known for this vaccination event,Do not populate,n/a,Date,2021-06-18,RXA-16-1,Substance Expiration Date,DTM
+29, Vaccine administering site,vax_admin_site,The body site of vaccine administration.,Required if known for this vaccination event,Do not populate,"HL7 defined table 0163
+LT (Left thigh) 
+LA (left arm)
+LD (left deltoid)
+LG (left gluteus medius)
+LVL (left vastus lateralis)
+LLFA (left lower forearm)
+RT (right thigh)
+RA (right arm)
+RD (right deltoid)
+RG (right gluteus medius)
+RVL (right vastus lateralis)
+RLFA (right lower forearm)",Coded Value,LA,RXR-2-1,Administration Site - Identifier,ST
+30, Vaccine route of administration,vax_route,"The route of vaccine administration (e.g., oral, subcutaneous)",Required if known for this vaccination event,Do not populate,"HL7 defined table 0162 or FDA NCI Thesaurus (NCIT)
+NCIT values preferred and provided for reference
+C38238 (Intradermal)
+C28161 (Intramuscular)
+C38284 (Nasal)
+C38276 (Intravenous)
+C38288 (Oral)
+C38676 (Percutaneous)
+C38299 (Subcutaneous)
+C38305 (Transdermal)",Coded Value,C38238,RXR-1-1,Route - Identifier,ST
+31, Dose number,dose_num,"Dose # in vaccination series provided dose is considered valid (e.g., counts towards immunity).",Required,Do not populate,"Locally Defined Value Set:
+1 (Valid first dose)
+2 (Valid second dose)
+3 (Valid third dose)
+4 (Valid fourth dose)
+5 (Valid Fifth dose)
+6 (Valid sixth dose)
+INV (Invalid dose)
+UNK (Unknown validity)",Coded Value,2,"OBX-5
+OBX-3 Must be 30973-2^Dose number in series^LOINC",Observation Value,ST
+32, Vaccination series complete,vax_series_complete,"Report if the vaccination series is complete. Select ""YES"" when the recipient has completed the required doses for the specific vaccine product. If more doses are required select ""NO."" If unknown, or cannot be calculated, select ""UNK.""",Required,Do not populate,"Locally Defined Value Set:
+YES (Yes)
+NO (No)
+UNK (Unknown)",Coded Value,YES,"OBX-5 with value = Complete
+OBX-3 Must be 59783-1^Status in immunization series^LOINC",Observation Value,ST
+33,Responsible organization,responsible_org,"The name of the parent organization or health system that originated and is accountable for the content of the record. If an organization has several clinics or facilities, this would be the organization that represents all of the clinics/facilities. (The ""Administered at location"" field is the name of individual physical location.)",Required,Required,n/a,String,Emory Hospital,MSH-22-1,Sending Responsible Organization - Name,ST
+34, Administered at location,admin_name,"The name of the physical clinic or facility that reported the vaccination, refusal, or missed appointment. In some cases, this could be the same as the responsible organization.",Required,Required,n/a,String,Hope Clinic,RXA-11-4-1,Administered-at Location - Facility - Namespace ID,IS
+35,VTrckS provider PIN,vtrcks_prov_pin,"This is the 6-digit Provider PIN in VTrckS. For VFC providers, this is the VFC PIN. This ID is being used for linking across data sources.
+
+If the event is reported as historical, assign the PIN of the reporting entity.",Required if known for this vaccination event,Required if known for this vaccination event,n/a,String,123456,RXA-11-4-2,Administered-at Location - Facility - Universal ID,ST
+36, Administered at location: type,admin_type,"The characteristic of the provider site that reported the vaccination, refusal, or missed appointment",Required,Required,"Locally Defined Value Set:
+1 (Commercial vaccination service provider)
+2 (Corrections/detention health services)
+3 (Health center – community)
+4 (Health center – migrant or refugee)
+5 (Health center – occupational)
+6 (Health center – STD/HIV clinic)
+7 (Health center – student)
+8 (Home health care provider)
+9 (Hospital)
+10 (Indian Health Service)
+11 (Tribal health)
+12 (Medical practice – family medicine)
+13 (Medical practice – pediatrics)
+14 (Medical practice – internal medicine)
+15 (Medical practice – OB/GYN)
+16 (Medical practice – other specialty)
+17 (Pharmacy – chain)
+18 (Pharmacy – independent)
+19 (Public health provider – public health clinic)
+20 (Public health provider – Federally Qualified Health Center)
+21 (Public health provider – Rural Health Clinic)
+22 (Long-term care – nursing home, skilled nursing facility, federally certified)
+23 (Long-term care – nursing home, skilled nursing facility, non-federally certified)
+24 (Long-term care – assisted living)
+25 (Long-term care – intellectual or developmental disability)
+26 (Long-term care – combination)
+27 (Urgent care)
+28 (Other)
+UNK (Unknown)",Coded Value,17,RXA-11-6-1,Patient Location Type,ST
+37, Administration address: street,admin_address_street,"The street component of where the vaccine is being administered/planned to be administered. For long-term care facilities, the recipient's address will be the same as the administration address. For mobile clinics, the administration address should be where the clinic is being held.",Required if known for this vaccination event,Required if known for this refusal,n/a,String,123 Long Road,RXA-11-9,"Administered-at Location
+- Street Address",ST
+38, Administration address: street 2,admin_address_street_2,"The street 2 component of where the vaccine is being administered/planned to be administered. For long-term care facilities, the recipient's address will be the same as the administration address. For mobile clinics, the administration address should be where the clinic is being held.",Required if known for this vaccination event,Required if known for this refusal,n/a,String,Suite #300,RXA-11-10,"Administered-at Location
+- Other Designation",ST
+39, Administration address: city,admin_address_city,"The city component of where the vaccine is being administered/planned to be administered. For long-term care facilities, the recipient's address will be the same as the administration address. For mobile clinics, the administration address should be where the clinic is being held.",Required if known for this vaccination event,Required if known for this refusal,n/a,String,Atlanta,RXA-11-11,"Administered-at Location
+- City",ST
+40, Administration address: county,admin_address_county,"The county component of where the vaccine is being administered/planned to be administered. For long-term care facilities, the recipient's address will be the same as the administration address. For mobile clinics, the administration address should be where the clinic is being held.",Required if known for this vaccination event,Required if known for this refusal,FIPS codes https://www.census.gov/geographies/reference-files/2019/demo/popest/2019-fips.html,Coded Value,13121,RXA-11-16,"Administered-at Location
+- Other Geographic Designation",ST
+41, Administration address: state,admin_address_state,"The state component of where the vaccine is being administered/planned to be administered. For long-term care facilities, the recipient's address will be the same as the administration address. For mobile clinics, the administration address should be where the clinic is being held.",Required if known for this vaccination event,Required if known for this refusal,US Postal Service two-character state codes,Coded Value,GA,RXA-11-12,"Administered-at Location
+- State or Province",ST
+42, Administration address: zip code,admin_address_zip,"The zip code component of where the vaccine is being administered/planned to be administered. For long-term care facilities, the recipient's address will be the same as the administration address. For mobile clinics, the administration address should be where the clinic is being held.",Required if known for this vaccination event,Required if known for this refusal,n/a,String,30301,RXA-11-13,"Administered-at Location
+- Zip or Postal Code",ST
+43, Vaccination refusal,vax_refusal,"Vaccination was refused, select 'Yes'. If the vaccine was administered, select 'No'",Required. Set to the value 'No',Required. Set to the value 'Yes',"Locally Defined Value Set:
+YES (Yes)
+NO (No)",Coded Value,NO,"RXA-20
+Value=RE^Refused",Completion Status,ID
+44, Comorbidity status,cmorbid_status,"Report if the recipient has a comorbidity. Recepients are a member of a special risk group that are at increased risk of severe illness.
+
+If the recipient has at least one of the conditions listed on  https://www.cdc.gov/coronavirus/2019-ncov/need-extra-precautions/people-with-medical-conditions.html?CDC_AA_refVal=https%3A%2F%2Fwww.cdc.gov%2Fcoronavirus%2F2019-ncov%2Fneed-extra-precautions%2Fgroups-at-higher-risk.html for ""are at increased risk"", select Yes. If they do not have any of those conditions or have ""No Existing Conditions"" then select No.
+
+Example conditions for CDC as of October 23,2020: Cancer, Chronic Kidney Disease, Immunicompromised, Chronic Lung Disease, Obesity, Sickle Cell Disease, Diabetes
+
+If unknown or you do not collect this information, please select ""UNK""",Required,Required,"Locally Defined Value Set:
+YES (Yes)
+NO (No)
+UNK (Unknown)",Coded Value,YES,"OBX-5-1
+OBX-3 must be VXC8^Member of Special Risk Group^PHIN VS",Observation Value,ST
+45, Serology results ,serology,"Report if there was a positive Serology (Antibody test) result. If the provider knows of any positive serology results, they should report it regardless of if they conducted the test.
+
+If you do not collect, please populate with UNK",Required,Required,"Locally Defined Value Set:
+YES (Yes)
+NO (No)
+UNK (Unknown)",Coded Value,UNK,"OBX-5-1 where 
+YES: value=TBD
+NO:value=TBD
+UNK:value=UNK^Unknown^NullFlavor
+
+OBX-3 must be 75505-8^Serological Evidence of Immunity^LOINC",Observation Value,ST
+,,,,,,,,,,,

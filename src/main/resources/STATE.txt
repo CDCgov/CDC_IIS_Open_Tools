@@ -1,0 +1,57 @@
+AL	Alabama	01	35-36
+AK	Alaska	02	995-999
+AS	American Samoa	60	96799
+AZ	Arizona	04	85-86
+AR	Arkansas	05	717-729
+CA	California	06	900-961
+CO	Colorado	08	80-81
+CT	Connecticut	09	06
+DE	Delaware	10	197-199
+DC	District of Columbia	11	200-205
+FL	Florida	12	32-34
+GA	Georgia	13	30-31,398-399
+GU	Guam	66	969
+HI	Hawaii	15	967-968
+ID	Idaho	16	832-838
+IL	Illinois	17	60-62
+IN	Indiana	18	46-47
+IA	Iowa	19	50-52
+KS	Kansas	20	66-67
+KY	Kentucky	21	40-42
+LA	Louisiana	22	700-714
+ME	Maine	23	039-049
+MH	Marshall Islands	68	969
+MD	Maryland	24	206-219
+MA	Massachusetts	25	010-027,055
+MI	Michigan	26	48-49
+MN	Minnesota	27	550-567
+MS	Mississippi	28	386-397
+MO	Missouri	29	63-65
+MT	Montana	30	59
+NE	Nebraska	31	68-69
+NV	Nevada	32	889-898
+NH	New Hampshire	33	030-038
+NJ	New Jersey	34	07-08
+NM	New Mexico	35	870-884
+NY	New York	36	10-14,05,063
+NC	North Carolina	37	27-28
+ND	North Dakota	38	58
+MP	Northern Mariana Islands	69	969
+OH	Ohio	39	43-45
+OK	Oklahoma	40	73-74
+OR	Oregon	41	97
+PA	Pennsylvania	42	150-196
+PR	Puerto Rico	72	006-009
+RI	Rhode Island	44	028-029
+SC	South Carolina	45	29
+SD	South Dakota	46	57
+TN	Tennessee	47	370-385
+TX	Texas	48	73-88
+UT	Utah	49	84
+VT	Vermont	50	05
+VI	Virgin Islands of the U.S.	78	008
+VA	Virginia	51	201,205,220-246
+WA	Washington	53	980-994
+WV	West Virginia	54	247-268
+WI	Wisconsin	55	53-54
+WY	Wyoming	56	820-834
