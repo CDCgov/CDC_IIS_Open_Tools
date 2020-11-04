@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Inherited
 public @interface DoNotSend {
-    EventType[] when() default {};
-    EventType[] whenv1() default {};
-    boolean versioned() default false;
+//    EventType[] when() default {};
+//    EventType[] whenv1() default {};
+//    boolean versioned() default false;
 }

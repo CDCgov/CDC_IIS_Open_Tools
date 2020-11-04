@@ -1,6 +1,7 @@
 package com.ainq.izgateway.extract;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedReader;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,20 +24,21 @@ import org.junit.jupiter.params.provider.MethodSource;
 import com.ainq.izgateway.extract.validation.BeanValidator;
 import com.ainq.izgateway.extract.validation.CVRSValidationException;
 
+import ca.uhn.hl7v2.HL7Exception;
 import gov.nist.validation.report.Entry;
 
 class TestValidator {
 
     @ParameterizedTest(name = "[{index}] -> {0}")
     @MethodSource("testErrorDetectionSource")
-    void testErrorDetection(String test, String[] headers, String data[]) throws IOException {
+    void testErrorDetection(String test, String[] headers, String data[]) throws IOException, HL7Exception {
         String code = test.split("_")[0];
         String rest = test.substring(code.length() + 1);
         Set<String> reported = new TreeSet<>();
 
         boolean found = false;
         try {
-            runOne(test, headers, data);
+            CVRSExtract extract = runOne(test, headers, data, false);
         } catch (CVRSValidationException e) {
             for (List<Entry> entry: e.getReport().getEntries().values()) {
                 if (entry.stream()
@@ -46,7 +49,7 @@ class TestValidator {
                         }
                     )
                     .anyMatch(ee ->
-                        code.equals(ee.getCategory()) &&
+                        code.equalsIgnoreCase(ee.getCategory()) &&
                         rest.startsWith(ee.getPath())
                     )
                  ) {
@@ -58,17 +61,35 @@ class TestValidator {
         assertTrue(found, code + " not reported for "  + test + ", found: " + reported);
     }
 
-    private static CVRSExtract runOne(String test, String headers[], String data[]) throws CVRSValidationException, IOException {
+    private static CVRSExtract runOne(String test, String headers[], String data[], boolean isGood) throws CVRSValidationException, IOException, HL7Exception {
         StringBuilder b = new StringBuilder();
         writeTabDelimited(b, headers);
         writeTabDelimited(b, data);
         BeanValidator bv = new BeanValidator(null, Validator.DEFAULT_VERSION);
         // stash this as a dup to enable duplicate checking
         bv.getEventIds().put("BUSR013_vax_event_id_nodups".toUpperCase(), "0");
+
+        // Test the conversion to extract from tab delimited form
+        CVRSExtract extract = null;
         try (Validator v = new Validator(new StringReader(b.toString()), bv);) {
             v.setName(test);
-            return v.validateOne();
+            extract = v.validateOne();
         }
+        // Reset identfier checking, since we are going to reuse the same validator.
+        bv.resetEventIds();
+
+        // Convert to HL7 and test the conversion from HL7
+        CVRSExtract extract2 = null;
+        try (Validator v = new Validator(new StringReader(Converter.toHL7String(extract)), isGood ? bv : null);) {
+            v.setName(test);
+            extract2 = v.validateOne();
+        }
+
+        // Check for equivalence
+        Field f = extract.notEqualsAt(extract2);
+        assertNull(f, String.format("Fields don't match at %s", f == null ? "" : f.getName()));
+
+        return extract;
     }
 
     private static void writeTabDelimited(StringBuilder b, String fields[]) {
@@ -82,10 +103,10 @@ class TestValidator {
     }
 
     static Stream<Object[]> testErrorDetectionSource() throws IOException {
-        return getTestResource("testerror.txt");
+        return getTestResource("testerror.txt").stream();
     }
 
-    private static Stream<Object[]> getTestResource(String name) throws IOException {
+    private static List<Object[]> getTestResource(String name) throws IOException {
         InputStream is = TestValidator.class.getClassLoader().getResourceAsStream(name);
         List<Object[]> o = new ArrayList<>();
         try (BufferedReader r = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));) {
@@ -105,18 +126,18 @@ class TestValidator {
                 o.add(a);
             }
         }
-        return o.stream();
+        return o;
     }
 
     @ParameterizedTest(name = "[{index}] -> {0}")
     @MethodSource("testGoodSamplesSource")
-    void testGoodSamples(String test, String[] headers, String data[]) throws IOException {
+    void testGoodSamples(String test, String[] headers, String data[]) throws IOException, HL7Exception {
         String code = test.split("_")[0];
         Set<String> reported = new TreeSet<>();
 
         boolean found = false;
         try {
-            runOne(test, headers, data);
+            runOne(test, headers, data, true);
         } catch (CVRSValidationException e) {
             found = true;
             for (List<Entry> entry: e.getReport().getEntries().values()) {
@@ -131,7 +152,7 @@ class TestValidator {
     }
 
     static Stream<Object[]> testGoodSamplesSource() throws IOException {
-        return getTestResource("testgood.txt");
+        return getTestResource("testgood.txt").stream();
     }
 
 }

@@ -30,7 +30,7 @@ public class ValueSetValidator extends SuppressibleValidator implements StringVa
             return true;
         }
         ensureValuesLoaded();
-        return values.contains(value.trim().toLowerCase());
+        return values.contains(value.trim().toUpperCase());
     }
 
     @Override
@@ -76,18 +76,18 @@ public class ValueSetValidator extends SuppressibleValidator implements StringVa
             while ( (line = r.readLine()) != null) {
                 String parts[] = line.trim().split("\\s+");
                 if (parts[0].length() != 0) {
-                    values.add(parts[0].toLowerCase());
+                    values.add(parts[0].toUpperCase());
                     switch (examples.size()) {
                     case 0:
                     case 1:
                     case 2:
                     case 3:
-                        examples.add(parts[0].toUpperCase());
+                        examples.add(parts[0]);
                         break;
                     case 4:
                         elide = true;
                         examples.remove(2);
-                        examples.add(parts[0].toUpperCase());
+                        examples.add(parts[0]);
                         break;
                     }
                 }

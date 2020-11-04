@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;
@@ -16,69 +15,72 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListResourceBundle;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.ainq.izgateway.extract.annotations.EventType;
 import com.ainq.izgateway.extract.validation.BeanValidator;
 import com.ainq.izgateway.extract.validation.CVRSEntry;
 import com.ainq.izgateway.extract.validation.CVRSValidationException;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.exceptions.CsvException;
-import com.opencsv.exceptions.CsvFieldValidationException;
+import com.ainq.izgateway.extract.exceptions.CsvFieldValidationException;
 
-import ca.uhn.hl7v2.DefaultHapiContext;
 import ca.uhn.hl7v2.HL7Exception;
-import ca.uhn.hl7v2.HapiContext;
 import ca.uhn.hl7v2.model.Message;
-import ca.uhn.hl7v2.parser.Parser;
 /**
- * A Validator for the CDC Extract File Format
- * @param args
+ * A Validator for the CDC COVID-19 Vaccination Report Specification Extract File Formats
  */
-public class Validator implements Closeable {
+public class Validator implements Iterator<CVRSExtract>, Closeable {
     /** Bundle for Error messages */
     public static class MyResources extends ListResourceBundle {
         @Override
         protected Object[][] getContents() {
-            return new Object[][] {
-                { "DATA001", "%1$s (%2$s) contains an invalid date, should match %3$s" },
-                { "DATA002", "%1$s (%3$s) should contain value %2$s" },
-                { "DATA003", "%1$s (%3$s) does not contain expected value from %2$s" },
-                { "DATA004", "%1$s (%2$s) should not be present" },
-                { "DATA005", "%1$s (%3$s) does not match the regular expression %2$s" },
-                { "DATA006", "%1$s (%3$s) should contain value %2$s" },
-                { "DATA007", "%1$s (%4$s) is not in value set %2$s%3$s" },
-            };
+            return Messages;
         };
     }
-    /** Display options for validation */
-    public enum Show {
-        /** Show neither HL7 nor tab-delimited data in standard out */
-        NEITHER,
-        /** Show only HL7 formatted data in standard out */
-        HL7,
-        /** Show only CVRS tab-delimited formatted data in standard out */
-        CVRS,
-        /** Show both HL7 and CVRS tab-delimited formatted data in standard out */
-        BOTH
-    }
+
+    /** Localizable Error Messages */
+    protected static Object[][] Messages = {
+            { "DATA001", "%1$s (%2$s) contains an invalid date, should match %3$s", "Date is not correctly formatted" },
+            { "DATA002", "%1$s (%3$s) should contain value %2$s", "Does not contain expected fixed value" },
+            { "DATA003", "%1$s (%3$s) does not contain expected value from %2$s", "Not Used" },
+            { "DATA004", "%1$s (%2$s) should not be present", "Should not be present" },
+            { "DATA005", "%1$s (%3$s) does not match the regular expression %2$s", "Does not match expected format" },
+            { "DATA006", "%1$s (%3$s) should contain value %2$s", "Does not contain expected value: REDACTED" },
+            { "DATA007", "%1$s (%4$s) is not in value set %2$s%3$s", "Does not contain values from the expected value set" },
+        };
+
     /** Default version of CVRS to use */
     public static final String DEFAULT_VERSION = "2";
+    private static final Set<String> ERROR_CODES = Collections.unmodifiableSet(new TreeSet<>(Arrays.asList(
+            "DATA001", "DATA002", "DATA003", "DATA004", "DATA005", "DATA006", "DATA007",
+            "BUSR001", "BUSR002", "BUSR003", "BUSR004", "BUSR005", "BUSR006", "BUSR007", "BUSR008", "BUSR009", "BUSR010",
+            // It actually stops at 13, but we won't have to fix this later when we add more.
+            "BUSR011", "BUSR012", "BUSR013", "BUSR014", "BUSR015", "BUSR016", "BUSR017", "BUSR018", "BUSR019", "BUSR020",
+            // These actually stop at 3
+            "REQD001", "REQD002", "REQD003", "REQD004", "REQD005",
+            "DNTS001", "DNTS002", "DNTS003", "DNTS004", "DNTS005",
+            // These actually stop at 1
+            "HL7_001", "HL7_002", "HL7_003"
+        )));
     /** Default max number of errors to allow */
     public static int DEFAULT_MAX_ERRORS = 1000;
 
-    /** Fixed HAPI Context to use for HL7 parsing */
-    private static HapiContext context = new DefaultHapiContext();
-    /** Fixed HAPI Parser to use for HL7 parsing */
-    private static Parser p = context.getGenericParser();
-
     /** Message bundle for reporting data validation errors */
     private static ResourceBundle MESSAGES = new MyResources();
+
+    /** Map of options to argument help text */
+    private static Map<String, String> helpText = new TreeMap<>((s,t) -> s.compareToIgnoreCase(t) );
+
     /**
      * Helper method to generate a validation exception with a formatted message.
+     * @param extract The extract to generate the error for.
      * @param key   The Error Code (Message code) for the error
      * @param args  Arguments for message formatting.
      * @return  The exception.
@@ -86,92 +88,144 @@ public class Validator implements Closeable {
     public static CsvFieldValidationException error(CVRSExtract extract, String key, Object ... args) {
         return new CsvFieldValidationException(extract, key, getMessage(key, args), (String)args[0]);
     }
-    public static boolean isTrue(String value) {
-        // True implies the value is not empty and the value is NOT = NO.
-        return !StringUtils.isEmpty(value) && !"NO".equalsIgnoreCase(value);
-    }
 
+    /**
+     * Main entry point for Command Line.
+     * @param args  Command line arguments
+     * @throws IOException  If a file could not be read, written or found.
+     */
     public static void main(String args[]) throws IOException {
-        int maxErrors = DEFAULT_MAX_ERRORS;
-        File cwd = new File(".");
-        System.out.println(cwd.getCanonicalPath());
-        Show convert = Show.BOTH;
-        Set<String> suppressErrors = new TreeSet<>();
-        String version = "2";
+        try {
+            if (args.length == 0) {
+                help();
+                System.exit(1);
+            }
+            int maxErrors = DEFAULT_MAX_ERRORS;
+            Set<String> suppressErrors = new TreeSet<>();
+            String version = DEFAULT_VERSION;
+            boolean allOK = true;
+            // Set to true to write all records regardless of validation results.
+            boolean writeAll = false;
+            String reportFolder = "-",
+                   hl7Folder = null,
+                   cvrsFolder = null;
 
-        // If skip = true, only skip options will be processed and other arguments will be
-        // skipped.  This is handy for quick debugging with script files or in Eclipse.
-        // Can also be used to include Komments in parameters
-        boolean skip = false;
-        for (String arg: args) {
-            if (arg.startsWith("-k")) {
-                skip = true;
-                continue;
-            }
-            if (arg.startsWith("-K")) {
-                skip = false;
-                continue;
-            }
-            if (skip) {
-                continue;
-            }
-            if (arg.startsWith("-v")) {
-                version = arg.substring(2);
-                continue;
-            }
-            if (arg.startsWith("-e")) {
-                // Exit processing: Another handy tool for quick debugging in script files or Eclipse.
-                break;
-            }
-            if (arg.startsWith("-m")) {
-                // Set max number of errors before rejecting the file.
-                maxErrors = Integer.parseInt(arg.substring(2));
-                continue;
-            }
-            if (arg.startsWith("-c")) {
-                convert = Show.CVRS;
-                continue;
-            }
-            if (arg.startsWith("-n")) {
-                convert = Show.NEITHER;
-                continue;
-            }
-            if (arg.startsWith("-7")) {
-                convert = Show.HL7;
-                continue;
-            }
-            if (arg.startsWith("-b")) {
-                convert = Show.BOTH;
-                continue;
-            }
-            if (arg.startsWith("-s")) {
-                // Suppress specific errors
-                suppressErrors.addAll(Arrays.asList(StringUtils.substring(arg, 2).split("[:,; ]+")));
-                continue;
-            }
-            if (arg.startsWith("-S")) {
-                if (arg.length() > 2) {
-                    // Turn off specific suppressions.
-                    suppressErrors.removeAll(Arrays.asList(StringUtils.substring(arg, 2).split("[:,; ]+")));
-                } else {
-                    // Turn off all suppressions.
-                    suppressErrors.clear();
+            boolean skip = false;
+            for (String arg: args) {
+                if (hasArgument(arg,"-k", "Start comment")) {
+                    skip = true;
+                    continue;
                 }
-                continue;
+                if (hasArgument(arg,"-K", "End comment")) {
+                    skip = false;
+                    continue;
+                }
+                // If skip = true, only skip options will be processed and other arguments will be
+                // skipped.  This is handy for quick debugging with script files or in Eclipse.
+                // Can also be used to include Komments in parameters
+                if (skip) {
+                    continue;
+                }
+
+                if (hasArgument(arg,"-i", "Write all inputs to output, ignoring errors. Use with -b, -c, or -7 options")) {
+                    writeAll = true;
+                    continue;
+                }
+                if (hasArgument(arg,"-I", "Write only valid inputs to output (default)")) {
+                    writeAll = false;
+                    continue;
+                }
+
+                if (hasArgument(arg,"-e", "Exit the program without processing more options or arguments")) {
+                    // Exit processing: Another handy tool for quick debugging in script files or Eclipse.
+                    break;
+                }
+                if (hasArgument(arg,"-v<1|2>", "Select version (default is %s), legal values are 1 and 2", DEFAULT_VERSION)) {
+                    version = arg.substring(2);
+                    continue;
+                }
+                if (hasArgument(arg,"-m<number>", "Set the maximum number (default is %d) of errors before stopping further processing", DEFAULT_MAX_ERRORS)) {
+                    // Set max number of errors before rejecting the file.
+                    maxErrors = Integer.parseInt(arg.substring(2));
+                    continue;
+                }
+                if (hasArgument(arg,"-c[folder]", "Write tab delimited version of input to <file>.txt at specified folder (default to .)")) {
+                    cvrsFolder = arg.length() == 2 ? "." : arg.substring(2);
+                    continue;
+                }
+                if (hasArgument(arg,"-n", "Do not copy inputs to any file")) {
+                    cvrsFolder = null;
+                    hl7Folder = null;
+                    continue;
+                }
+                if (hasArgument(arg,"-7[folder]", "Write HL7 version of input to <file>.hl7 at specified folder (default to .)")) {
+                    hl7Folder = arg.length() == 2 ? "." : arg.substring(2);
+                    continue;
+                }
+                if (hasArgument(arg,"-b[folder]", "Write both HL7 and tab delimited version of input to <file>.hl7 and <file>.txt in specified folder (default to .)")) {
+                    cvrsFolder = hl7Folder = arg.length() == 2 ? "." : arg.substring(2);
+                    continue;
+                }
+                if (hasArgument(arg,"-s[error code,...]|ALL", "Suppress errors (e.g., -sDATA001,DATA002), use -sALL to supress all messages")) {
+                    // Suppress specific errors
+                    String errors = StringUtils.substring(arg, 2);
+                    if ("ALL".equalsIgnoreCase(errors)) {
+                        suppressErrors.clear();  // ensure later equality check works.
+                        suppressErrors.addAll(ERROR_CODES);
+                    } else {
+                        suppressErrors.addAll(Arrays.asList(errors.split("[:,; ]+")));
+                    }
+                    continue;
+                }
+                if (hasArgument(arg,"-S[error code,...]|ALL", "Stop suppressing specified errors (e.g., -SDATA001,DATA002) or all")) {
+                    if (arg.length() > 2) {
+                        // Turn off specific suppressions.
+                        suppressErrors.removeAll(Arrays.asList(StringUtils.substring(arg, 2).split("[:,; ]+")));
+                    } else {
+                        // Turn off all suppressions.
+                        suppressErrors.clear();
+                    }
+                    continue;
+                }
+
+                if (hasArgument(arg,"-h", "Get this help")) {
+                    help();
+                    continue;
+                }
+
+                allOK = allOK && validateFile(maxErrors, suppressErrors, version, arg, reportFolder, cvrsFolder, hl7Folder, writeAll);
             }
 
-            validateFile(maxErrors, convert, suppressErrors, version, arg);
+            System.exit(allOK ? 0 : 1);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            System.exit(-1);
         }
     }
-    private static int getColumnWidth(String[] headers, String[] cols, int i) {
-        int width = 0;
-        if (i < headers.length) {
-            width = headers[i].length();
+
+    /**
+     * Initializes help text for an option, and checks to see if arg matches the option.
+     * @param arg       The argument to check.
+     * @param option    The option to check for
+     * @param help      The help text for the option.
+     * @param args      Format arguments for the help text.
+     * @return  true if the option was found.
+     */
+    private static boolean hasArgument(String arg, String option, String help, Object ... args) {
+
+        if (!helpText.containsKey(option)) {
+            helpText.put(option, String.format(help, args));
         }
-        if (i < cols.length) {
-            width = Math.max(width, cols[i].length());
+        return arg.startsWith(option.split("[\\[\\<\\{\\(] ]")[0]);
+    }
+
+    private static void help() {
+        System.out.printf("%s [options] file ... %n%n", Validator.class.getCanonicalName());
+        System.out.println("Validate or convert inputs (or both) and generate a report\n\nOptions:\n");
+        for (Map.Entry<String, String> entry: helpText.entrySet()) {
+            System.out.printf("%s\t%s\n", entry.getKey(), entry.getValue());
         }
-        return Math.max(4, width + 1);
+        System.out.println("\nfile ...\tOne or more files to validate or convert.\n");
     }
 
     /** Helper method to get a formatted message
@@ -184,53 +238,230 @@ public class Validator implements Closeable {
         return String.format(MESSAGES.getString(key), args);
     }
 
-    private static void printRow(String[] headers, String[] cols, String header, PrintStream err) {
-        StringBuffer l1 = new StringBuffer(), l2 = new StringBuffer();
-        int headerPos = headers.length;
-        if (header != null) {
-            for (headerPos = 0; headerPos < headers.length; headerPos++) {
-                if (header.equals(headers[headerPos])) {
-                    break;
+    /**
+     * Validate a single file.
+     * @param maxErrors The maximum number of errors before quitting.
+     * @param suppressErrors    The error codes to suppress
+     * @param version   The CVRS Version (1 or 2)
+     * @param arg       The file to validate
+     * @param hl7Folder Where to place the HL7 output (null to skip)
+     * @param cvrsFolder    Where to place the CVRS output (null to skip)
+     * @param reportFolder Where to place the report (null to skip)
+     * @param writeAll  If true, converted outputs are written even if they have errors. If false, these are not written.
+     * @return true if the file is OK, false if errors or warnings were found.
+     * @throws FileNotFoundException    If the file could not be found.
+     * @throws IOException  If an IO Error occured while reading the file.
+     */
+    private static boolean validateFile(
+        int maxErrors, Set<String> suppressErrors, String version,
+        String arg, String reportFolder, String cvrsFolder, String hl7Folder, boolean writeAll) throws FileNotFoundException, IOException {
+        boolean reported = false;
+
+        try (Validator v = new Validator(
+                Utility.getReader(arg),
+                suppressErrors.equals(ERROR_CODES) ? null : new BeanValidator(suppressErrors, version)
+             );
+        ) {
+            v.setReport(getOutputStream(arg, reportFolder, "rpt"));
+            v.setCvrs(getOutputStream(arg, cvrsFolder, "txt"));
+            v.setHL7(getOutputStream(arg, hl7Folder, "hl7"));
+            v.setMaxErrors(maxErrors);
+            v.setName(arg);
+            v.setIgnoringErrors(writeAll);
+            v.getReport().printf("Validating %s%n", arg);
+
+            while (v.hasNext()) {
+                try {
+                    v.validateOne();
+                    v.report();
+                } catch (CVRSValidationException ex) {
+                    if (!reported) {
+                        if (v.getReport() != null) {
+                            v.getReport().format("%-32s %-16s %s%n", "File", "Vax_Event_Id", CVRSEntry.header());
+                        }
+                        reported = true;
+                    }
+                    v.report();
                 }
             }
-        }
-        for (int i = 0; i < Math.max(headers.length, cols.length); i++) {
-            int width = getColumnWidth(headers, cols, i);
-            String format = "%-" + width + "s";
-            if (headerPos == headers.length || i >= headerPos - 2 && i <= headerPos + 2) {
-                l1.append(String.format(format, i < headers.length ? headers[i] : ""));
-                l2.append(String.format(format, i < cols.length ? cols[i] : ""));
+
+            Map<String, Integer> summary = v.getErrorSummary();
+            int total = summary.values().stream().collect(Collectors.summingInt(s -> s));
+            if (v.getReport() != null) {
+                v.getReport().printf("%s has %d errors in %d of %d records.%n",
+                    v.getName(), total, v.getErrorCount(), v.getCount());
+
+                if (v.getCvrs() != null) {
+                    v.getReport().printf("%d of %d CVRS records written.%n",
+                        v.getCvrsCount(), v.getCount());
+
+                }
+                if (v.getHl7() != null) {
+                    v.getReport().printf("%d of %d HL7 records written.%n",
+                        v.getHl7Count(), v.getCount());
+
+                }
             }
+            if (v.getErrorCount() != 0 && v.getReport() != null) {
+                v.getReport().printf("%-8s%-8s%s%n", "Code", "Count", "Description");
+                for (Map.Entry<String, Integer> e: summary.entrySet()) {
+                    String code = e.getKey();
+                    String description = null;
+                    switch(e.getKey().substring(0,4)) {
+                    case "DATA":
+                        description =
+                            (String) Arrays.asList(Messages).stream()
+                                .filter(m -> code.equals(m[0])).findFirst().get()[2];
+                        break;
+                    case "HL7_":
+                        description = "Message does not round trip (possibly due to input errors).";
+                        break;
+                    case "BUSR":
+                        description = BeanValidator.getRule(code);
+                        break;
+                    case "REQD":
+                        description = "A required field is missing for " +
+                            EventType.values()[Integer.parseInt(code.substring(4))-1];
+                        break;
+                    case "DNTS":
+                        description = "A field is present that should not be for " +
+                            EventType.values()[Integer.parseInt(code.substring(4))-1];
+                        break;
+                    default:
+                        description = "Unexpected Exception: " + e.getKey();
+                        break;
+                    }
+                    v.getReport().printf("%-8s%5d   %s%n", code, e.getValue(), description);
+                }
+                return false;
+            }
+            return true;
         }
-        err.println(l1.toString());
-        err.println(l2.toString());
-        err.println();
+
     }
 
-    private static String[] readHeaders(BufferedReader r) throws IOException {
-        r.mark(1024);
-        String header = r.readLine();
-        r.reset();
-        return header.split("\\t");
+    /** Set to true if errors should be ignored while writing HL7 or CVRS Output */
+    private boolean ignoringErrors = false;
+
+    /** The HL7 output stream */
+    private PrintStream hl7 = null;
+
+    /** The CVRS output stream */
+    private PrintStream cvrs = null;
+
+    /** The Report output stream */
+    private PrintStream rpt = null;
+
+    /**
+     * Get whether this validator is ignoring errors for writing output.
+     * @param ignoringErrors Set to true if writing should proceed for invalid records or false to write only valid records.
+     * @return this for fluent use.
+     */
+    public Validator setIgnoringErrors(boolean ignoringErrors) {
+        this.ignoringErrors = ignoringErrors;
+        return this;
     }
 
-    private static void validateFile(int maxErrors, Show convert, Set<String> suppressErrors, String version,
-        String arg) throws FileNotFoundException, IOException {
+    /**
+     * Get whether this validator is ignoring errors for writing output.
+     * @return true if writing invalid records.
+     */
+    public boolean isIgnoringErrors() {
+        return ignoringErrors;
+    }
 
-        int count = 0;
-        try (Validator v = new Validator(new FileReader(arg, StandardCharsets.UTF_8), new BeanValidator(suppressErrors, version));) {
-            v.setMaxErrors(maxErrors);
-            v.setShow(convert);
-            v.setName(arg);
-            CVRSExtract extract = null;
-            try {
-                extract = v.validateOne();
-            } catch (CVRSValidationException ex) {
-                v.report(extract,
-                    Collections.singletonList(new CVRSEntry(ex, count)),
-                    count);
-            }
+    /**
+     * Set the stream where HL7 records should be written or null
+     * to skip this step.
+     * @param outputStream  the stream where HL7 records should be written or null
+     * @return this for fluent use.
+     */
+    public Validator setHL7(PrintStream outputStream) {
+        hl7 = outputStream;
+        return this;
+    }
+
+    /**
+     * Get the stream where HL7 records should be written or null
+     * to skip this step.
+     * @return The stream where HL7 records will be written
+     */
+    public PrintStream getHl7() {
+        return hl7;
+    }
+
+    /**
+     * Set the stream where CVRS records should be written or null
+     * to skip this step.
+     * @param outputStream  the stream where CVRS records should be written or null
+     * @return this for fluent use.
+     */
+    public Validator setCvrs(PrintStream outputStream) {
+        cvrs = outputStream;
+        if (cvrs != null) {
+            Utility.printRow(cvrs, getHeaders());
         }
+        return this;
+    }
+
+    /**
+     * Get the stream where CVRS records should be written or null
+     * to skip this step.
+     * @return The stream where HL7 records will be written
+     */
+    public PrintStream getCvrs() {
+        return cvrs;
+    }
+
+    /**
+     * Set the stream where the validation report should be written or null
+     * to skip this step.
+     * @param outputStream  the stream where CVRS records should be written or null
+     * @return this for fluent use.
+     */
+    public Validator setReport(PrintStream outputStream) {
+        rpt = outputStream;
+        return this;
+    }
+
+    /**
+     * Get the stream where the validation report should be written or null
+     * to skip this step.
+     * @return The stream where the validation report will be written
+     */
+    public PrintStream getReport() {
+        return rpt;
+    }
+
+    /**
+     * Given a file name and a folder and extension, create a new file name.
+     * If arg already has the given extension (e.g., arg=file.txt, ext=txt), the new file
+     * will have the extension .new.txt (e.g., file.new.txt) to avoid file name conflicts.
+     * @param arg   The file name
+     * @param folder    The folder in which to put it
+     * @param ext   The new extension to use
+     * @return  A new file name.
+     * @throws IOException  If an error occurs creating the stream
+     */
+    private static PrintStream getOutputStream(String arg, String folder, String ext) throws IOException {
+        if (folder == null) {
+            return null;
+        }
+
+        if ("-".equals(folder)) {
+            return System.out;
+        }
+        if ("--".equals(folder)) {
+            return System.err;
+        }
+
+        File f1 = new File(arg), f2 = Utility.getNewFile(arg, new File(folder), ext);
+        // Don't overwrite the input file!
+        if (f1.getCanonicalPath().equals(f2.getCanonicalPath())) {
+            ext = "new." + ext;
+            f2 = Utility.getNewFile(arg, new File(folder), ext);
+        }
+        return new PrintStream(f2, StandardCharsets.UTF_8);
     }
 
     /** Headers in the tab delimited text file in order */
@@ -242,40 +473,97 @@ public class Validator implements Closeable {
     /** Max Errors to Allow */
     private int maxErrors = Validator.DEFAULT_MAX_ERRORS;
 
-    /** What to Show */
-    private Show convert = Show.BOTH;
+    /** Summary of Errors */
+    private Map<String, Integer> errorSummary = new TreeMap<>();
 
     /** Name of the extract */
     private String name = "";
+    /** The file being validated */
     private BufferedReader reader;
+    /** The Parser for converting it to a CVRSExtract */
     private Iterable<CVRSExtract> parser = null;
-    private Iterator<CVRSExtract> iterator = null;
-    private int count = 0;
-    private int errorCount;
 
+    /** The iterator used to loop over extracts obtained from the file */
+    private Iterator<CVRSExtract> iterator = null;
+    /** Count of messages validated */
+    private int count = 0;
+    /** Count of messages in error */
+    private int errorCount = 0;
+
+    /** Count of CVRS Records written */
+    private int cvrsCount = 0;
+
+    /** Count of HL7 Records written */
+    private int hl7Count = 0;
+
+    /** The most recent read extract */
+    private CVRSExtract currentExtract = null;
+
+    /** Errors associated with the most recent extract */
+    private List<CVRSEntry> errors = null;
+
+    /**
+     * Create a new Validator instance for the specified reader,
+     * and validating using the specified BeanValidator instance.
+     *
+     * @param reader    The stream to read data from.
+     * @param validator The BeanValidator used to valid the CVRSExtract (can be null, which skips most validation).
+     * @throws IOException  If an error occured while reading content (headers)
+     */
     public Validator(Reader reader, BeanValidator validator) throws IOException {
-        this.reader = getBufferedReader(reader);
-        headers = readHeaders(this.reader);
+        this.reader = Utility.getBufferedReader(reader);
+        headers = Utility.readHeaders(this.reader);
+        if (HL7MessageParser.isMessageDelimiter(headers[0])) {
+            headers = CVRSExtract.getHeaders(validator == null ? null : validator.getVersion());
+        }
         this.validator = validator;
-        parser = ParserFactory.newParser(this.reader);
+        parser = ParserFactory.newParser(this.reader, null);
         iterator = parser.iterator();
     }
 
-    private static BufferedReader getBufferedReader(Reader reader) {
-        if (reader instanceof BufferedReader) {
-            return (BufferedReader) reader;
-        } else {
-            return new BufferedReader(reader);
-        }
-    }
     /**
-     * @return the headers
+     * @return The count of records read.
+     */
+    public int getCount() {
+        return count;
+    }
+
+    /**
+     * Get the number of records in error encounted.  A single record with one or errors will increase this count by 1, no
+     * matter how many errors aree found.
+     *
+     * @return The count of records in error
+     */
+    public int getErrorCount() {
+        return errorCount;
+    }
+
+    /**
+     * Return the count of Cvrs records written.
+     * @return the count of Cvrs records written.
+     */
+    public int getCvrsCount() {
+        return cvrsCount;
+    }
+
+    /**
+     * Return the count of HL7 records written.
+     * @return the count of HL7 records written.
+     */
+    public int getHl7Count() {
+        return hl7Count;
+    }
+
+    /**
+     * Get the Header read from the tab delimited file.
+     * @return The headers
      */
     public String[] getHeaders() {
         return headers;
     }
 
     /**
+     * Get the name of the file.
      * @return The name
      */
     public String getName() {
@@ -283,7 +571,10 @@ public class Validator implements Closeable {
     }
 
     /**
-     * @return the suppressed
+     * Get the errors being suppressed.  Only validation errors (DATA, BUSR, REQD and DNTS) can be suppressed.
+     * HL7 conversion and unexpected exceptions cannot be suppressed.
+     *
+     * @return The codes for the suppressed errors.
      */
     public Set<String> getSuppressed() {
         return validator == null ? Collections.emptySet() : validator.getSuppressed();
@@ -291,29 +582,29 @@ public class Validator implements Closeable {
 
     /**
      * Get the BeanValidator to use.
-     * @return  the BeanValidator to use.
+     *
+     * @return  The BeanValidator to use.
      */
     public BeanValidator getValidator() {
         return validator;
     }
 
     /**
-     * @return the version
+     * Get the version of the CVRS to validate for.  NOTE: Source for Version 1 has had limited testing,
+     * and bugs in Version 1 CVRS validation will not be fixed. However, we expect that future versions
+     * of CVRS may need to be supported.  See {@link #DEFAULT_VERSION}
+     *
+     * @return The version of the CVRS to validate for.
      */
     public String getVersion() {
         return validator == null ? null : validator.getVersion();
     }
 
     /**
-     * @param headers the headers to set
-     */
-    public Validator setHeaders(String[] headers) {
-        this.headers = headers;
-        return this;
-    }
-
-    /**
-     * @param name The name to set
+     * Set the file name.
+     *
+     * @param name The name of the file to set.
+     * @return this for fluent use.
      */
     public Validator setName(String name) {
         this.name = name;
@@ -323,7 +614,7 @@ public class Validator implements Closeable {
     /**
      * Set the BeanValidator to use.
      * @param validator The BeanValidator.
-     * @return  this
+     * @return  this For fluent use.
      */
     public Validator setValidator(BeanValidator validator) {
         this.validator = validator;
@@ -333,127 +624,88 @@ public class Validator implements Closeable {
     /**
      * Set the maximum number of errors to allow in a batch.
      * @param maxErrors the maximum number of errors to allow in a batch.
+     * @return this for fluent use.
      */
     public Validator setMaxErrors(int maxErrors) {
         this.maxErrors = maxErrors;
         return this;
     }
 
-    // TODO: Shift this to static methods
-    private Validator setShow(Show convert) {
-        this.convert = convert;
-        return this;
-    }
-
-    // TODO: Return Report artifact from NIST
-    private int report(CVRSExtract ex, List<CVRSEntry> exList2, int count) {
-        // Report captured exceptions first.
-        for (CVRSEntry err: exList2) {
-            System.err.printf("%s:%s\t%s%n",
-                getName(),
-                err.getPath() == null ? Integer.toString(err.getLine()) : err.getPath(),
-                err.getDescription()
-            );
-            printRow(headers, err.getRow(), err.getPath(), System.err);
-        }
-        if (convert != Show.NEITHER) {
-            ++count;
-            if (convert == Show.CVRS || convert == Show.BOTH) {
-                printRow(headers, ex.getValues(headers), null, System.out);
+    /**
+     * Report on a record.
+     * @return The current record count.
+     */
+    private int report() {
+        if (!errors.isEmpty()) {
+            for (CVRSEntry err: errors) {
+                printEntry(rpt, currentExtract, err);
             }
-            if (convert == Show.HL7 || convert == Show.BOTH) {
+        }
+        if (cvrs != null && (errors.isEmpty() || isIgnoringErrors())) {
+            cvrsCount++;
+            Utility.printRow(cvrs, currentExtract.getValues(headers));
+        }
+        CVRSExtract e2 = null;
+        if (hl7 != null && (errors.isEmpty() || isIgnoringErrors())) {
+            try {
+                Message m = Converter.toHL7(currentExtract);
                 try {
-                    System.out.printf("%s:%d%n%s%n", getName(), count, Converter.toHL7String(ex));
-                    Message m = Converter.toHL7(ex);
-                    List<CVRSEntry> exList = new ArrayList<>();
-                    CVRSExtract e2 = Converter.fromHL7(m, exList, validator, count);
-                    Field ff = ex.notEqualsAt(e2);
-                    if (ff != null) {
-                        ff.setAccessible(true);
-                        System.err.printf("%s:%d%n%s '%s' != '%s' %n", getName(), count,
-                            "Message does not round trip at " + ff.getName(),
-                            ff.get(ex), ff.get(e2)
-                        );
-                    }
-                } catch (Exception e) {
-                    System.err.printf("%s:%d%n%s%n", getName(), count, e.getMessage());
-                    //e.printStackTrace();
+                    hl7.printf("%s%n", m.encode());
+                    hl7Count++;
+                } catch (HL7Exception hl7ex) {
+                    CVRSEntry entry = new CVRSEntry(currentExtract, "HL7_003", "???",
+                        hl7ex.getMessage()
+                    ).setLine(getCount());
+                    errors.add(entry);
+                    printEntry(rpt, currentExtract, entry);
+                    updateSummary(entry);
                 }
-            }
-        }
-
-        return count;
-    }
-
-    public void validateHL7AsCVRS(Reader r) {
-
-        // TODO Auto-generated method stub
-        StringBuffer b = new StringBuffer();
-
-        int msgCount = 0;
-        int count = 0;
-        try (BufferedReader br = r instanceof BufferedReader ? (BufferedReader)r : new BufferedReader(r);) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                count++;
-                if (HL7MessageParser.isBatchDelimiter(line)) {
-                    continue;
-                }
-                if (!line.startsWith("MSH")) {
-                    System.err.println("Missing Message Header (MHS) Segment at line " + count);
-                    continue;
-                }
-
-                do {
-                    b.append(line).append("\r");
-                    r.mark(1024);
-                    count++;
-                } while ((line = br.readLine()) != null && !HL7MessageParser.isMessageDelimiter(line));
-
-                // Adjust counts.
-                msgCount++;
-                count--;
-                r.reset();
-
-                Message hapiMsg = p.parse(b.toString());
                 List<CVRSEntry> exList = new ArrayList<>();
-                CVRSExtract extract = Converter.fromHL7(hapiMsg, exList, validator, msgCount);
-                count = report(extract, exList, count);
+                e2 = Converter.fromHL7(m, exList, validator, getCount());
+                Field ff = currentExtract.notEqualsAt(e2);
+                if (ff != null) {
+                    ff.setAccessible(true);
+                    CVRSEntry entry = new CVRSEntry(e2, "HL7_001", ff.getName(),
+                            String.format("Message does not round trip at %s, '%s' != '%s'",
+                                ff.getName(), ff.get(currentExtract), ff.get(e2)
+                            )
+                        ).setLine(getCount());
+                    errors.add(entry);
+                    printEntry(rpt, currentExtract, entry);
+                    updateSummary(entry);
+                }
+            } catch (Exception e) {
+                CVRSEntry entry = new CVRSEntry(e2, e.getClass().getName(), "???", e.getMessage()).setLine(getCount());
+                errors.add(entry);
+                printEntry(System.out, currentExtract, entry);
+                updateSummary(entry);
             }
-        } catch (IOException e) {
-            System.out.println("Error reading file at line " + count);
-        } catch (HL7Exception e) {
-            System.out.println("Error parsing message at line " + count + " in message " + msgCount);
-        } catch (CsvException e) {
-            System.out.println("Error validating message at line " + count + " in message " + msgCount);
         }
+        return getCount();
     }
 
-    public void validateTextAsCVRS(Reader rf) {
-
-        try (Reader r = new UpperCaseReader(rf)) {
-            CsvToBean<CVRSExtract> beanReader = ParserFactory.newBeanReader(r, validator, maxErrors);
-
-            int count = 0;
-            for (CVRSExtract extract: beanReader) {
-                List<CsvException> errs = beanReader.getCapturedExceptions();
-                count = report(extract, toEntries(extract, errs), count);
-                errs.clear();
-            }
-            List<CsvException> errs = beanReader.getCapturedExceptions();
-            count = report(null, toEntries(null, errs), count);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private List<CVRSEntry> toEntries(CVRSExtract extract, List<CsvException> errs) {
-        return Arrays.asList(
-            errs.stream().map(
-                err -> new CVRSEntry(extract, err, (int) err.getLineNumber())).toArray(CVRSEntry[]::new)
+    /**
+     * Print a single detail record for validation report.
+     * @param out   The stream to print to
+     * @param ex    The extract being validated.
+     * @param entry The validation error being reported.
+     */
+    private void printEntry(PrintStream out, CVRSExtract ex, CVRSEntry entry) {
+        out.format("%-32s %-16s %s%n",
+            StringUtils.abbreviateMiddle(getName(), "***", 32),
+            StringUtils.abbreviateMiddle(ex.getVax_event_id(), "***", 16),
+            entry.toString()
         );
     }
 
+    /**
+     * Collect all validated records and errors
+     * @param errs  A list for reporting errors.  If null, errors will be reported in a CVRSValidationException
+     * @return  The list of validate records.
+     * @throws IOException  If an IO Error occured while reading.
+     * @throws CVRSValidationException  If a validation error occured and errs == null, or the maximum number
+     * of errors is exceeded.
+     */
     public List<CVRSExtract> validate(List<CVRSValidationException> errs)
         throws IOException, CVRSValidationException
     {
@@ -475,23 +727,108 @@ public class Validator implements Closeable {
         return result;
     }
 
+    /**
+     * Provides the hasNext() method to allow Validator to be used with the Iterator interface
+     * @return true if there are more records to process.
+     */
+    public boolean hasNext() {
+        return iterator.hasNext();
+    }
+
+    /**
+     * Get the next CVRSExtract to process
+     * @return the next CVRSExtract
+     */
+    public CVRSExtract next() {
+        try {
+            return validateOne();
+        } catch (CVRSValidationException e) {
+            NoSuchElementException ex = new NoSuchElementException();
+            ex.initCause(e);
+            throw ex;
+        }
+    }
+
+    /**
+     * Validate one record, throwing an exception if an error is found.
+     * @return The validated CVRSExtract
+     * @throws CVRSValidationException  If an error is found.
+     *
+     * TODO: Update this to save the current extract and/or errors
+     */
     public CVRSExtract validateOne() throws CVRSValidationException {
         ++count;
-        CVRSExtract extract = iterator.next();
+        currentExtract = null;
+        currentExtract = iterator.next();
         if (validator != null) {
+            errors = new ArrayList<>();
             try {
-                validator.verifyBean(extract);
+                validator.verifyBean(currentExtract);
             } catch (CVRSValidationException e) {
                 errorCount++;
-                e.setLine(extract.getValues(headers));
+                e.setLine(currentExtract.getValues(headers));
                 e.setLineNumber(count);
+                updateSummary(e);
+                errors.addAll(e.getEntries());
                 throw e;
             }
         }
-        return extract;
+        return currentExtract;
     }
+
+    /**
+     * Get the summary error report.
+     * @return  A map of error codes to counts of errors found.
+     */
+    public Map<String, Integer> getErrorSummary() {
+        return Collections.unmodifiableMap(errorSummary);
+    }
+
+    /**
+     * Given a Validation error, update the summary with the problems found.
+     * @param e The exception reported.
+     */
+    private void updateSummary(CVRSValidationException e) {
+        for (CVRSEntry entry: e.getEntries()) {
+            updateSummary(entry);
+        }
+    }
+
+    /**
+     * Update the summary for the given error report.
+     * @param entry The reported error.
+     */
+    private void updateSummary(CVRSEntry entry) {
+        Integer i = errorSummary.get(entry.getCategory());
+        if (i == null) {
+            i = Integer.valueOf(0);
+        }
+        errorSummary.put(entry.getCategory(), i + 1);
+    }
+
+
+    /**
+     * Forces a close of the underlying reader.
+     */
     @Override
     public void close() throws IOException {
         reader.close();
+    }
+
+    /**
+     * Get the current extract
+     * @return the current extract
+     */
+    public List<CVRSEntry> getCurrentExtract() {
+        return errors;
+    }
+
+
+    /**
+     * Get the errors associated with the current extract.
+     * @return the errors
+     */
+    public List<CVRSEntry> getErrors() {
+        return errors;
     }
 }

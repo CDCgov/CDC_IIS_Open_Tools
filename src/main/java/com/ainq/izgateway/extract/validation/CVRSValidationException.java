@@ -1,6 +1,7 @@
 package com.ainq.izgateway.extract.validation;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,10 @@ public class CVRSValidationException extends CsvConstraintViolationException {
         for (CVRSEntry e: errors) {
             e.setLine((int) line);
         }
+    }
+
+    public List<CVRSEntry> getEntries() {
+        return Collections.unmodifiableList(errors);
     }
 
     public Report getReport() {

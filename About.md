@@ -10,53 +10,35 @@ NOTE: Many components are still to be done.  These are marked (TBD).
 The specifications from which this project was originally developed include the following,
 included in this site:
 
-* [CDC Specifications for the CDC COVID-19 Vaccine Reporting Specification (Release 2)](#todo)
-* [What's New Guide](#todo)
-* [Data Revision Notes](#todo)
+* [CDC Specifications for the CDC COVID-19 Vaccine Reporting Specification v2](doc/CDC COVID-19 Vaccination Reporting Specification_v2_CLEARED_20201029.xlsx)
+* [CDC CVRS_What's New in Version 2](doc/CDC CVRS_What's New in Version 2_CLEARED_20201028.docx)
+* [CDC CVRS Instructions v2](doc/CDC CVRS_Instructions_v2_CLEARED_20201028.docx)
 
-## CURL Scripts
-A CURL Script (will be) included to support file uploads.
+## Scripts
+The [scripts](scripts/README.md) folder contains scripts that can be used to support file uploads.
+These scripts rely on [CURL](https://curl.haxx.se/) (pronounced either as C-U-R-L or
+"curl" as in the wave curls), a widely availablee command line tool for interacting
+with WEB APIs.
 
-## Mirth Channel
-There is a sample Mirth channel that includes a listener that you can use for local
+## Mirth Channel (TBD)
+There is a sample [Mirth channel](mirth/README.md) that includes a listener that you can use for local
 testing, and a sender that will send files dropped into a folder to the specified destination.
 
 ## Java Code
 Java code and documentation are included that support Validation of flat files and HL7 Version 2 Messages.
 
-### Validation
-```
-    $ java -classpath extract-validator.jar com.ainq.izgateway.extract.Validator [options]? [files] ...
-```
+### Validator
 
-#### Options
--e  Exit (ignoring further command line arguments)<br/>
--7  Display HL7 Message Format from files<br/>
--c  Display Tab Delimited Format from files<br/>
--b  Display Both HL7 and Tab-Delimited from files<br/>
--n  Display Neither HL7 or Tab-Delimited file content<br/>
--v1 Use Version 1 CVRS Validation Tables<br/>
--v1 Use Version 2 CVRS Validation Tables<br/>
--k  Comment <br/>
--K  End of Comment<br/>
+The Validator is a command line tool and collection of Java classes that can be used
+to support validation.
 
-file    An HL7 V2 VXU Message or Tab Delimited File
-
-The type of file will automatically detected from its content.
-
-Tab Delimited Files must conform to the CDC CVRS Tab Delimited Format
-
-HL7 VXU Message Files can contain a single HL7 V2 Message. Each HL7 V2 Segment must
-be terminated by a newline or carriage-return or carriage-return/newline pair of
-characters.
-
-NOTE: Future support is anticipated for HL7 Batch messages that use the FHS/FFS and
-BHS/BFS segments.
+Validator is implemented in the `com.ainq.izgateway.extract.Validator` class and has
+a command line interface described in the [Validator](Validator.md) description page.
 
 ### HL7 from/to Flat File Conversion
 TBD -- See Converter source code.  Depends on [HAPI V2 Release 2.3](https://hapifhir.github.io/hapi-hl7v2/).
 
-### SOAP Message Sender
+## SOAP Message Sender
 Converts a batch file to a sequence of SOAP Messages and sends them to the destination
 end point (TBD).
 
@@ -69,7 +51,7 @@ testing.
 Value Set tables used for content validation. These are simple space delimited files
 containing the code in the first field, and additional helpful data in remaining fields.
 
-* [Value Set Files](src\main\resources)
+  * [Value Set Files](src\main\resources)
   * [FIPS County Codes](src\main\resources\COUNTY.txt)
   * [Facility Type Codes (used during enrollment)](src\main\resources\DCHTYPE2.txt)
   * [CVX Codes](src\main\resources\CVX.txt)
@@ -83,13 +65,11 @@ containing the code in the first field, and additional helpful data in remaining
   * [SITE Codes](src\main\resources\SITE.txt)
   * [SEX Codes](src\main\resources\SEX.txt)
 
-## HL7 Profiles for HL7 V2 Messages
-HL7 Profiles for V2 Messages containing CVRS Content (TBD)
+## HL7 Profiles for HL7 V2 Messages (TBD)
+HL7 Profiles for V2 Messages containing CVRS Content
 * Z22.CVRS - An enhanced Z22 containing additional fields to support communication of
 CVRS data.
 * Z50.CVRSExtract - A message containing only the data needed by DCH, and using the values
 found in CVRS Release 2.
-* Z22.Identified - A Profile for identified content based on Z22.CVRS ... additional requirements
-for sending identified data.
-* Z22.Redacted - A Profile for redacted content based on Z22.CVRS ... additional requirements
-for sending identified data.
+* Z22.Redacted - A Profile for redacted content based on Z22/Z22.CVRS ... additional requirements
+for sending redacted data.

@@ -3,6 +3,7 @@ package com.ainq.izgateway.extract;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.lang.reflect.Field;
 import java.util.Set;
 
 import com.ainq.izgateway.extract.validation.BeanValidator;
@@ -60,7 +61,7 @@ public class ParserFactory extends CSVParser {
     }
 
     public static CsvToBean<CVRSExtract> newBeanReader(Reader r, BeanValidator validator, int maxErrors) {
-        CsvToBeanBuilder<CVRSExtract> b = new CsvToBeanBuilder<CVRSExtract>(UpperCaseReader.getReader(r));
+        CsvToBeanBuilder<CVRSExtract> b = new CsvToBeanBuilder<CVRSExtract>(r);
         b.withIgnoreLeadingWhiteSpace(false)
          .withIgnoreQuotations(true)
          .withSeparator('\t')
@@ -76,6 +77,9 @@ public class ParserFactory extends CSVParser {
         // Add a verifier if requested.
         if (validator != null) {
             b.withVerifier(validator);
+            for (Field f: BeanValidator.getIgnoredFields(validator.getVersion())) {
+                b.withIgnoreField(CVRSExtract.class, f);
+            }
         }
         return b.build();
     }
@@ -84,7 +88,7 @@ public class ParserFactory extends CSVParser {
         return new BeanValidator(suppressed, version);
     }
 
-    public static Iterable<CVRSExtract> newParser(Reader r) throws IOException {
+    public static Iterable<CVRSExtract> newParser(Reader r, BeanValidator validator) throws IOException {
         BufferedReader br = r instanceof BufferedReader ? (BufferedReader) r : new BufferedReader(r);
         br.mark(1024);
         String line = br.readLine();
@@ -93,6 +97,6 @@ public class ParserFactory extends CSVParser {
             // This is an HL7 Message, create a parser for HL7
             return new HL7MessageConverter(br);
         }
-        return newBeanReader(br, null, 0);
+        return newBeanReader(br, validator, 0);
     }
 }

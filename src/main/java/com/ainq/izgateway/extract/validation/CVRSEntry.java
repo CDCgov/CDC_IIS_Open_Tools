@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.ainq.izgateway.extract.CVRSExtract;
 import com.opencsv.exceptions.CsvConstraintViolationException;
 import com.opencsv.exceptions.CsvException;
-import com.opencsv.exceptions.CsvFieldValidationException;
+import com.ainq.izgateway.extract.exceptions.CsvFieldValidationException;
 
 import gov.nist.validation.report.Entry;
 import gov.nist.validation.report.Trace;
@@ -170,8 +170,21 @@ public class CVRSEntry implements Entry {
         return this;
     }
 
+    public static String header() {
+        return String.format("%-6s %-6s %-24s %-6s %s",
+            "Line", "Level", "Field", "Error", "Description");
+    }
     public String toString() {
-        return "\n\t" + toText();
+        return String.format("%-6d %-6s %-24s %-6s %s",
+            getLine(),
+            getClassification(),
+            StringUtils.truncate(getPath(),24),
+            getCategory(),
+            getDescription());
+    }
+
+    public void setClassification(String classification) {
+        this.classification = classification;
     }
 
 }

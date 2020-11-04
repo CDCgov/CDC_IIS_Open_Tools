@@ -26,7 +26,7 @@ public class DateValidator extends SuppressibleValidator implements StringValida
                 // Wee do this to overcome some leniency in interpretation of months.
                 Date d = fmt.parse(value);
                 String v = fmt.format(d);
-                return v.equals(value);
+                return v.equalsIgnoreCase(value);
             } catch (ParseException e) {
             }
         }

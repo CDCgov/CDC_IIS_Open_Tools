@@ -8,8 +8,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,33 +19,47 @@ import java.util.TreeMap;
 import org.apache.commons.lang3.StringUtils;
 
 import com.ainq.izgateway.extract.CVRSExtract;
+import com.ainq.izgateway.extract.Utility;
 import com.ainq.izgateway.extract.Validator;
-import com.ainq.izgateway.extract.annotations.DoNotSend;
 import com.ainq.izgateway.extract.annotations.EventType;
 import com.ainq.izgateway.extract.annotations.FieldValidator;
-import com.ainq.izgateway.extract.annotations.Required;
+import com.ainq.izgateway.extract.annotations.Requirement;
+import com.ainq.izgateway.extract.annotations.RequirementType;
 import com.opencsv.bean.BeanVerifier;
 import com.opencsv.bean.validators.StringValidator;
-import com.opencsv.exceptions.CsvFieldValidationException;
+import com.ainq.izgateway.extract.exceptions.CsvFieldValidationException;
 import com.opencsv.exceptions.CsvValidationException;
 
 public class BeanValidator extends SuppressibleValidator implements BeanVerifier<CVRSExtract> {
-    /** The business rules to execute */
+    /** The business rules to execute
+     *  This array is structured as follows:
+     *  Error Code, Rule, Message, Error Level, Version
+     *
+     *  If Error Level is null or unspecified, then it's an ERROR.
+     *  If Version is null or unspecified, then it applies to all versions.
+     *
+     *  FWIW: This array is in the form needed for a ListMessageBundle
+     */
     private static String rules[][] = {
-        { "BUSR001", "recip_address_county in recip_address_state FIPS", "%s (%s) does not match %s (%s) for Recipient"},
-        { "BUSR002", "admin_address_county in admin_address_state FIPS", "%s (%s) does not match %s (%s) for Vaccine Administrator"},
-        { "BUSR003", "recip_address_zip in recip_address_state STATE", "%s (%s) does not match %s (%s) for Recipient"},
-        { "BUSR004", "admin_address_zip in admin_address_state STATE", "%s (%s) does not match %s (%s) for Vaccine Administrator" },
-        { "BUSR005", "recip_dob < admin_date", "%s (%s) is after %s (%s)" },
-        { "BUSR006", "vax_refusal NAND recip_missed_appt", "%s (%s) and %s (%s) should not both be YES" },
-        { "BUSR007", "recip_address_zip implies recip_address_state", "If %s (%s) is present, %s (%s) should be present for Recipient"},
-        { "BUSR008", "admin_address_zip implies admin_address_state", "If %s (%s) is present, %s (%s) should be present for Vaccine Administrator"},
-        { "BUSR009", "recip_address_zip implies recip_address_county", "If %s (%s) is present, %s (%s) should be present for Recipient"},
-        { "BUSR010", "admin_address_zip implies admin_address_county", "If %s (%s) is present, %s (%s) should be present for Vaccine Administrator" },
-        { "BUSR011", "recip_dob no_time_travel recip_dob", "If %s (%s) is present it should be less than %s (%s)"},
-        { "BUSR012", "admin_date no_time_travel admin_date", "If %s (%s) is present it should less than %s (%s)" },
-        { "BUSR013", "vax_event_id nodups vax_event_id", "Value of %s (%s) duplicates %s at line %s" }
+        { "BUSR001", "%s (%s) does not match %s (%s) for Recipient", "recip_address_county in recip_address_state FIPS" },
+        { "BUSR002", "%s (%s) does not match %s (%s) for Vaccine Administrator", "admin_address_county in admin_address_state FIPS" },
+        { "BUSR003", "%s (%s) does not match %s (%s) for Recipient", "recip_address_zip in recip_address_state STATE" },
+        { "BUSR004", "%s (%s) does not match %s (%s) for Vaccine Administrator", "admin_address_zip in admin_address_state STATE"},
+        { "BUSR005", "%s (%s) is after %s (%s)", "recip_dob < admin_date"},
+        { "BUSR006", "%s (%s) and %s (%s) should not both be YES", "vax_refusal NAND recip_missed_appt", null, "1"},
+        { "BUSR007", "If %s (%s) is present, %s (%s) should be present for Recipient", "recip_address_zip implies recip_address_state", "WARN"},
+        { "BUSR008", "If %s (%s) is present, %s (%s) should be present for Vaccine Administrator", "admin_address_zip implies admin_address_state", "WARN"},
+        { "BUSR009", "If %s (%s) is present, %s (%s) should be present for Recipient", "recip_address_zip implies recip_address_county", "WARN"},
+        { "BUSR010", "If %s (%s) is present, %s (%s) should be present for Vaccine Administrator", "admin_address_zip implies admin_address_county", "WARN" },
+        { "BUSR011", "If %s (%s) is present it should be less than %s (%s)", "recip_dob no_time_travel"},
+        { "BUSR012", "If %s (%s) is present it should less than %s (%s)", "admin_date no_time_travel" },
+        { "BUSR013", "Value of %s (%s) duplicates %s at line %s", "vax_event_id nodups" }
     };
+
+    private static final int ERROR_CODE = 0, MESSAGE = 1, RULE = 2, LEVEL = 3, VERSIONS = 4;
+    private static final String DEFAULT_LEVEL = "ERROR";
+    private static final String DEFAULT_VERSIONS = "1,2"; // Applies to all versions.
+
     /** Map of states to FIP Prefixes to validate county in state */
     private static Map<String, String> stateToCounty = new TreeMap<>();
     /** Map of states to zip-code prefixes to validate zip in state */
@@ -74,6 +88,23 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         setVersion(version);
     }
 
+    /**
+     * Reset the state of the event_id table for duplicate checking.
+     * Allows a BeanValidator to be reused.
+     */
+    public void resetEventIds() {
+        event_id.clear();
+    }
+
+    public static String getRule(String code) {
+        for (String rule[]: rules) {
+            if (rule[ERROR_CODE].equals(code)) {
+                return rule[RULE];
+            }
+        }
+        return null;
+    }
+
     public Map<String, String> getEventIds() {
         return event_id;
     }
@@ -92,16 +123,27 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         List<CVRSEntry> errors = new ArrayList<>();
         String values[] = bean.getValues();
         checkRequirements(bean, errors);
-        Date d = new Date();
-        // This is good enough for testing the rule even though it is both deprecated, and not using good date math.
-        String tomorrow = String.format("%04d-%02d-%02d", d.getYear() + 1900, d.getMonth()+1, d.getDate() + 1);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        String tomorrow = String.format("%04d-%02d-%02d", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE));
         for (String rule[]: rules) {
-            String parts[] = rule[1].split("\\s+");
-            String field1 = bean.getField(parts[0]), field2 = bean.getField(parts[2]);
-            if (getSuppressed().contains(rule[0])) {
+            String level = rule.length > LEVEL ? rule[LEVEL] : DEFAULT_LEVEL;
+            String versions[] = (rule.length > VERSIONS ? rule[VERSIONS] : DEFAULT_VERSIONS).split(",");
+            String parts[] = rule[RULE].split("\\s+");
+            String field1 = bean.getField(parts[0]), field2 = parts.length > 2 ? bean.getField(parts[2]) : null;
+            // Extend array if needed.
+            if (parts.length < 4) {
+                parts = Arrays.copyOf(parts, 4);
+            }
+            if (!Arrays.asList(versions).contains(getVersion())) {
+                // Don't apply rules that aren't applicable to the current version
+                continue;
+            }
+            if (getSuppressed().contains(rule[ERROR_CODE])) {
                 // Don't check for suppressed errors.
                 continue;
             }
+
             boolean success = false;
             switch (parts[1]) {
             case "in":
@@ -114,9 +156,9 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                 }
                 break;
             case "nodups":
-                String line = event_id.get(field1);
+                String line = event_id.get(field1.toUpperCase());
                 success = line == null;
-                event_id.put(field1, field2 = Integer.toString(++counter));
+                event_id.put((parts[2] = field1).toUpperCase(), field2 = Integer.toString(++counter));
                 break;
             case "no_time_travel":
                 success = StringUtils.isEmpty(field1) || field1.compareTo(tomorrow) < 0;
@@ -132,14 +174,15 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                 }
                 break;
             case "XOR":
-                success = Validator.isTrue(field1) != Validator.isTrue(field2);
+                success = Utility.isTrue(field1) != Utility.isTrue(field2);
                 break;
             case "NAND":
-                success = !("YES".equals(field1) && "YES".equals(field2));
+                success = !("YES".equalsIgnoreCase(field1) && "YES".equalsIgnoreCase(field2));
                 break;
             }
             if (!success) {
-                CVRSEntry e = new CVRSEntry(bean, rule[0], parts[0], String.format(rule[2], parts[0], field1, parts[2], field2));
+                CVRSEntry e = new CVRSEntry(bean, rule[ERROR_CODE], parts[0], String.format(rule[MESSAGE], parts[0], field1, parts[2], field2));
+                e.setClassification(level);
                 e.setRow(values);
                 errors.add(e);
             }
@@ -152,61 +195,65 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         return true;
     }
 
+
+    public static List<Field> getIgnoredFields(String version) {
+        List<Field> fields = new ArrayList<>();
+        for (Field f: CVRSExtract.class.getDeclaredFields()) {
+            if ((f.getModifiers() & (Modifier.TRANSIENT|Modifier.STATIC)) != 0) {
+                // Skip Static and transient fields.
+                continue;
+            }
+            if (getRequirement(f, RequirementType.IGNORE, version) != null) {
+                fields.add(f);
+            }
+        }
+        return fields;
+    }
+
     private void checkRequirements(CVRSExtract bean, List<CVRSEntry> errors) {
-        int fieldCount = 0;
         String values[] = bean.getValues();
         for (Field f: CVRSExtract.class.getDeclaredFields()) {
-            fieldCount++;
             if ((f.getModifiers() & (Modifier.TRANSIENT|Modifier.STATIC)) != 0) {
                 // Skip Static and transient fields.
                 continue;
             }
 
-            EventType eventType = EventType.VACCINATION;
-            if ("YES".equalsIgnoreCase(bean.getRecip_missed_appt())) {
-                eventType = EventType.MISSED_APPOINTMENT;
-            }
-            if ("YES".equalsIgnoreCase(bean.getVax_refusal())) {
-                if (eventType == EventType.MISSED_APPOINTMENT) {
-                    // This error is already reported, we don't need to report it again. Treat as a Refusal.
-                }
-                eventType = EventType.REFUSAL;
-            }
-            Required req = f.getAnnotation(Required.class);
-
             f.setAccessible(true);
             String value;
             try {
+                // If the field isn't used in this version of the CVRS
+                // Set the field to null in the extracted bean.
+                if (getRequirement(f, RequirementType.IGNORE, getVersion()) != null) {
+                    f.set(bean, null);
+                }
+                // Get the value.
                 value = (String)f.get(bean);
             } catch (IllegalArgumentException | IllegalAccessException e1) {
                 // SHOULDN'T Happen, we've already done this successfully by now.
-                throw new RuntimeException("Error retrieving bean field " + f.getName(), e1);
+                throw new RuntimeException("Error retrieving bean field: " + f.getName(), e1);
             }
 
-            if (req != null) {
-                EventType[] when = req.versioned() && getVersion().equals("1") ? req.whenv1() : req.when();
-                if (Arrays.asList(when).contains(eventType)) {
-                    String code = String.format("REQD%03d", eventType.ordinal() + 1);
-                    if (!getSuppressed().contains(code) && StringUtils.isEmpty(value)) {
-                        CVRSEntry e = new CVRSEntry(bean, code, f.getName(),
-                            String.format("%s: %s is required for %s events", code, f.getName(), eventType));
-                        e.setRow(values);
-                        errors.add(e);
-                    }
+            EventType eventType = getEventType(bean);
+
+            Requirement req = getRequirement(f, RequirementType.REQUIRED, getVersion());
+            if (req != null && Arrays.asList(req.when()).contains(eventType)) {
+                String code = String.format("REQD%03d", eventType.ordinal() + 1);
+                if (!getSuppressed().contains(code) && StringUtils.isEmpty(value)) {
+                    CVRSEntry e = new CVRSEntry(bean, code, f.getName(),
+                        String.format("%s is required for %s events", f.getName(), eventType));
+                    e.setRow(values);
+                    errors.add(e);
                 }
             }
 
-            DoNotSend dns = f.getAnnotation(DoNotSend.class);
-            if (dns != null) {
-                EventType[] when = dns.versioned() && getVersion().equals("1") ? dns.whenv1() : dns.when();
-                if (Arrays.asList(when).contains(eventType)) {
-                    String code = String.format("DNTS%03d", eventType.ordinal() + 1);
-                    if (!getSuppressed().contains(code) && !StringUtils.isEmpty(value)) {
-                        CVRSEntry e = new CVRSEntry(bean, code, f.getName(), String.format("%s: %s (%s) should not be present for %s events",
-                            code, f.getName(), value, eventType));
-                        e.setRow(values);
-                        errors.add(e);
-                    }
+            Requirement dns = getRequirement(f, RequirementType.DO_NOT_SEND, getVersion());
+            if (dns != null && Arrays.asList(dns.when()).contains(eventType)) {
+                String code = String.format("DNTS%03d", eventType.ordinal() + 1);
+                if (!getSuppressed().contains(code) && !StringUtils.isEmpty(value)) {
+                    CVRSEntry e = new CVRSEntry(bean, code, f.getName(), String.format("%s (%s) should not be present for %s events",
+                        f.getName(), value, eventType));
+                    e.setRow(values);
+                    errors.add(e);
                 }
             }
 
@@ -246,6 +293,30 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         }
     }
 
+    public static Requirement getRequirement(Field f, RequirementType type, String version) {
+        Requirement r[] = f.getAnnotationsByType(Requirement.class);
+        for (Requirement req: r) {
+            if (req.value() == type && Arrays.asList(req.versions()).contains(version)) {
+                return req;
+            }
+        }
+        return null;
+    }
+
+    private EventType getEventType(CVRSExtract bean) {
+        EventType eventType = EventType.VACCINATION;
+        if ("YES".equalsIgnoreCase(bean.getRecip_missed_appt())) {
+            eventType = EventType.MISSED_APPOINTMENT;
+        }
+        if ("YES".equalsIgnoreCase(bean.getVax_refusal())) {
+            if (eventType == EventType.MISSED_APPOINTMENT) {
+                // This error is already reported, we don't need to report it again. Treat as a Refusal.
+            }
+            eventType = EventType.REFUSAL;
+        }
+        return eventType;
+    }
+
     private static synchronized void verifyStatesLoaded() {
         if (stateToZip.isEmpty()) {
             try (BufferedReader r = new BufferedReader(
@@ -272,7 +343,7 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
 
         verifyStatesLoaded();
 
-        String code = stateToCounty.get(state);
+        String code = stateToCounty.get(state.toUpperCase());
         if (StringUtils.isEmpty(code)) {
             // we don't have a county code, so we cannot tell.
             return true;
@@ -288,7 +359,7 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
 
         verifyStatesLoaded();
 
-        String zips = stateToZip.get(state);
+        String zips = stateToZip.get(state.toUpperCase());
         if (zips == null) {
             return false;
         }
