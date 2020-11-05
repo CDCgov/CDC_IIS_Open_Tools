@@ -268,7 +268,7 @@ public class CVRSExtract implements CVRS {
     private String admin_name;
 
 	/** This is the 6-digit Provider PIN in VTrckS. For VFC Providers, this is the VFC PIN. This ID is being used for linking across data sources, so population is critical. */
-    @FieldValidator(validator = Matches.class, paramString = "^\\d{6}?")
+    @FieldValidator(validator = Matches.class, paramString = "^([0-9A-Za-z]{0,6})$")
     @CsvBindByName
     @Requirement(value=RequirementType.REQUIRED, when = { VACCINATION, REFUSAL, MISSED_APPOINTMENT }, versions= { "1" } )
     @Requirement(value=RequirementType.REQUIRED_IF_KNOWN, when = { VACCINATION, REFUSAL, MISSED_APPOINTMENT }, versions= { "2" } )

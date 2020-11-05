@@ -8,7 +8,7 @@ a command line interface described in the [Validator](Validator.md) description 
 
 ## Usage
 ```
-    $ java -classpath extract-validator.jar com.ainq.izgateway.extract.Validator [options]? [files] ...
+    $ java -jar extract-validator.jar [options]? [files] ...
 ```
 
 ### Options
@@ -125,17 +125,57 @@ REQD002     6   A required field is missing for Refusal
 ```
 
 ### Error Codes
+The sections below list the reported error codes and their meaning.
+Other error codes indicate an abnormal condition (an uncaught exception) and given the exception name for the code.
+
+#### DATA Errors
 DATA Error codes denote conditions where a field failed to meet data type validation criteria.
 
+DATA001: Invalid Date
+DATA002: Does not match an expected fixed value (not used for anything at this point)
+DATA003: Does not contain expected value from (D|I|P) (only used for ext_type)
+DATA004: Should not be present (applies to pprl_id)
+DATA005: Does not match expected format
+DATA006: Does not contain expected value (Redacted)
+DATA007: Is not in the expected Value Set
+
+### Missing Required data
 REQD Error codes indicate that required data was not provided for an event (e.g., Vaccination, Refusal, Missed Appointment)
 
+REQD001: Required for Missed Appointment (not reported in V2)
+REQD002: Required for Refusal
+REQD003: Required for Vaccination
+
+### Do Not Send Data
 DNTS Error codes indicate that data was provided that was marked as do not send for an event.
 
+DNTS001: Do not send for Missed Appointment (not reported in V2)
+DNTS002: Do not send for Refusal
+DNTS003: Do not send for Vaccination (not used)
+
+### Business Rule Validations
 BUSR Error codes indicate that one or more cross-field business rules failed validation.
 
+BUSR001:  FIPS County and State code should match for recipient address.
+BUSR002:  FIPS County and State code should match for admin address.
+BUSR003:  ZIP Code and State code should match for recipient address.
+BUSR004:  ZIP Code and State code should match for admin address.
+BUSR005:  Date of birth should be less than administration date.
+BUSR006:  vax_refusal and recip_missed_appt cannot both be yes (not active in V2)
+BUSR007:  If a Zip code is present, county code should also be present for recipient address (this is a warning only)
+BUSR008:  If a Zip code is present, state should also be present for recipient address (this is a warning only)
+BUSR009:  If a Zip code is present, county code should also be present for admin address (this is a warning only)
+BUSR010:  If a Zip code is present, state should also be present for admin address (this is a warning only)
+BUSR011:  Recipient date of birth should be less than tomorrow’s date.
+BUSR012:  Admin date should be less than tomorrow’s date.
+BUSR013:  vax_event_id should not be duplicated in any batch.
+
+### HL7 Conversion/Parsing Errors
 HL7_ Error codes indicate that an error was detected converting to HL7 Format at the specified field.
 
-Other error codes indicate an abnormal condition (an uncaught exception) and given the exception name for the code.
+HL7_001: Message does not round trip (content from Tab Delimited format converted to HL7 and back is not the same)
+HL7_002: Missing required value
+HL7_003: HL7 Parsing Error (usually on dates that are not formatted correctly)
 
 ## Exit Codes
 If all records validated successfully, the program will return an exit code of 0.

@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -67,7 +68,7 @@ class TestValidator {
         writeTabDelimited(b, data);
         BeanValidator bv = new BeanValidator(null, Validator.DEFAULT_VERSION);
         // stash this as a dup to enable duplicate checking
-        bv.getEventIds().put("BUSR013_vax_event_id_nodups".toUpperCase(), "0");
+        bv.addEventId("BUSR013_vax_event_id_nodups".toUpperCase(), 0, 0);
 
         // Test the conversion to extract from tab delimited form
         CVRSExtract extract = null;

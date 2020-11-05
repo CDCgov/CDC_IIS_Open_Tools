@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.ainq.izgateway.extract.CVRSExtract;
 import com.ainq.izgateway.extract.Utility;
@@ -65,7 +66,7 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
     /** Map of states to zip-code prefixes to validate zip in state */
     private static Map<String, String> stateToZip = new TreeMap<>();
 
-    private Map<String, String> event_id = new HashMap<>();
+    private Map<String, Pair<Integer, Integer>> event_id = new HashMap<>();
     private int counter;
 
     /**
@@ -96,6 +97,20 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         event_id.clear();
     }
 
+    /**
+     * Add a previously occuring event to the list of records this validator
+     * should reject as a duplicate.
+     *
+     * @param eventId   The event identifier
+     * @param hashCode  The hash code of the original data
+     * @param line  The line where this data was defined
+     * @return  The old event id replaced by this new one (i.e., the duplicated event)
+     */
+    public Pair<Integer, Integer> addEventId(String eventId, int hashCode, int line) {
+        Pair<Integer, Integer> definingEvent = Pair.of(hashCode, line);
+        return event_id.put(eventId, definingEvent);
+    }
+
     public static String getRule(String code) {
         for (String rule[]: rules) {
             if (rule[ERROR_CODE].equals(code)) {
@@ -103,10 +118,6 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
             }
         }
         return null;
-    }
-
-    public Map<String, String> getEventIds() {
-        return event_id;
     }
 
     public int getCounter() {
@@ -121,6 +132,8 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
     @Override
     public boolean verifyBean(CVRSExtract bean) throws CVRSValidationException {
         List<CVRSEntry> errors = new ArrayList<>();
+        // Increment the validation counter (for duplicate record checking)
+        counter++;
         String values[] = bean.getValues();
         checkRequirements(bean, errors);
         Calendar cal = Calendar.getInstance();
@@ -156,9 +169,10 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                 }
                 break;
             case "nodups":
-                String line = event_id.get(field1.toUpperCase());
-                success = line == null;
-                event_id.put((parts[2] = field1).toUpperCase(), field2 = Integer.toString(++counter));
+                Pair<Integer, Integer> definingEvent = addEventId(field1.toUpperCase(), bean.hashCode(), counter);
+                success = definingEvent == null || definingEvent.hashCode() == bean.hashCode();
+                parts[2] = parts[0];
+                field2 = Integer.toString(event_id.get(field1.toUpperCase()).getValue());
                 break;
             case "no_time_travel":
                 success = StringUtils.isEmpty(field1) || field1.compareTo(tomorrow) < 0;

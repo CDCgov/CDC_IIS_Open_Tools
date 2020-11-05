@@ -15,6 +15,7 @@ import com.ainq.izgateway.extract.validation.BeanValidator;
 import com.ainq.izgateway.extract.validation.CVRSEntry;
 import com.ainq.izgateway.extract.validation.DateValidator;
 import com.ainq.izgateway.extract.validation.DateValidatorIfKnown;
+import com.ainq.izgateway.extract.validation.ValueSetValidator;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.exceptions.CsvException;
 
@@ -102,6 +103,15 @@ public class Converter {
                             }
                         }
                     }
+// TODO: Figure out where to put this, it causes failures for refusals
+//                    if (StringUtils.isEmpty(value)) {
+//                        // If there's no value, and it's a ValueSet check, and the value set is YES_NO_UNK
+//                        if (ValueSetValidator.class.isAssignableFrom(val.validator()) &&
+//                            "YES_NO_UNK".equals(val.paramString())) {
+//                            // Set the value to UNK, since we don't know it
+//                            value = "UNK";
+//                        }
+//                    }
                 } else {
                     value = adjustValuesToExtract(terser.get("/." + v2Data.value()), val, v2Data.map());
                 }
