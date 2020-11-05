@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ainq.izgateway</groupId>
 	<artifactId>extract-validator</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0beta</version>
 	<name>Extract Validator</name>
 	<description>A Validator for flat files and HL7 Messages conforming to the IG Gateway Extract format.</description>
 

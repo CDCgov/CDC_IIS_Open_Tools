@@ -3,8 +3,7 @@
 The Validator is a command line tool and collection of Java classes that can be used
 to support validation.
 
-Validator is implemented in the `com.ainq.izgateway.extract.Validator` class and has
-a command line interface described in the [Validator](Validator.md) description page.
+Validator is implemented in the `com.ainq.izgateway.extract.Validator` class.
 
 ## Usage
 ```

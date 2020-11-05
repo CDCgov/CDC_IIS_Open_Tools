@@ -1,0 +1,19 @@
+<project name="CVRS Extract Validator">
+  <bannerLeft>
+    <src>images/Ai_Horizontal_FullColor.jpg</src>
+    <name>CVRS Extract Validator</name>
+  </bannerLeft>
+  <version position="right"/>
+  <publishDate position="left"/>
+  <body>
+    <links>
+      <item name="CVRS Extract Validator" href="https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools" />
+    </links>
+    <menu name="Overview">
+	  <item name="About This Project" href="About.html" />
+      <item name="Command Line Tools" href="Validator.html" />
+    </menu>
+    <menu ref="parent" />
+    <menu ref="reports" />
+  </body>
+</project>
