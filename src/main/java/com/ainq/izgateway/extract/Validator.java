@@ -90,20 +90,28 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     }
 
     /**
+     * Gyration to support testing
+     * @param args  Command line arguements
+     * @throws IOException If a file could not be read, written or found.
+     */
+    public static void main(String args[]) throws IOException {
+        System.exit(main1(args));
+    }
+    /**
      * Main entry point for Command Line.
      * @param args  Command line arguments
      * @throws IOException  If a file could not be read, written or found.
      */
-    public static void main(String args[]) throws IOException {
+    public static int main1(String args[]) throws IOException {
         try {
             if (args.length == 0) {
                 help();
-                System.exit(1);
+                return 1;
             }
             int maxErrors = DEFAULT_MAX_ERRORS;
+            int totalErrors = 0;
             Set<String> suppressErrors = new TreeSet<>();
             String version = DEFAULT_VERSION;
-            boolean allOK = true;
             // Set to true to write all records regardless of validation results.
             boolean writeAll = false;
             String reportFolder = "-",
@@ -192,14 +200,15 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                     help();
                     continue;
                 }
-
-                allOK = allOK && validateFile(maxErrors, suppressErrors, version, arg, reportFolder, cvrsFolder, hl7Folder, writeAll);
+                totalErrors += validateFile(maxErrors, suppressErrors, version, arg, reportFolder, cvrsFolder, hl7Folder, writeAll);
             }
 
-            System.exit(allOK ? 0 : 1);
+            /** Report the total number of errors [enables automation of some simple command line tests] */
+            System.out.println(totalErrors + " total errors.");
+            return totalErrors;
         } catch (Throwable t) {
             t.printStackTrace();
-            System.exit(-1);
+            return -1;
         }
     }
 
@@ -216,7 +225,8 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         if (!helpText.containsKey(option)) {
             helpText.put(option, String.format(help, args));
         }
-        return arg.startsWith(option.split("[\\[\\<\\{\\(] ]")[0]);
+        String opt = option.split("[\\[\\<\\{\\( ]")[0];
+        return arg.startsWith(opt);
     }
 
     private static void help() {
@@ -252,10 +262,11 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @throws FileNotFoundException    If the file could not be found.
      * @throws IOException  If an IO Error occured while reading the file.
      */
-    private static boolean validateFile(
+    private static int validateFile(
         int maxErrors, Set<String> suppressErrors, String version,
         String arg, String reportFolder, String cvrsFolder, String hl7Folder, boolean writeAll) throws FileNotFoundException, IOException {
         boolean reported = false;
+        int totalErrors = 0;
 
         try (Validator v = new Validator(
                 Utility.getReader(arg),
@@ -266,7 +277,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             v.setCvrs(getOutputStream(arg, cvrsFolder, "txt"));
             v.setHL7(getOutputStream(arg, hl7Folder, "hl7"));
             v.setMaxErrors(maxErrors);
-            v.setName(arg);
+            v.setName(new File(arg).getName());
             v.setIgnoringErrors(writeAll);
             v.getReport().printf("Validating %s%n", arg);
 
@@ -277,7 +288,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 } catch (CVRSValidationException ex) {
                     if (!reported) {
                         if (v.getReport() != null) {
-                            v.getReport().format("%-32s %-16s %s%n", "File", "Vax_Event_Id", CVRSEntry.header());
+                            v.getReport().format("%-20s %-28s %s%n", "File", "Vax_Event_Id", CVRSEntry.header());
                         }
                         reported = true;
                     }
@@ -287,6 +298,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
 
             Map<String, Integer> summary = v.getErrorSummary();
             int total = summary.values().stream().collect(Collectors.summingInt(s -> s));
+            totalErrors += total;
             if (v.getReport() != null) {
                 v.getReport().printf("%s has %d errors in %d of %d records.%n",
                     v.getName(), total, v.getErrorCount(), v.getCount());
@@ -333,11 +345,9 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                     }
                     v.getReport().printf("%-8s%5d   %s%n", code, e.getValue(), description);
                 }
-                return false;
             }
-            return true;
+            return totalErrors;
         }
-
     }
 
     /** Set to true if errors should be ignored while writing HL7 or CVRS Output */
@@ -446,6 +456,9 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     private static PrintStream getOutputStream(String arg, String folder, String ext) throws IOException {
         if (folder == null) {
             return null;
+        }
+        if ("NULL".equalsIgnoreCase(folder)) {
+            return new PrintStream(PrintStream.nullOutputStream());
         }
 
         if ("-".equals(folder)) {
@@ -691,9 +704,9 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @param entry The validation error being reported.
      */
     private void printEntry(PrintStream out, CVRSExtract ex, CVRSEntry entry) {
-        out.format("%-32s %-16s %s%n",
-            StringUtils.abbreviateMiddle(getName(), "***", 32),
-            StringUtils.abbreviateMiddle(ex.getVax_event_id(), "***", 16),
+        out.format("%-20s %-28s %s%n",
+            StringUtils.abbreviateMiddle(getName(), "***", 20),
+            StringUtils.abbreviateMiddle(ex.getVax_event_id(), "***", 28),
             entry.toString()
         );
     }
