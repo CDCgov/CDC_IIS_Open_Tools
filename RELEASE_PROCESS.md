@@ -38,5 +38,5 @@
 15. Publish the Release
 16. Merge changes back to master using a pull request.
 17. Change the VERSION in POM.xml to the next release number + SNAPSHOT in the Master Branch
-18. Bask in Gloring
+18. Bask in Glory
 
