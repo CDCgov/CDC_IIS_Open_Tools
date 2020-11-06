@@ -36,5 +36,7 @@
 13. Add the renamed files from step 10 to the release
 14. Copy the contents of src/site/markdown/RELEASE_NOTES.md to the Release Notes in GitHub
 15. Publish the Release
-16. Bask in glory
+16. Merge changes back to master using a pull request.
+17. Change the VERSION in POM.xml to the next release number + SNAPSHOT in the Master Branch
+18. Bask in Gloring
 
