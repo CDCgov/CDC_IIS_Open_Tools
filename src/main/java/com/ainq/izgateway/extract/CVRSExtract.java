@@ -416,7 +416,7 @@ public class CVRSExtract implements CVRS {
     public String getField(String name) {
         Field f;
         try {
-            f = getClass().getDeclaredField(name);
+            f = getClass().getDeclaredField(name.toLowerCase());
             return (String) f.get(this);
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage(), e);
@@ -426,7 +426,7 @@ public class CVRSExtract implements CVRS {
     public void setField(String name, String value) {
         Field f;
         try {
-            f = getClass().getDeclaredField(name);
+            f = getClass().getDeclaredField(name.toLowerCase());
             f.set(this, value);
             return;
         } catch (Exception e) {

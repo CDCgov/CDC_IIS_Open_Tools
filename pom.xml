@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ainq.izgateway</groupId>
 	<artifactId>extract-validator</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0beta</version>
 	<name>Extract Validator</name>
 	<description>A Validator for flat files and HL7 Messages conforming to the IG Gateway Extract format.</description>
 
@@ -188,7 +188,7 @@
 					<additionalOptions>
 						<additionalOption>-Xdoclint:none</additionalOption>
 					</additionalOptions>
-					<show>private</show>
+					<show>protected</show>
 					<nohelp>true</nohelp>
 				</configuration>
 				<executions>
@@ -323,7 +323,22 @@
 				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>3.0.0-M3</version>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<show>public</show>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<id>default</id>
+						<reports>
+							<report>javadoc</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
 		</plugins>
 	</reporting>
 
