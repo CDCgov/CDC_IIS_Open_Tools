@@ -18,7 +18,7 @@ jobs:
         with:
           java-version: 11.0.4
       - name: Maven Install
-        run: mvb -B install:install-file -Dfile=lib/validation-report-1.0.0.jar -DgroupId=com.github.hl7-tools -DartifactId=validation-report -Dversion=1.0.0 -Dpackaging=jar
+        run: mvn -B install:install-file -Dfile=lib/validation-report-1.0.0.jar -DgroupId=com.github.hl7-tools -DartifactId=validation-report -Dversion=1.0.0 -Dpackaging=jar
       - name: Maven Package
         run: mvn -B clean package -DskipTests
       - name: Maven Verify
