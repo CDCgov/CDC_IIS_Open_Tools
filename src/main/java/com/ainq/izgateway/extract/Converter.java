@@ -15,7 +15,6 @@ import com.ainq.izgateway.extract.validation.BeanValidator;
 import com.ainq.izgateway.extract.validation.CVRSEntry;
 import com.ainq.izgateway.extract.validation.DateValidator;
 import com.ainq.izgateway.extract.validation.DateValidatorIfKnown;
-import com.ainq.izgateway.extract.validation.ValueSetValidator;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.exceptions.CsvException;
 

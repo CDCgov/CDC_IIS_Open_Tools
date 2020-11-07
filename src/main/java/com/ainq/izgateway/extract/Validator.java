@@ -44,8 +44,16 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         };
     }
 
-    /** Default max number of errors to allow */
-    public static int DEFAULT_MAX_ERRORS = 1000;
+    /** Localizable Error Messages */
+    protected static Object[][] Messages = {
+            { "DATA001", "%1$s (%2$s) contains an invalid date, should match %3$s", "Date is not correctly formatted" },
+            { "DATA002", "%1$s (%3$s) should contain value %2$s", "Does not contain expected fixed value" },
+            { "DATA003", "%1$s (%3$s) does not contain expected value from %2$s", "Not Used" },
+            { "DATA004", "%1$s (%2$s) should not be present", "Should not be present" },
+            { "DATA005", "%1$s (%3$s) does not match the regular expression %2$s", "Does not match expected format" },
+            { "DATA006", "%1$s (%3$s) should contain value %2$s", "Does not contain expected value: REDACTED" },
+            { "DATA007", "%1$s (%4$s) is not in value set %2$s%3$s", "Does not contain values from the expected value set" },
+        };
 
     /** Default version of CVRS to use */
     public static final String DEFAULT_VERSION = "2";
@@ -60,22 +68,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             // These actually stop at 1
             "HL7_001", "HL7_002", "HL7_003"
         )));
-    /** Map of options to argument help text */
-    private static Map<String, String> helpText = new TreeMap<>((s,t) -> s.compareToIgnoreCase(t) );
+    /** Default max number of errors to allow */
+    public static int DEFAULT_MAX_ERRORS = 1000;
 
     /** Message bundle for reporting data validation errors */
     private static ResourceBundle MESSAGES = new MyResources();
 
-    /** Localizable Error Messages */
-    protected static Object[][] Messages = {
-            { "DATA001", "%1$s (%2$s) contains an invalid date, should match %3$s", "Date is not correctly formatted" },
-            { "DATA002", "%1$s (%3$s) should contain value %2$s", "Does not contain expected fixed value" },
-            { "DATA003", "%1$s (%3$s) does not contain expected value from %2$s", "Not Used" },
-            { "DATA004", "%1$s (%2$s) should not be present", "Should not be present" },
-            { "DATA005", "%1$s (%3$s) does not match the regular expression %2$s", "Does not match expected format" },
-            { "DATA006", "%1$s (%3$s) should contain value %2$s", "Does not contain expected value: REDACTED" },
-            { "DATA007", "%1$s (%4$s) is not in value set %2$s%3$s", "Does not contain values from the expected value set" },
-        };
+    /** Map of options to argument help text */
+    private static Map<String, String> helpText = new TreeMap<>((s,t) -> s.compareToIgnoreCase(t) );
 
     /**
      * Helper method to generate a validation exception with a formatted message.
@@ -89,20 +89,28 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     }
 
     /**
+     * Gyration to support testing
+     * @param args  Command line arguements
+     * @throws IOException If a file could not be read, written or found.
+     */
+    public static void main(String args[]) throws IOException {
+        System.exit(main1(args));
+    }
+    /**
      * Main entry point for Command Line.
      * @param args  Command line arguments
      * @throws IOException  If a file could not be read, written or found.
      */
-    public static void main(String args[]) throws IOException {
+    public static int main1(String args[]) throws IOException {
         try {
             if (args.length == 0) {
                 help();
-                System.exit(1);
+                return 1;
             }
             int maxErrors = DEFAULT_MAX_ERRORS;
+            int totalErrors = 0;
             Set<String> suppressErrors = new TreeSet<>();
             String version = DEFAULT_VERSION;
-            boolean allOK = true;
             // Set to true to write all records regardless of validation results.
             boolean writeAll = false;
             String reportFolder = "-",
@@ -204,14 +212,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                     v.setIgnoringErrors(writeAll);
                     v.getReport().printf("Validating %s%n", arg);
 
-                    allOK = allOK && v.validateFile().isEmpty();
+                    totalErrors += v.validateFile().size();
                 }
             }
 
-            System.exit(allOK ? 0 : 1);
+            return totalErrors;
         } catch (Throwable t) {
             t.printStackTrace();
-            System.exit(-1);
+            return -1;
         }
     }
 

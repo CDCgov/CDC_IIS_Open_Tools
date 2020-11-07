@@ -172,7 +172,7 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                 Pair<Integer, Integer> definingEvent = addEventId(field1.toUpperCase(), bean.hashCode(), counter);
                 success = definingEvent == null || definingEvent.hashCode() == bean.hashCode();
                 parts[2] = parts[0];
-                field2 = Integer.toString(event_id.get(field1.toUpperCase()).getValue());
+                field2 = Integer.toString(definingEvent == null ? event_id.get(field1.toUpperCase()).getValue() : definingEvent.getValue());
                 break;
             case "no_time_travel":
                 success = StringUtils.isEmpty(field1) || field1.compareTo(tomorrow) < 0;
