@@ -18,7 +18,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -39,6 +38,7 @@ class TestValidator {
 
         boolean found = false;
         try {
+            @SuppressWarnings("unused")
             CVRSExtract extract = runOne(test, headers, data, false);
         } catch (CVRSValidationException e) {
             for (List<Entry> entry: e.getReport().getEntries().values()) {
