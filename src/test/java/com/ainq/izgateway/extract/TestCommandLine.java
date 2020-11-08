@@ -64,8 +64,8 @@ public class TestCommandLine {
                     message = String.format("Mismatch between %s and %s at Character %d (%d,%d): %d(%c) != %d(%c)%n",
                         expected, actual,
                         i, line, col,
-                        expectedContent.charAt(i), expectedContent.charAt(i),
-                        actualContent.charAt(i), actualContent.charAt(i));
+                        (int)expectedContent.charAt(i), expectedContent.charAt(i),
+                        (int)actualContent.charAt(i), actualContent.charAt(i));
                     throw new Error(message, err);
                 }
                 if (expectedContent.charAt(i) == '\n') {
