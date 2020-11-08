@@ -1,6 +1,6 @@
 Validating src/test/resources/testerror.txt
 src/test/resources/testerror.txt DATA001***ip_dob 1      ERROR  recip_dob                HL7_001 Message does not round trip at recip_dob, '2015-26-08' != ''
 src/test/resources/testerror.txt DATA001***date_1 2      ERROR  admin_date               HL7_001 Message does not round trip at admin_date, '10/24/2020' != ''
-src/test/resources/testerror.txt REQD001***issing 49     ERROR  vax_refusal              HL7_001 Message does not round trip at vax_refusal, '' != 'NO'
-src/test/resources/testerror.txt has 3 errors in 0 of 50 records.
-50 of 50 HL7 records written.
+src/test/resources/testerror.txt REQD001***issing 50     ERROR  vax_refusal              HL7_001 Message does not round trip at vax_refusal, '' != 'NO'
+src/test/resources/testerror.txt has 3 errors in 0 of 51 records.
+51 of 51 HL7 records written.
