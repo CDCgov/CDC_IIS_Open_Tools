@@ -52,7 +52,6 @@ public class CVRSExtract implements CVRS {
 
 	/** Extract Type defines whether this file contains completely de-identified data, PPRL ID, or fully identifiable data. */
     @FieldValidator(validator = ExtractTypeValidator.class, paramString = "^(D|P|I)$")
-    @CsvBindByName(required = true)
     @V2Field(value = "MSH-8")
     private String ext_type;
 
