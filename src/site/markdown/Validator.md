@@ -53,6 +53,12 @@ and otherwise works like -7 above.
 -S[error code,...]|ALL
 : Stop suppressing validation for the specified errors (e.g., -sDATA001,DATA002)
 
+-d
+: Enable default value processing for HL7 Message Conversion
+
+-D
+: Disable default value processing for HL7 Message Conversion
+
 file ... One ore more HL7 V2 VXU Message or Tab Delimited Files
 
 The type of file will automatically detected from its content.
