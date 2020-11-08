@@ -274,6 +274,11 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
             FieldValidator fv = f.getAnnotation(FieldValidator.class);
             ValidatorBeanField vbf = new ValidatorBeanField(f);
             if (fv != null) {
+                int length = value == null ? 0 : value.length();
+                if (length > fv.maxLength()) {
+                    CVRSEntry e1 = new CVRSEntry(bean, "DATA008", f.getName(), Validator.getMessage("DATA008", f.getName(), value, fv.maxLength()));
+                    errors.add(e1);
+                }
                 StringValidator sv;
                 try {
                     sv = fv.validator().getConstructor().newInstance();
@@ -317,7 +322,7 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         return null;
     }
 
-    private EventType getEventType(CVRSExtract bean) {
+    public static EventType getEventType(CVRSExtract bean) {
         EventType eventType = EventType.VACCINATION;
         if ("YES".equalsIgnoreCase(bean.getRecip_missed_appt())) {
             eventType = EventType.MISSED_APPOINTMENT;

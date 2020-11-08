@@ -37,5 +37,10 @@ public @interface FieldValidator {
      * @return The list of versions to which this validator applies.
      */
     String[] versions() default "";
+
+    /**
+     * The maximum length of the field
+     */
+    int maxLength() default 255;
 }
 
