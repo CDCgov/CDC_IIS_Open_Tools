@@ -8,7 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
+import com.ainq.izgateway.extract.annotations.EventType;
 import com.ainq.izgateway.extract.annotations.FieldValidator;
+import com.ainq.izgateway.extract.annotations.Requirement;
 import com.ainq.izgateway.extract.annotations.RequirementType;
 import com.ainq.izgateway.extract.annotations.V2Field;
 import com.ainq.izgateway.extract.validation.BeanValidator;
@@ -60,7 +62,7 @@ public class Converter {
      * @return  The converted CVRSExtract
      * @throws CsvException If an error occured during conversion.
      */
-    public static CVRSExtract fromHL7(Message message, List<CVRSEntry> exList, BeanValidator validator, int line) throws CsvException {
+    public static CVRSExtract fromHL7(Message message, List<CVRSEntry> exList, BeanValidator validator, boolean useDefaults, int line) throws CsvException {
         Terser terser = new Terser(message);
         CVRSExtract extract = new CVRSExtract();
         String version = validator == null ? Validator.DEFAULT_VERSION : validator.getVersion();
@@ -94,7 +96,9 @@ public class Converter {
             field.set(extract, value);
         });
 
-        //setDefaultValues(extract, version);
+        if (useDefaults) {
+            setDefaultValues(extract, version);
+        }
 
         if (exList != null) {
             // Add data to line values in Error entries.
@@ -144,6 +148,7 @@ public class Converter {
      */
     private static void setDefaultValues(CVRSExtract extract, String ver) {
         String version = ver == null ? Validator.DEFAULT_VERSION : ver;
+        EventType eventType = BeanValidator.getEventType(extract);
         extract.forEachField(true, field -> {
             field.setAccessible(true);
             String value = (String) field.get(extract);
@@ -163,11 +168,20 @@ public class Converter {
                 if (!v.isValid("UNK")) {
                     return;
                 }
-                // If the field isn't required, skip it.
-                if (BeanValidator.getRequirement(field, RequirementType.REQUIRED, version) == null) {
+
+                Requirement req = BeanValidator.getRequirement(field, RequirementType.REQUIRED, version);
+                // If the field isn't required, or isn't required for the current event type then skip it.
+                if (req == null || !Arrays.asList(req.when()).contains(eventType)) {
                     return;
                 }
-                // The field is required, set to unknown.
+
+                Requirement dns = BeanValidator.getRequirement(field, RequirementType.DO_NOT_SEND, version);
+                // If this is a Do Not Send case, don't default it.
+                if (dns != null && Arrays.asList(dns.when()).contains(eventType)) {
+                    return;
+                }
+
+                // The field is required, isn't a Do Not Send Case, set to unknown.
                 field.set(extract, "UNK");
             } catch (InstantiationException | InvocationTargetException | NoSuchMethodException
                 | SecurityException e) {

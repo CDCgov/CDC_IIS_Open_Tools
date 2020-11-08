@@ -13,5 +13,7 @@
     <logger name="root" level="info"/>
     <logger name="org.springframework.boot.test" level="warn"/>
     <logger name="ch.qos.logback" level="warn"/>
-    <logger name="org.apache.commons.beanutils.converters" level="info"/>
+    <logger name="org.apache.commons.beanutils" level="error"/>
+    <logger name="org.apache.commons.beanutils.converters" level="error"/>
+    <logger name="ca.uhn.hl7v2" level="warn"/>
 </configuration>
