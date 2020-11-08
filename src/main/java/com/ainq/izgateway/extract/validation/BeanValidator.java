@@ -23,6 +23,7 @@ import com.ainq.izgateway.extract.CVRSExtract;
 import com.ainq.izgateway.extract.Utility;
 import com.ainq.izgateway.extract.Validator;
 import com.ainq.izgateway.extract.annotations.EventType;
+import com.ainq.izgateway.extract.annotations.ExtractType;
 import com.ainq.izgateway.extract.annotations.FieldValidator;
 import com.ainq.izgateway.extract.annotations.Requirement;
 import com.ainq.izgateway.extract.annotations.RequirementType;
@@ -135,6 +136,7 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         // Increment the validation counter (for duplicate record checking)
         counter++;
         String values[] = bean.getValues();
+
         checkRequirements(bean, errors);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
@@ -226,6 +228,9 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
 
     private void checkRequirements(CVRSExtract bean, List<CVRSEntry> errors) {
         String values[] = bean.getValues();
+        EventType eventType = getEventType(bean);
+        ExtractType extractType = getExtractType(bean);
+
         for (Field f: CVRSExtract.class.getDeclaredFields()) {
             if ((f.getModifiers() & (Modifier.TRANSIENT|Modifier.STATIC)) != 0) {
                 // Skip Static and transient fields.
@@ -246,8 +251,6 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                 // SHOULDN'T Happen, we've already done this successfully by now.
                 throw new RuntimeException("Error retrieving bean field: " + f.getName(), e1);
             }
-
-            EventType eventType = getEventType(bean);
 
             Requirement req = getRequirement(f, RequirementType.REQUIRED, getVersion());
             if (req != null && Arrays.asList(req.when()).contains(eventType)) {
@@ -287,6 +290,9 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                     }
                     if (sv instanceof SuppressibleValidator) {
                         ((SuppressibleValidator) sv).setVersion(getVersion());
+                    }
+                    if (sv instanceof ExtractTypeBasedValidator) {
+                        ((ExtractTypeBasedValidator) sv).setExtractType(extractType);
                     }
                     if (fv.paramString() != null) {
                         sv.setParameterString(fv.paramString());
@@ -334,6 +340,32 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
             eventType = EventType.REFUSAL;
         }
         return eventType;
+    }
+
+    /**
+     * Examine an extract and see what type is should have.
+     * @param bean  The bean to examine
+     * @return  The type of extract it represents.
+     */
+    public static ExtractType getExtractType(CVRSExtract bean) {
+        String extractType = bean.getExt_type();
+        // If the bean asserts an extract type, it knows best.
+        if (!StringUtils.isEmpty(extractType)) {
+            for (ExtractType t: ExtractType.values()) {
+                if (t.getCode().equalsIgnoreCase(extractType)) {
+                    return t;
+                }
+            }
+            return null;
+        }
+        if (bean.isRedacted()) {
+            if (StringUtils.isEmpty(bean.getPprl_id())) {
+                return ExtractType.REDACTED;
+            }
+            return ExtractType.PPRL;
+        } else {
+            return ExtractType.IDENTIFIED;
+        }
     }
 
     private static synchronized void verifyStatesLoaded() {

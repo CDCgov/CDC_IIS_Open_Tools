@@ -24,8 +24,8 @@ public class TestCommandLine {
     @CsvSource( {
         "src/test/resources/testgood.txt,0,src/test/resources/testgood.txt.rpt",
         "src/test/resources/testgood.hl7,0,src/test/resources/testgood.hl7.rpt",
-        "src/test/resources/testerror.txt,180,src/test/resources/testerror.txt.rpt",
-        "src/test/resources/testerror.hl7,180,src/test/resources/testerror.hl7.rpt",
+        "src/test/resources/testerror.txt,179,src/test/resources/testerror.txt.rpt",
+        "src/test/resources/testerror.hl7,179,src/test/resources/testerror.hl7.rpt",
     })
 
     public void testCommandLine(String file, int errorCount, String baseline) throws IOException, InterruptedException {

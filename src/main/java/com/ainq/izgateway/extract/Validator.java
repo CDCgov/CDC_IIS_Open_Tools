@@ -48,7 +48,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     protected static Object[][] Messages = {
             { "DATA001", "%1$s (%2$s) contains an invalid date, should match %3$s", "Date is not correctly formatted" },
             { "DATA002", "%1$s (%3$s) should contain value %2$s", "Does not contain expected fixed value" },
-            { "DATA003", "%1$s (%3$s) does not contain expected value from %2$s", "Not Used" },
+            { "DATA003", "%1$s (%3$s) is not a legal value for extract type %2$s", "Extract Type Invalid" },
             { "DATA004", "%1$s (%2$s) should not be present", "Should not be present" },
             { "DATA005", "%1$s (%3$s) does not match the regular expression %2$s", "Does not match expected format" },
             { "DATA006", "%1$s (%3$s) should contain value %2$s", "Does not contain expected value: REDACTED" },

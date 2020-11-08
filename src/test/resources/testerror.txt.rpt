@@ -26,7 +26,6 @@ src/test/resources/testerror.txt DATA005_ext_type 5      ERROR  dose_num        
 src/test/resources/testerror.txt DATA005_ext_type 5      ERROR  vax_series_complete      REQD001 vax_series_complete is required for Vaccination events
 src/test/resources/testerror.txt DATA005_ext_type 5      ERROR  admin_type               DATA007 admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
 src/test/resources/testerror.txt DATA005_ext_type 5      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
-src/test/resources/testerror.txt DATA004_pprl_id  6      ERROR  pprl_id                  DNTS001 pprl_id (Present) should not be present for Vaccination events
 src/test/resources/testerror.txt DATA004_pprl_id  6      ERROR  pprl_id                  DATA004 pprl_id (Present) should not be present
 src/test/resources/testerror.txt DATA004_pprl_id  6      ERROR  admin_type               DATA007 admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
 src/test/resources/testerror.txt DATA004_pprl_id  6      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
@@ -180,7 +179,7 @@ src/test/resources/testerror.txt REQD001***issing 47     ERROR  responsible_org 
 src/test/resources/testerror.txt REQD001***issing 48     ERROR  admin_name               REQD001 admin_name is required for Vaccination events
 src/test/resources/testerror.txt REQD001***issing 49     ERROR  vax_refusal              REQD001 vax_refusal is required for Vaccination events
 src/test/resources/testerror.txt REQD001***issing 50     ERROR  cmorbid_status           REQD001 cmorbid_status is required for Vaccination events
-src/test/resources/testerror.txt has 180 errors in 50 of 50 records.
+src/test/resources/testerror.txt has 179 errors in 50 of 50 records.
 Code    Count   Description
 BUSR001    11   recip_address_county in recip_address_state FIPS
 BUSR002     3   admin_address_county in admin_address_state FIPS
@@ -199,6 +198,5 @@ DATA005     6   Does not match expected format
 DATA006     8   Does not contain expected value: REDACTED
 DATA007    25   Does not contain values from the expected value set
 DATA008     1   Field exceeds maximum length
-DNTS001     1   A field is present that should not be for Vaccination
 DNTS002    72   A field is present that should not be for Refusal
 REQD001    31   A required field is missing for Vaccination

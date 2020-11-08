@@ -7,9 +7,10 @@ import com.ainq.izgateway.extract.annotations.V2Field;
 import com.ainq.izgateway.extract.validation.BeanValidator;
 import com.ainq.izgateway.extract.validation.DateValidator;
 import com.ainq.izgateway.extract.validation.DateValidatorIfKnown;
-import com.ainq.izgateway.extract.validation.DoNotPopulateValidator;
+import com.ainq.izgateway.extract.validation.PPRLValidator;
 import com.ainq.izgateway.extract.validation.Matches;
 import com.ainq.izgateway.extract.validation.RedactedValidator;
+import com.ainq.izgateway.extract.validation.ExtractTypeValidator;
 import com.ainq.izgateway.extract.validation.ValueSetValidator;
 import com.ainq.izgateway.extract.validation.ValueSetValidatorIfKnown;
 
@@ -50,14 +51,13 @@ public class CVRSExtract implements CVRS {
     private String vax_event_id;
 
 	/** Extract Type defines whether this file contains completely de-identified data, PPRL ID, or fully identifiable data. */
-    @FieldValidator(validator = Matches.class, paramString = "^(D|P|I)$")
+    @FieldValidator(validator = ExtractTypeValidator.class, paramString = "^(D|P|I)$")
     @CsvBindByName(required = true)
     @V2Field(value = "MSH-8")
     private String ext_type;
 
 	/** Privacy Preserving Record Linkage ID. */
-    @FieldValidator(validator = DoNotPopulateValidator.class, maxLength = 100)
-    @Requirement( value=RequirementType.DO_NOT_SEND, when = { VACCINATION, MISSED_APPOINTMENT, REFUSAL})
+    @FieldValidator(validator = PPRLValidator.class, maxLength = 100)
     @CsvBindByName
     @V2Field(value = "PID-3(1)-1")
     private String pprl_id;
