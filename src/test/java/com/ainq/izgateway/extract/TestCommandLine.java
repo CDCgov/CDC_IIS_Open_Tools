@@ -110,7 +110,7 @@ public class TestCommandLine {
         try {
             // Change Windows CR-LF to just a LF so content comparison works
             // on Linux and Windows platforms
-            return FileUtils.readFileToString(file, StandardCharsets.UTF_8).replace("\r\n", "\n").replace("\r", "\n");
+            return FileUtils.readFileToString(file, StandardCharsets.UTF_8).replace("\r", "\n").replace("\n\n", "\n");
         } catch (FileNotFoundException fnex) {
             return String.format("%s not found.", file.getPath());
         } catch (IOException fnex) {
