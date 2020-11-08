@@ -80,7 +80,9 @@ public class TestCommandLine {
 
     private static String readFile(File file) {
         try {
-            return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+            // Change Windows CR-LF to just a LF so content comparison works
+            // on Linux and Windows platforms
+            return FileUtils.readFileToString(file, StandardCharsets.UTF_8).replace("\r\n", "\n");
         } catch (FileNotFoundException fnex) {
             return String.format("%s not found.", file.getPath());
         } catch (IOException fnex) {
