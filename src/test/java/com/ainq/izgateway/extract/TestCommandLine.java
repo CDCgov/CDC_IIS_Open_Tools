@@ -120,7 +120,7 @@ public class TestCommandLine {
     }
 
     private static String ignoreTomorrow(String contents) {
-        return contents.replaceAll("tomorrow ([0-9]{4}-[0-9]{2}-[0-9]{2}", "tomorrow (DON'T CARE)");
+        return contents.replaceAll("tomorrow \\([0-9]{4}-[0-9]{2}-[0-9]{2}\\)", "tomorrow (DON'T CARE)");
     }
     private static String cleanMSH(String contents) {
         BufferedReader r = new BufferedReader(new StringReader(contents));
