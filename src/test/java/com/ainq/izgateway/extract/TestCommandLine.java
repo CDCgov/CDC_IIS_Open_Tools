@@ -60,8 +60,8 @@ public class TestCommandLine {
         File outputFile = Utility.getNewFile(file, dir.toFile(), "hl7");
 
         // Verify Converted File Matches Baseline Conversion
-        String convertedOutput = cleanMSH(FileUtils.readFileToString(outputFile, StandardCharsets.UTF_8));
-        String baselineOutput = cleanMSH(FileUtils.readFileToString(new File(file2), StandardCharsets.UTF_8));
+        String convertedOutput = cleanMSH(readFile(outputFile));
+        String baselineOutput = cleanMSH(readFile(new File(file2)));
         assertEquals(baselineOutput, convertedOutput);
 
         // Verify Report File Matches Baseline Report
