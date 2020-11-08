@@ -36,7 +36,7 @@ public class TestCommandLine {
         assertEquals(errorCount, errors);
 
         File outputFile = Utility.getNewFile(file, dir.toFile(), "rpt");
-        compareFiles(outputFile, new File(baseline), null);
+        compareFiles(outputFile, new File(baseline), TestCommandLine::ignoreTomorrow);
 
         try {
             FileUtils.deleteDirectory(dir.toFile());
@@ -110,7 +110,7 @@ public class TestCommandLine {
         try {
             // Change Windows CR-LF to just a LF so content comparison works
             // on Linux and Windows platforms
-            return FileUtils.readFileToString(file, StandardCharsets.UTF_8).replace("\r", "\n").replace("\n\n", "\n");
+            return FileUtils.readFileToString(file, StandardCharsets.UTF_8).replaceAll("[\\r\\n]+", "\n");
         } catch (FileNotFoundException fnex) {
             return String.format("%s not found.", file.getPath());
         } catch (IOException fnex) {
@@ -119,6 +119,9 @@ public class TestCommandLine {
 
     }
 
+    private static String ignoreTomorrow(String contents) {
+        return contents.replaceAll("tomorrow ([0-9]{4}-[0-9]{2}-[0-9]{2}", "tomorrow (DON'T CARE)");
+    }
     private static String cleanMSH(String contents) {
         BufferedReader r = new BufferedReader(new StringReader(contents));
         StringBuffer b = new StringBuffer();
