@@ -60,8 +60,9 @@ public class TestCommandLine {
             int line = 1, col = 1;
             for (int i = 0; i < Math.min(expectedContent.length(), actualContent.length()); i++) {
                 if (expectedContent.charAt(i) != actualContent.charAt(i)) {
-                    System.err.printf("Mismatch at Character %d (%d,%d): %c != %c%n", i, line, col,
+                    System.out.printf("Mismatch at Character %d (%d,%d): %c != %c%n", i, line, col,
                         expectedContent.charAt(i), actualContent.charAt(i));
+                    break;
                 }
                 if (expectedContent.charAt(i) == '\n') {
                     line++;
@@ -105,7 +106,7 @@ public class TestCommandLine {
         try {
             // Change Windows CR-LF to just a LF so content comparison works
             // on Linux and Windows platforms
-            return FileUtils.readFileToString(file, StandardCharsets.UTF_8).replace("\r\n", "\n");
+            return FileUtils.readFileToString(file, StandardCharsets.UTF_8).replace("\r\n", "\n").replace("\r", "\n");
         } catch (FileNotFoundException fnex) {
             return String.format("%s not found.", file.getPath());
         } catch (IOException fnex) {
