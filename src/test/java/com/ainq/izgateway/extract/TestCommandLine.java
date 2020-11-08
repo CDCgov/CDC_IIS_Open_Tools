@@ -58,11 +58,15 @@ public class TestCommandLine {
             assertEquals(expectedContent, actualContent);
         } catch (Error err) {
             int line = 1, col = 1;
+            String message = null;
             for (int i = 0; i < Math.min(expectedContent.length(), actualContent.length()); i++) {
                 if (expectedContent.charAt(i) != actualContent.charAt(i)) {
-                    System.out.printf("Mismatch at Character %d (%d,%d): %c != %c%n", i, line, col,
-                        expectedContent.charAt(i), actualContent.charAt(i));
-                    break;
+                    message = String.format("Mismatch between %s and %s at Character %d (%d,%d): %d(%c) != %d(%c)%n",
+                        expected, actual,
+                        i, line, col,
+                        expectedContent.charAt(i), expectedContent.charAt(i),
+                        actualContent.charAt(i), actualContent.charAt(i));
+                    throw new Error(message, err);
                 }
                 if (expectedContent.charAt(i) == '\n') {
                     line++;
