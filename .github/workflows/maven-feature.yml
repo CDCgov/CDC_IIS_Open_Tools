@@ -26,6 +26,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Maven Install
-		    run: mvn -B install:install-file -Dfile=lib/validation-report-1.0.0.jar -DgroupId=com.github.hl7-tools -DartifactId=validation-report -Dversion=1.0.0 -Dpackaging=jar
+        run: mvn -B install:install-file -Dfile=lib/validation-report-1.0.0.jar -DgroupId=com.github.hl7-tools -DartifactId=validation-report -Dversion=1.0.0 -Dpackaging=jar
       - name: Maven Clean, Test and Package the output
         run: mvn -B clean test package
