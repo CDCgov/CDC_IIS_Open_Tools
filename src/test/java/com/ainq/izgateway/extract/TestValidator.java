@@ -29,9 +29,9 @@ import gov.nist.validation.report.Entry;
 
 class TestValidator {
 
-    @ParameterizedTest(name = "[{index}] -> {0}")
+    @ParameterizedTest(name = "[{index}] -> {3}:{0}")
     @MethodSource("testErrorDetectionSource")
-    void testErrorDetection(String test, String[] headers, String data[]) throws IOException, HL7Exception {
+    void testErrorDetection(String test, String[] headers, String data[], String filename) throws IOException, HL7Exception {
         String code = test.split("_")[0];
         String rest = test.substring(code.length() + 1);
         Set<String> reported = new TreeSet<>();
@@ -81,7 +81,7 @@ class TestValidator {
 
         // Convert to HL7 and test the conversion from HL7
         CVRSExtract extract2 = null;
-        try (Validator v = new Validator(new StringReader(Converter.toHL7String(extract)), isGood ? bv : null);) {
+        try (Validator v = new Validator(new StringReader(Converter.toHL7String(extract, Validator.DEFAULT_VERSION)), isGood ? bv : null);) {
             v.setName(test);
             extract2 = v.validateOne();
         }
@@ -104,7 +104,8 @@ class TestValidator {
     }
 
     static Stream<Object[]> testErrorDetectionSource() throws IOException {
-        return getTestResource("testerror.txt").stream();
+        List<Object[]> errs = getTestResource("testerror.txt");
+        return errs.stream();
     }
 
     private static List<Object[]> getTestResource(String name) throws IOException {
@@ -123,16 +124,16 @@ class TestValidator {
                 if (data.length < headers.length) {
                     data = Arrays.copyOf(data, headers.length);
                 }
-                Object[] a = { data[0], headers, data };
+                Object[] a = { data[0], headers, data, name };
                 o.add(a);
             }
         }
         return o;
     }
 
-    @ParameterizedTest(name = "[{index}] -> {0}")
+    @ParameterizedTest(name = "[{index}] -> {3}:{0}")
     @MethodSource("testGoodSamplesSource")
-    void testGoodSamples(String test, String[] headers, String data[]) throws IOException, HL7Exception {
+    void testGoodSamples(String test, String[] headers, String data[], String filename) throws IOException, HL7Exception {
         String code = test.split("_")[0];
         Set<String> reported = new TreeSet<>();
 
@@ -153,7 +154,8 @@ class TestValidator {
     }
 
     static Stream<Object[]> testGoodSamplesSource() throws IOException {
-        return getTestResource("testgood.txt").stream();
+        List<Object[]> good = getTestResource("testgood.txt");
+        return good.stream();
     }
 
 }

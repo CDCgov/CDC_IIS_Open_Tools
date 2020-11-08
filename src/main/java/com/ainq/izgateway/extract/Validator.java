@@ -53,6 +53,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             { "DATA005", "%1$s (%3$s) does not match the regular expression %2$s", "Does not match expected format" },
             { "DATA006", "%1$s (%3$s) should contain value %2$s", "Does not contain expected value: REDACTED" },
             { "DATA007", "%1$s (%4$s) is not in value set %2$s%3$s", "Does not contain values from the expected value set" },
+            { "DATA008", "%1$s (%3$s) exceeds maximum length %2$s", "Field exceeds maximum length" },
         };
 
     /** Default version of CVRS to use */
@@ -94,14 +95,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @throws IOException If a file could not be read, written or found.
      */
     public static void main(String args[]) throws IOException {
-        System.exit(main1(args));
+        System.exit(main1(args, "-"));
     }
     /**
      * Main entry point for Command Line.
      * @param args  Command line arguments
      * @throws IOException  If a file could not be read, written or found.
      */
-    public static int main1(String args[]) throws IOException {
+    public static int main1(String args[], String reportFolder) throws IOException {
         try {
             if (args.length == 0) {
                 help();
@@ -113,8 +114,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             String version = DEFAULT_VERSION;
             // Set to true to write all records regardless of validation results.
             boolean writeAll = false;
-            String reportFolder = "-",
-                   hl7Folder = null,
+            String hl7Folder = null,
                    cvrsFolder = null;
 
             boolean skip = false;
@@ -229,7 +229,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @param args  Arguments to generate the message
      * @return The formatted message.
      */
-    private static String getMessage(String key, Object ... args) {
+    public static String getMessage(String key, Object ... args) {
         return String.format(MESSAGES.getString(key), args);
     }
 
@@ -256,6 +256,9 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         }
 
         File f1 = new File(arg), f2 = Utility.getNewFile(arg, new File(folder), ext);
+        if (!f2.getParentFile().exists()) {
+            f2.getParentFile().mkdirs();
+        }
         // Don't overwrite the input file!
         if (f1.getCanonicalPath().equals(f2.getCanonicalPath())) {
             ext = "new." + ext;
@@ -277,7 +280,8 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         if (!helpText.containsKey(option)) {
             helpText.put(option, String.format(help, args));
         }
-        return arg.startsWith(option.split("[\\[\\<\\{\\(] ]")[0]);
+        String opt = option.split("[\\Q[<{(] \\E]")[0];
+        return arg.startsWith(opt);
     }
 
     private static void help() {
@@ -652,8 +656,8 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         ++count;
         currentExtract = null;
         currentExtract = iterator.next();
+        errors = new ArrayList<>();
         if (validator != null) {
-            errors = new ArrayList<>();
             try {
                 validator.verifyBean(currentExtract);
             } catch (CVRSValidationException e) {
@@ -687,6 +691,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @return The current record count.
      */
     private int report() {
+
         if (!errors.isEmpty()) {
             for (CVRSEntry err: errors) {
                 printEntry(rpt, currentExtract, err);
@@ -715,7 +720,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     private void convertToHL7() {
         CVRSExtract e2 = null;
         try {
-            Message m = Converter.toHL7(currentExtract);
+            Message m = Converter.toHL7(currentExtract, validator != null ? validator.getVersion() : DEFAULT_VERSION);
 
             try {
                 hl7.printf("%s%n", m.encode());

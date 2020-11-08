@@ -13,7 +13,7 @@ import com.opencsv.exceptions.CsvValidationException;
 
 public class DateValidator extends SuppressibleValidator implements StringValidator, Suppressible {
     private String param = null;
-    private static String DEFAULT_FORMAT = "yyyy-MM-dd";
+    private static String DEFAULT_FORMAT = "yyyy-MM-dd|yyyy-MM";
     private SimpleDateFormat sdf[] = { new SimpleDateFormat(DEFAULT_FORMAT) };
     @Override
     public boolean isValid(String value) {
@@ -42,7 +42,7 @@ public class DateValidator extends SuppressibleValidator implements StringValida
 
     @Override
     public void setParameterString(String value) {
-        param = (value == null || value.length() == 0) ? DEFAULT_FORMAT : value;
+        param = StringUtils.isEmpty(value) ? DEFAULT_FORMAT : value;
         String fmts[] = param.split("\\|");
         sdf = new SimpleDateFormat[fmts.length];
         int count = 0;

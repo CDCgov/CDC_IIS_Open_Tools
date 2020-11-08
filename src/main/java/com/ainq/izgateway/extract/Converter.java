@@ -66,8 +66,8 @@ public class Converter {
 
         extract.forEachField(true, field -> {
             // Don't process a field if it should be ignored for this version
-            if (validator != null &&
-                BeanValidator.getRequirement(field, RequirementType.IGNORE, validator.getVersion()) != null) {
+            if (BeanValidator.getRequirement(field, RequirementType.IGNORE,
+                    validator == null ? Validator.DEFAULT_VERSION : validator.getVersion()) != null) {
                 return;
             }
 
@@ -146,7 +146,7 @@ public class Converter {
      * @return  The converted HL7 Message
      * @throws HL7Exception If an exception occurs converting to HL7 (e.g., bad value for a data type)
      */
-    public static VXU_V04 toHL7(CVRSExtract e) throws HL7Exception {
+    public static VXU_V04 toHL7(CVRSExtract e, String version) throws HL7Exception {
         VXU_V04 message = new VXU_V04();
         try {
             message.initQuickstart("VXU", "V04", "P");
@@ -159,11 +159,18 @@ public class Converter {
 
         e.forEachField(true, field -> {
             try {
+                // Don't process a field if it should be ignored for this version
+                if (version != null &&
+                    BeanValidator.getRequirement(field, RequirementType.IGNORE, version) != null) {
+                    return;
+                }
+
                 V2Field v2Data = field.getAnnotation(V2Field.class);
                 FieldValidator val = field.getAnnotation(FieldValidator.class);
                 if (v2Data == null) {
                     throw new RuntimeException(field.getName() + " is not annotated.");
                 }
+
                 field.setAccessible(true);
                 String value = adjustValuesToHL7((String)field.get(e), val, v2Data.map());
 
@@ -187,11 +194,12 @@ public class Converter {
      * Convert and encode a CVRS Extract to an HL7 Message String.
      * This method uses the HAPI V2 Library for HL7 V2 messaging.
      * @param e The extract to convert and encode
+     * @param version The CVRS Version to use for extraction
      * @return  The converted HL7 Message as a String
      * @throws HL7Exception If an exception occurs converting to HL7 (e.g., bad value for a data type)
      */
-    public static String toHL7String(CVRSExtract e) throws HL7Exception {
-        VXU_V04 message = toHL7(e);
+    public static String toHL7String(CVRSExtract e, String version) throws HL7Exception {
+        VXU_V04 message = toHL7(e, version);
         return message.encode();
     }
 

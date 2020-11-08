@@ -56,7 +56,7 @@ public class CVRSExtract implements CVRS {
     private String ext_type;
 
 	/** Privacy Preserving Record Linkage ID. */
-    @FieldValidator(validator = DoNotPopulateValidator.class)
+    @FieldValidator(validator = DoNotPopulateValidator.class, maxLength = 100)
     @Requirement( value=RequirementType.DO_NOT_SEND, when = { VACCINATION, MISSED_APPOINTMENT, REFUSAL})
     @CsvBindByName
     @V2Field(value = "PID-3(1)-1")
@@ -88,7 +88,7 @@ public class CVRSExtract implements CVRS {
     private String recip_last_name;
 
 	/** Recipient's date of birth  */
-    @FieldValidator(validator = DateValidator.class, paramString = "yyyy-MM-dd|yyyy-MM|yyyy")
+    @FieldValidator(validator = DateValidator.class)
     @CsvBindByName
     @Requirement(value=RequirementType.REQUIRED, when = { VACCINATION, REFUSAL, MISSED_APPOINTMENT })
     @V2Field(value = "PID-7-1")
@@ -182,7 +182,7 @@ public class CVRSExtract implements CVRS {
     private String recip_ethnicity;
 
 	/** The date the vaccination event occurred (or was intended to occur) */
-    @FieldValidator(validator = DateValidator.class)
+    @FieldValidator(validator = DateValidator.class, paramString = "yyyy-MM-dd")
     @CsvBindByName
     @Requirement(value=RequirementType.REQUIRED, when = { VACCINATION, REFUSAL, MISSED_APPOINTMENT })
     @V2Field(value = "RXA-3-1")
@@ -197,14 +197,14 @@ public class CVRSExtract implements CVRS {
     private String cvx;
 
 	/** The vaccine product that was administered. Unit of Use (UoU) is preferred if both UoU and Unit of Sale (UoS) are available. */
-    @FieldValidator(validator = ValueSetValidatorIfKnown.class, paramString = "NDC")
+    @FieldValidator(validator = ValueSetValidatorIfKnown.class, paramString = "NDC", maxLength = 50)
     @Requirement(value=RequirementType.DO_NOT_SEND, when = { MISSED_APPOINTMENT, REFUSAL })
     @CsvBindByName
     @V2Field(value = "RXA-5-4", system="NDC")
     private String ndc;
 
 	/** The manufacturer of the vaccine administered */
-    @FieldValidator(validator = ValueSetValidatorIfKnown.class, paramString = "MVX")
+    @FieldValidator(validator = ValueSetValidatorIfKnown.class, paramString = "MVX", maxLength = 3)
     @Requirement(value=RequirementType.DO_NOT_SEND, when = { MISSED_APPOINTMENT, REFUSAL })
     @CsvBindByName
     @V2Field(value = "RXA-17-1", system="MVX")
@@ -217,7 +217,7 @@ public class CVRSExtract implements CVRS {
     private String lot_number;
 
 	/** The expiration date of the vaccine administered. This can either be YYYY-MM-DD or YYYY-MM */
-    @FieldValidator(validator = DateValidatorIfKnown.class, paramString = "yyyy-MM-dd|yyyy-MM")
+    @FieldValidator(validator = DateValidatorIfKnown.class)
     @Requirement(value=RequirementType.DO_NOT_SEND, when = { MISSED_APPOINTMENT, REFUSAL })
     @CsvBindByName
     @V2Field(value = "RXA-16")
@@ -231,7 +231,7 @@ public class CVRSExtract implements CVRS {
     private String vax_admin_site;
 
 	/** The route of vaccine administration (e.g., oral, subcutaneous) */
-    @FieldValidator(validator = ValueSetValidatorIfKnown.class, paramString = "ROUTE")
+    @FieldValidator(validator = ValueSetValidatorIfKnown.class, paramString = "ROUTE", maxLength = 10)
     @Requirement(value=RequirementType.DO_NOT_SEND, when = { MISSED_APPOINTMENT, REFUSAL })
     @CsvBindByName
     @V2Field(value = "RXR-2-1", system="NCIT")
@@ -439,7 +439,7 @@ public class CVRSExtract implements CVRS {
         if (inHL7Order) {
             Arrays.sort(fields, Converter::compareFields);
         }
-        for (Field f: getClass().getDeclaredFields()) {
+        for (Field f: fields) {
             if ((f.getModifiers() & (Modifier.TRANSIENT|Modifier.STATIC)) == 0) {
                 try {
                     action.accept(f);
