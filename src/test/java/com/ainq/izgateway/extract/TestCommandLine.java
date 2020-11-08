@@ -10,6 +10,7 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.function.Function;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -35,9 +36,7 @@ public class TestCommandLine {
         assertEquals(errorCount, errors);
 
         File outputFile = Utility.getNewFile(file, dir.toFile(), "rpt");
-        String convertedReport = readFile(outputFile);
-        String baselineReport = readFile(new File(baseline));
-        assertEquals(baselineReport, convertedReport);
+        compareFiles(outputFile, new File(baseline), null);
 
         try {
             FileUtils.deleteDirectory(dir.toFile());
@@ -45,6 +44,34 @@ public class TestCommandLine {
             // Swallow these, we don't really care.
         }
 
+    }
+
+    private void compareFiles(File actual, File expected, Function<String, String> conv) {
+        // TODO Auto-generated method stub
+        String actualContent = readFile(actual);
+        String expectedContent = readFile(expected);
+        if (conv != null) {
+            actualContent = conv.apply(actualContent);
+            expectedContent = conv.apply(expectedContent);
+        }
+        try {
+            assertEquals(expectedContent, actualContent);
+        } catch (Error err) {
+            int line = 1, col = 1;
+            for (int i = 0; i < Math.min(expectedContent.length(), actualContent.length()); i++) {
+                if (expectedContent.charAt(i) != actualContent.charAt(i)) {
+                    System.err.printf("Mismatch at Character %d (%d,%d): %c != %c%n", i, line, col,
+                        expectedContent.charAt(i), actualContent.charAt(i));
+                }
+                if (expectedContent.charAt(i) == '\n') {
+                    line++;
+                    col = 1;
+                } else {
+                    col ++;
+                }
+            }
+            throw err;
+        }
     }
 
     @ParameterizedTest
@@ -60,15 +87,11 @@ public class TestCommandLine {
         File outputFile = Utility.getNewFile(file, dir.toFile(), "hl7");
 
         // Verify Converted File Matches Baseline Conversion
-        String convertedOutput = cleanMSH(readFile(outputFile));
-        String baselineOutput = cleanMSH(readFile(new File(file2)));
-        assertEquals(baselineOutput, convertedOutput);
+        compareFiles(outputFile, new File(file2), TestCommandLine::cleanMSH);
 
         // Verify Report File Matches Baseline Report
         outputFile = Utility.getNewFile(file, dir.toFile(), "rpt");
-        String convertedReport = readFile(outputFile);
-        String baselineReport = readFile(new File(baseline));
-        assertEquals(baselineReport, convertedReport);
+        compareFiles(outputFile, new File(baseline), null);
 
         try {
             FileUtils.deleteDirectory(dir.toFile());
@@ -91,22 +114,26 @@ public class TestCommandLine {
 
     }
 
-    private String cleanMSH(String contents) throws IOException {
+    private static String cleanMSH(String contents) {
         BufferedReader r = new BufferedReader(new StringReader(contents));
         StringBuffer b = new StringBuffer();
         String line = null;
-        while ((line = r.readLine()) != null) {
-            if (line.startsWith("MSH")) {
-                String fields[] = line.split("\\|");
-                if (fields.length > 6) {
-                    fields[6] = "DONTCARE";
+        try {
+            while ((line = r.readLine()) != null) {
+                if (line.startsWith("MSH")) {
+                    String fields[] = line.split("\\|");
+                    if (fields.length > 6) {
+                        fields[6] = "DONTCARE";
+                    }
+                    if (fields.length > 9) {
+                        fields[9] = "DONTCARE";
+                    }
+                    line = StringUtils.join(fields, "|");
                 }
-                if (fields.length > 9) {
-                    fields[9] = "DONTCARE";
-                }
-                line = StringUtils.join(fields, "|");
+                b.append(line).append('\n');
             }
-            b.append(line).append('\n');
+        } catch (IOException e) {
+           // This will never happen with a StringReader
         }
         if (b.length() > 0) {
             b.setCharAt(b.length()-1, '\r');
