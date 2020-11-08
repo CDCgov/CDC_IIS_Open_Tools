@@ -23,6 +23,8 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ainq.izgateway.extract.annotations.EventType;
 import com.ainq.izgateway.extract.validation.BeanValidator;
@@ -36,6 +38,7 @@ import ca.uhn.hl7v2.model.Message;
  * A Validator for the CDC COVID-19 Vaccination Report Specification Extract File Formats
  */
 public class Validator implements Iterator<CVRSExtract>, Closeable {
+    private final static Logger LOGGER = LoggerFactory.getLogger(Validator.class);
     /** Bundle for Error messages */
     public static class MyResources extends ListResourceBundle {
         @Override
@@ -94,9 +97,10 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @param args  Command line arguements
      * @throws IOException If a file could not be read, written or found.
      */
-    public static void main(String args[]) throws IOException {
+    public static void main(String... args) throws IOException {
         System.exit(main1(args, "-"));
     }
+
     /**
      * Main entry point for Command Line.
      * @param args  Command line arguments
@@ -113,7 +117,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             Set<String> suppressErrors = new TreeSet<>();
             String version = DEFAULT_VERSION;
             // Set to true to write all records regardless of validation results.
-            boolean writeAll = false;
+            boolean writeAll = false, useDefaults = false;
             String hl7Folder = null,
                    cvrsFolder = null;
 
@@ -146,6 +150,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 if (hasArgument(arg,"-e", "Exit the program without processing more options or arguments")) {
                     // Exit processing: Another handy tool for quick debugging in script files or Eclipse.
                     break;
+                }
+                if (hasArgument(arg,"-d", "Enable default conversion rules for HL7 Messages")) {
+                    useDefaults = true;
+                    continue;
+                }
+                if (hasArgument(arg,"-D", "Disable default conversion rules for HL7 Messages")) {
+                    useDefaults = false;
+                    continue;
                 }
                 if (hasArgument(arg,"-v<1|2>", "Select version (default is %s), legal values are 1 and 2", DEFAULT_VERSION)) {
                     version = arg.substring(2);
@@ -202,7 +214,8 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
 
                 try (Validator v = new Validator(
                     Utility.getReader(arg),
-                    suppressErrors.equals(ERROR_CODES) ? null : new BeanValidator(suppressErrors, version)
+                    suppressErrors.equals(ERROR_CODES) ? null : new BeanValidator(suppressErrors, version),
+                    useDefaults
                 );) {
                     v.setReport(getOutputStream(arg, reportFolder, "rpt"));
                     v.setCvrs(getOutputStream(arg, cvrsFolder, "txt"));
@@ -355,6 +368,9 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     private PrintStream rpt = null;
     /** Validator to use for CVRSExtract beans */
     private BeanValidator validator = null;
+
+    /** If true, use default conversion rules for missing fields */
+    private boolean useDefaults;
     /**
      * Create a new Validator instance for the specified reader,
      * and validating using the specified BeanValidator instance.
@@ -363,14 +379,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @param validator The BeanValidator used to valid the CVRSExtract (can be null, which skips most validation).
      * @throws IOException  If an error occured while reading content (headers)
      */
-    public Validator(Reader reader, BeanValidator validator) throws IOException {
+    public Validator(Reader reader, BeanValidator validator, boolean useDefaults) throws IOException {
         this.reader = Utility.getBufferedReader(reader);
         headers = Utility.readHeaders(this.reader);
         if (HL7MessageParser.isMessageDelimiter(headers[0])) {
             headers = CVRSExtract.getHeaders(validator == null ? null : validator.getVersion());
         }
         this.validator = validator;
-        parser = ParserFactory.newParser(this.reader, null);
+        parser = ParserFactory.newParser(this.reader, null, useDefaults);
         iterator = parser.iterator();
     }
 
@@ -499,6 +515,10 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         return validator;
     }
 
+    public boolean getUseDefaults() {
+        return useDefaults;
+    }
+
     /**
      * Get the version of the CVRS to validate for.  NOTE: Source for Version 1 has had limited testing,
      * and bugs in Version 1 CVRS validation will not be fixed. However, we expect that future versions
@@ -614,6 +634,11 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      */
     public Validator setValidator(BeanValidator validator) {
         this.validator = validator;
+        return this;
+    }
+
+    public Validator setUseDefaults(boolean useDefaults) {
+        this.useDefaults = useDefaults;
         return this;
     }
 
@@ -734,7 +759,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 updateSummary(entry);
             }
             List<CVRSEntry> exList = new ArrayList<>();
-            e2 = Converter.fromHL7(m, exList, validator, getCount());
+            e2 = Converter.fromHL7(m, exList, validator, useDefaults, getCount());
             Field ff = currentExtract.notEqualsAt(e2);
             if (ff != null) {
                 ff.setAccessible(true);

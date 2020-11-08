@@ -72,7 +72,7 @@ class TestValidator {
 
         // Test the conversion to extract from tab delimited form
         CVRSExtract extract = null;
-        try (Validator v = new Validator(new StringReader(b.toString()), bv);) {
+        try (Validator v = new Validator(new StringReader(b.toString()), bv, false);) {
             v.setName(test);
             extract = v.validateOne();
         }
@@ -81,7 +81,7 @@ class TestValidator {
 
         // Convert to HL7 and test the conversion from HL7
         CVRSExtract extract2 = null;
-        try (Validator v = new Validator(new StringReader(Converter.toHL7String(extract, Validator.DEFAULT_VERSION)), isGood ? bv : null);) {
+        try (Validator v = new Validator(new StringReader(Converter.toHL7String(extract, Validator.DEFAULT_VERSION)), isGood ? bv : null, false);) {
             v.setName(test);
             extract2 = v.validateOne();
         }

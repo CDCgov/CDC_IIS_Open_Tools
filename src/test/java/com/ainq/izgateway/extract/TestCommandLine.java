@@ -10,6 +10,7 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.function.Function;
 
 import org.apache.commons.io.FileUtils;
@@ -22,32 +23,41 @@ public class TestCommandLine {
 
     @ParameterizedTest
     @CsvSource( {
-        "src/test/resources/testgood.txt,0,src/test/resources/testgood.txt.rpt",
-        "src/test/resources/testgood.hl7,0,src/test/resources/testgood.hl7.rpt",
-        "src/test/resources/testerror.txt,183,src/test/resources/testerror.txt.rpt",
-        "src/test/resources/testerror.hl7,183,src/test/resources/testerror.hl7.rpt",
+        "src/test/resources/testgood.txt,0,src/test/resources/testgood.txt.rpt,",
+        "src/test/resources/testgood.hl7,0,src/test/resources/testgood.hl7.rpt,",
+        "src/test/resources/testerror.txt,183,src/test/resources/testerror.txt.rpt,",
+        "src/test/resources/testerror.hl7,183,src/test/resources/testerror.hl7.rpt,",
+        "src/test/resources/testdefault.hl7,0,src/test/resources/testdefault.hl7.rpt,-d"
     })
 
-    public void testCommandLine(String file, int errorCount, String baseline) throws IOException, InterruptedException {
-        String command[] = { file};
+    public void testCommandLine(String file, int errorCount, String baseline, String args) throws IOException, InterruptedException {
+
+        String command[] = { file };
+        if (!StringUtils.isEmpty(args)) {
+            String opts[] = args.split("\\s+");
+            command = Arrays.copyOf(opts, opts.length + 1);
+            command[opts.length] = file;
+        }
         Path dir = Files.createTempDirectory("cvrs");
         String outputDir = dir.toFile().getCanonicalPath();
         int errors = Validator.main1(command, outputDir);
         assertEquals(errorCount, errors);
 
-        File outputFile = Utility.getNewFile(file, dir.toFile(), "rpt");
-        compareFiles(outputFile, new File(baseline), TestCommandLine::ignoreTomorrow);
+        // If a baseline file was provided, compare against it.
+        if (!StringUtils.isEmpty(baseline)) {
+            File outputFile = Utility.getNewFile(file, dir.toFile(), "rpt");
+            compareFiles(outputFile, new File(baseline), TestCommandLine::ignoreTomorrow);
+        }
 
         try {
             FileUtils.deleteDirectory(dir.toFile());
         } catch (IOException ioex) {
             // Swallow these, we don't really care.
         }
-
     }
 
     private void compareFiles(File actual, File expected, Function<String, String> conv) {
-        // TODO Auto-generated method stub
+        // System.out.printf("Comparing %s to %s\n", actual, expected);
         String actualContent = readFile(actual);
         String expectedContent = readFile(expected);
         if (conv != null) {
@@ -57,6 +67,7 @@ public class TestCommandLine {
         try {
             assertEquals(expectedContent, actualContent);
         } catch (Error err) {
+            System.err.println("Errors found");
             int line = 1, col = 1;
             @SuppressWarnings("unused")
             String message = null;
@@ -82,15 +93,16 @@ public class TestCommandLine {
 
     @ParameterizedTest
     @CsvSource( {
-        "src/test/resources/testgood.txt,src/test/resources/testgood.hl7,src/test/resources/testgood.cnv.rpt",
-        "src/test/resources/testerror.txt,src/test/resources/testerror.hl7,src/test/resources/testerror.cnv.rpt",
+        "src/test/resources/testgood.txt,src/test/resources/testgood.hl7,src/test/resources/testgood.cnv.rpt,false",
+        "src/test/resources/testerror.txt,src/test/resources/testerror.hl7,src/test/resources/testerror.cnv.rpt,false",
+        "src/test/resources/testdefault.hl7,src/test/resources/testdefault.txt,src/test/resources/testdefault.cnv.rpt,true",
     })
-    public void testConversion(String file, String file2, String baseline) throws IOException, InterruptedException {
+    public void testConversion(String file, String file2, String baseline, boolean useDefault) throws IOException, InterruptedException {
         Path dir = Files.createTempDirectory("cvrs");
         String outputDir = dir.toFile().getCanonicalPath();
-        String command[] = { "-sALL", (file.endsWith(".txt") ? "-7" : "-c") + outputDir, file };
+        String command[] = { "-sALL", useDefault ? "-d" : "-D", (file.endsWith(".txt") ? "-7" : "-c") + outputDir, file };
         Validator.main1(command, outputDir);
-        File outputFile = Utility.getNewFile(file, dir.toFile(), "hl7");
+        File outputFile = Utility.getNewFile(file, dir.toFile(), file.endsWith(".txt") ? "hl7" : "txt");
 
         // Verify Converted File Matches Baseline Conversion
         compareFiles(outputFile, new File(file2), TestCommandLine::cleanMSH);

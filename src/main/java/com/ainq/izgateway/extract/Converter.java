@@ -2,20 +2,22 @@ package com.ainq.izgateway.extract;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
+import com.ainq.izgateway.extract.annotations.EventType;
 import com.ainq.izgateway.extract.annotations.FieldValidator;
+import com.ainq.izgateway.extract.annotations.Requirement;
 import com.ainq.izgateway.extract.annotations.RequirementType;
 import com.ainq.izgateway.extract.annotations.V2Field;
-import com.ainq.izgateway.extract.exceptions.CsvFieldValidationException;
 import com.ainq.izgateway.extract.validation.BeanValidator;
 import com.ainq.izgateway.extract.validation.CVRSEntry;
 import com.ainq.izgateway.extract.validation.DateValidator;
 import com.ainq.izgateway.extract.validation.DateValidatorIfKnown;
-import com.opencsv.bean.CsvBindByName;
+import com.ainq.izgateway.extract.validation.ValueSetValidator;
 import com.opencsv.exceptions.CsvException;
 
 import ca.uhn.hl7v2.HL7Exception;
@@ -60,14 +62,14 @@ public class Converter {
      * @return  The converted CVRSExtract
      * @throws CsvException If an error occured during conversion.
      */
-    public static CVRSExtract fromHL7(Message message, List<CVRSEntry> exList, BeanValidator validator, int line) throws CsvException {
+    public static CVRSExtract fromHL7(Message message, List<CVRSEntry> exList, BeanValidator validator, boolean useDefaults, int line) throws CsvException {
         Terser terser = new Terser(message);
         CVRSExtract extract = new CVRSExtract();
+        String version = validator == null ? Validator.DEFAULT_VERSION : validator.getVersion();
 
         extract.forEachField(true, field -> {
             // Don't process a field if it should be ignored for this version
-            if (BeanValidator.getRequirement(field, RequirementType.IGNORE,
-                    validator == null ? Validator.DEFAULT_VERSION : validator.getVersion()) != null) {
+            if (BeanValidator.getRequirement(field, RequirementType.IGNORE, version) != null) {
                 return;
             }
 
@@ -75,8 +77,6 @@ public class Converter {
             field.setAccessible(true);
             V2Field v2Data = field.getAnnotation(V2Field.class);
             FieldValidator val = field.getAnnotation(FieldValidator.class);
-            CsvBindByName binder = field.getAnnotation(CsvBindByName.class);
-
             // If there's no V2Field annotation, we don't know how to convert the field.
             // For now, this is an error.
             if (v2Data == null) {
@@ -86,31 +86,7 @@ public class Converter {
 
             try {
                 if (v2Data.obx3() != null && v2Data.obx3().length() != 0) {
-                    // Special handling to find the right OBX
-                    List<Segment> obxList = getAllOrderObxSegments(message);
-                    value = "";
-                    for (Segment obx: obxList) {
-                        CE id;
-                        id = (CE) obx.getField(3, 0);
-                        String code = id.getIdentifier().getValue();
-                        String system = id.getNameOfCodingSystem().getValue();
-                        String obx3Parts[] = v2Data.obx3().split("\\^");
-                        if (obx3Parts.length > 0 && obx3Parts[0].equalsIgnoreCase(code)) {
-                            if (obx3Parts.length <= 2 || obx3Parts[2].equalsIgnoreCase(system)) {
-                                value = adjustValuesToExtract(obx.getField(5, 0), val, v2Data.map());
-                                break;
-                            }
-                        }
-                    }
-// TODO: Figure out where to put this, it causes failures for refusals
-//                    if (StringUtils.isEmpty(value)) {
-//                        // If there's no value, and it's a ValueSet check, and the value set is YES_NO_UNK
-//                        if (ValueSetValidator.class.isAssignableFrom(val.validator()) &&
-//                            "YES_NO_UNK".equals(val.paramString())) {
-//                            // Set the value to UNK, since we don't know it
-//                            value = "UNK";
-//                        }
-//                    }
+                    value = setupObx3(message, v2Data, val);
                 } else {
                     value = adjustValuesToExtract(terser.get("/." + v2Data.value()), val, v2Data.map());
                 }
@@ -118,16 +94,11 @@ public class Converter {
                 throw new RuntimeException("Unexpected HL7Exception", e);
             }
             field.set(extract, value);
-            if (validator != null && binder.required()) {
-                CsvFieldValidationException ex =
-                    new CsvFieldValidationException(extract, "HL7_002", field.getName(), v2Data.value() + " does not contain required " + field.getName() + " value.")
-                        .setErrorPosition(v2Data.value());
-                if (exList == null) {
-                    throw new RuntimeException(ex.getMessage(), ex);
-                }
-                exList.add(ex.getValidationEntry());
-            }
         });
+
+        if (useDefaults) {
+            setDefaultValues(extract, version);
+        }
 
         if (exList != null) {
             // Add data to line values in Error entries.
@@ -138,6 +109,85 @@ public class Converter {
             }
         }
         return extract;
+    }
+
+    /**
+     * Find the Obx3 Value to adjust or create a new one for the field.
+     * @param message   The message to obtain content from
+     * @param v2Data    The V2Field describing V2 Conversion
+     * @param val       The FieldValidator providing data type information.
+     * @return          The value to set in the Obx3
+     * @throws HL7Exception If the value could not be set due to an HL7 Parsing error.
+     */
+    private static String setupObx3(Message message, V2Field v2Data, FieldValidator val) throws HL7Exception {
+        String value;
+        // Special handling to find the right OBX
+        List<Segment> obxList = getAllOrderObxSegments(message);
+        value = "";
+        for (Segment obx: obxList) {
+            CE id;
+            id = (CE) obx.getField(3, 0);
+            String code = id.getIdentifier().getValue();
+            String system = id.getNameOfCodingSystem().getValue();
+            String obx3Parts[] = v2Data.obx3().split("\\^");
+            if (obx3Parts.length > 0 && obx3Parts[0].equalsIgnoreCase(code)) {
+                if (obx3Parts.length <= 2 || obx3Parts[2].equalsIgnoreCase(system)) {
+                    value = adjustValuesToExtract(obx.getField(5, 0), val, v2Data.map());
+                    break;
+                }
+            }
+        }
+        return value;
+    }
+
+    /**
+     * Set default values for the given extract based on the version of the extract.
+     * @param extract   The extract to adjust
+     * @param version   The version of the extract to work with, or null to use the default (most current)
+     * version.
+     */
+    private static void setDefaultValues(CVRSExtract extract, String ver) {
+        String version = ver == null ? Validator.DEFAULT_VERSION : ver;
+        EventType eventType = BeanValidator.getEventType(extract);
+        extract.forEachField(true, field -> {
+            field.setAccessible(true);
+            String value = (String) field.get(extract);
+            FieldValidator val = field.getAnnotation(FieldValidator.class);
+            // If it's not a value set check, skip it.
+            if (val == null || !ValueSetValidator.class.isAssignableFrom(val.validator())) {
+                return;
+            }
+            // If the field is not empty, skip it.
+            if (!StringUtils.isEmpty(value)) {
+                return;
+            }
+            try {
+                ValueSetValidator v = (ValueSetValidator) val.validator().getConstructor().newInstance();
+                v.setParameterString(val.paramString());
+                // If UNK isn't a legal value skip it.
+                if (!v.isValid("UNK")) {
+                    return;
+                }
+
+                Requirement req = BeanValidator.getRequirement(field, RequirementType.REQUIRED, version);
+                // If the field isn't required, or isn't required for the current event type then skip it.
+                if (req == null || !Arrays.asList(req.when()).contains(eventType)) {
+                    return;
+                }
+
+                Requirement dns = BeanValidator.getRequirement(field, RequirementType.DO_NOT_SEND, version);
+                // If this is a Do Not Send case, don't default it.
+                if (dns != null && Arrays.asList(dns.when()).contains(eventType)) {
+                    return;
+                }
+
+                // The field is required, isn't a Do Not Send Case, set to unknown.
+                field.set(extract, "UNK");
+            } catch (InstantiationException | InvocationTargetException | NoSuchMethodException
+                | SecurityException e) {
+                // At this point, we are certain this won't happen.
+            }
+        });
     }
 
     /**

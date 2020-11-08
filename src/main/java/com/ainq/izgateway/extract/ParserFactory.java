@@ -88,14 +88,14 @@ public class ParserFactory extends CSVParser {
         return new BeanValidator(suppressed, version);
     }
 
-    public static Iterable<CVRSExtract> newParser(Reader r, BeanValidator validator) throws IOException {
+    public static Iterable<CVRSExtract> newParser(Reader r, BeanValidator validator, boolean useDefaults) throws IOException {
         BufferedReader br = r instanceof BufferedReader ? (BufferedReader) r : new BufferedReader(r);
         br.mark(1024);
         String line = br.readLine();
         br.reset();
         if (HL7MessageParser.isMessageDelimiter(line)) {
             // This is an HL7 Message, create a parser for HL7
-            return new HL7MessageConverter(br);
+            return new HL7MessageConverter(br, useDefaults, validator);
         }
         return newBeanReader(br, validator, 0);
     }
