@@ -9,8 +9,14 @@ Validator is implemented in the `com.ainq.izgateway.extract.Validator` class.
 
 ## Usage
 ```
-    $ java -jar extract-validator.jar [options]? [files] ...
+    $ java -cp extract-validator.jar -DclientId=clientIDValue -DclientSecret=clientSecretValue file ...
 ```
+-DclientId=clientIDValue 
+
+-DclientSecret=clientSecretValue 
+
+file ...
+: One or more files to send.
 
 ### Options
 -7[folder]
