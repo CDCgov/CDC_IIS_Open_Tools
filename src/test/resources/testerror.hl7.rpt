@@ -184,23 +184,52 @@ src/test/resources/testerror.hl7 REQD001***issing 48     ERROR  responsible_org 
 src/test/resources/testerror.hl7 REQD001***issing 49     ERROR  admin_name               REQD001 admin_name is required for Vaccination events
 src/test/resources/testerror.hl7 REQD001***issing 51     ERROR  cmorbid_status           REQD001 cmorbid_status is required for Vaccination events
 src/test/resources/testerror.hl7 has 183 errors in 50 of 51 records.
-Code    Count   Description
-BUSR001    12   recip_address_county in recip_address_state FIPS
-BUSR002     4   admin_address_county in admin_address_state FIPS
-BUSR003     2   recip_address_zip in recip_address_state STATE
-BUSR004     2   admin_address_zip in admin_address_state STATE
-BUSR005     6   recip_dob < admin_date
-BUSR007     1   recip_address_zip implies recip_address_state
-BUSR008     1   admin_address_zip implies admin_address_state
-BUSR009     1   recip_address_zip implies recip_address_county
-BUSR010     2   admin_address_zip implies admin_address_county
-BUSR011     1   recip_dob no_time_travel
-BUSR012     3   admin_date no_time_travel
-DATA004     1   Should not be present
-DATA005     6   Does not match expected format
-DATA006     9   Does not contain expected value: REDACTED
-DATA007    26   Does not contain values from the expected value set
-DATA008     1   Field exceeds maximum length
-DATA009     1   Date is not correctly formatted
-DNTS002    72   A field is present that should not be for Refusal
-REQD001    32   A required field is missing for Vaccination
+Code    Field                   Count   Description                                         Example
+BUSR001 recip_address_county       12   recip_address_county in recip_address_state FIPS         1 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+BUSR002 admin_address_county        4   admin_address_county in admin_address_state FIPS         3 admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator
+BUSR003 recip_address_zip           2   recip_address_zip in recip_address_state STATE          15 recip_address_zip (1529) does not match recip_address_state (MI) for Recipient
+BUSR004 admin_address_zip           2   admin_address_zip in admin_address_state STATE          15 admin_address_zip (1529) does not match admin_address_state (MI) for Vaccine Administrator
+BUSR005 recip_dob                   6   recip_dob < admin_date                                   1 recip_dob () is after admin_date (2020-10-04)
+BUSR007 recip_address_zip           1   recip_address_zip implies recip_address_state           18 If recip_address_zip (48504) is present, recip_address_state () should be present for Recipient
+BUSR008 admin_address_zip           1   admin_address_zip implies admin_address_state           19 If admin_address_zip (49053) is present, admin_address_state () should be present for Vaccine Administrator
+BUSR009 recip_address_zip           1   recip_address_zip implies recip_address_county          20 If recip_address_zip (49964) is present, recip_address_county () should be present for Recipient
+BUSR010 admin_address_zip           2   admin_address_zip implies admin_address_county          20 If admin_address_zip (49053) is present, admin_address_county () should be present for Vaccine Administrator
+BUSR011 recip_dob                   1   recip_dob no_time_travel                                22 If recip_dob (2032-11-01) is present it should be less than tomorrow (DON'T CARE)
+BUSR012 admin_date                  3   admin_date no_time_travel                               22 If admin_date (2022-10-04) is present it should less than tomorrow (DON'T CARE)
+DATA004 pprl_id                     1   Should not be present                                    6 pprl_id (Present) should not be present
+DATA005 admin_address_zip           2   Does not match expected format                          15 admin_address_zip (1529) does not match the regular expression ^(\d{5}(-\d{4})?)?$
+DATA005 ext_type                    1   Does not match expected format                           5 ext_type (Q) does not match the regular expression ^(D|P|I)$
+DATA005 recip_address_zip           3   Does not match expected format                           8 recip_address_zip (48504-) does not match the regular expression \d{5}(-\d{4})?
+DATA006 recip_address_city          2   Does not contain expected value: REDACTED                4 recip_address_city (Not redacted) should contain value Redacted
+DATA006 recip_address_street        1   Does not contain expected value: REDACTED               38 recip_address_street () should contain value Redacted
+DATA006 recip_address_street_2      1   Does not contain expected value: REDACTED               39 recip_address_street_2 () should contain value Redacted
+DATA006 recip_first_name            3   Does not contain expected value: REDACTED                7 recip_first_name (UnRedacted) should contain value Redacted
+DATA006 recip_last_name             1   Does not contain expected value: REDACTED               35 recip_last_name () should contain value Redacted
+DATA006 recip_middle_name           1   Does not contain expected value: REDACTED               34 recip_middle_name () should contain value Redacted
+DATA007 admin_type                 23   Does not contain values from the expected value set      1 admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+DATA007 cvx                         1   Does not contain values from the expected value set     11 cvx (XXX) is not in value set CVX[900, 901 ... 187, 188]
+DATA007 mvx                         1   Does not contain values from the expected value set     12 mvx (AAAA) is not in value set MVX[AAA, BBB ... WA, ZLB]
+DATA007 recip_sex                   1   Does not contain values from the expected value set     10 recip_sex (UNK) is not in value set SEX[M, F, U]
+DATA008 mvx                         1   Field exceeds maximum length                            12 mvx (AAAA) exceeds maximum length 3
+DATA009 admin_date                  1   Date is not correctly formatted                          3 admin_date (2020-10) contains an incorrectly formatted date, should match yyyy-MM-dd
+DNTS002 dose_num                    8   A field is present that should not be for Refusal       25 dose_num (1) should not be present for Refusal events
+DNTS002 lot_number                  8   A field is present that should not be for Refusal       25 lot_number (M9999-05) should not be present for Refusal events
+DNTS002 mvx                         8   A field is present that should not be for Refusal       25 mvx (AAA) should not be present for Refusal events
+DNTS002 ndc                         8   A field is present that should not be for Refusal       25 ndc (80777-9999-00) should not be present for Refusal events
+DNTS002 vax_admin_site              8   A field is present that should not be for Refusal       25 vax_admin_site (RVL) should not be present for Refusal events
+DNTS002 vax_expiration              8   A field is present that should not be for Refusal       25 vax_expiration (2020-11-01) should not be present for Refusal events
+DNTS002 vax_prov_suffix             8   A field is present that should not be for Refusal       25 vax_prov_suffix (OTH) should not be present for Refusal events
+DNTS002 vax_route                   8   A field is present that should not be for Refusal       25 vax_route (C38276) should not be present for Refusal events
+DNTS002 vax_series_complete         8   A field is present that should not be for Refusal       25 vax_series_complete (No) should not be present for Refusal events
+REQD001 admin_date                  2   A required field is missing for Vaccination              2 admin_date is required for Vaccination events
+REQD001 admin_name                  1   A required field is missing for Vaccination             49 admin_name is required for Vaccination events
+REQD001 admin_type                  1   A required field is missing for Vaccination             47 admin_type is required for Vaccination events
+REQD001 cmorbid_status              1   A required field is missing for Vaccination             51 cmorbid_status is required for Vaccination events
+REQD001 cvx                         7   A required field is missing for Vaccination              1 cvx is required for Vaccination events
+REQD001 dose_num                    7   A required field is missing for Vaccination              1 dose_num is required for Vaccination events
+REQD001 recip_dob                   2   A required field is missing for Vaccination              1 recip_dob is required for Vaccination events
+REQD001 recip_ethnicity             1   A required field is missing for Vaccination             42 recip_ethnicity is required for Vaccination events
+REQD001 recip_race_1                1   A required field is missing for Vaccination             41 recip_race_1 is required for Vaccination events
+REQD001 recip_sex                   1   A required field is missing for Vaccination             37 recip_sex is required for Vaccination events
+REQD001 responsible_org             1   A required field is missing for Vaccination             48 responsible_org is required for Vaccination events
+REQD001 vax_series_complete         7   A required field is missing for Vaccination              1 vax_series_complete is required for Vaccination events

@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListResourceBundle;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -48,6 +49,29 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         protected Object[][] getContents() {
             return Messages;
         };
+    }
+
+    private static class ErrorSummary {
+        int count;
+        int exampleLine;
+        String message;
+        String code;
+        String field;
+        ErrorSummary(int exampleLine, String message, String code, String field) {
+            count = 1;
+            this.exampleLine = exampleLine;
+            this.message = message;
+            this.code = code;
+            this.field = field;
+        }
+
+        public ErrorSummary(CVRSEntry entry) {
+            this(entry.getLine(), entry.getDescription(), entry.getCategory(), entry.getPath());
+        }
+
+        void addOne() {
+            count++;
+        }
     }
 
     /** Localizable Error Messages */
@@ -377,7 +401,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     private List<CVRSEntry> errors = null;
 
     /** Summary of Errors */
-    private Map<String, Integer> errorSummary = new TreeMap<>();
+    private Map<String, ErrorSummary> errorSummary = new TreeMap<>();
 
     /** Headers in the tab delimited text file in order */
     private String[] headers;
@@ -535,7 +559,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * Get the summary error report.
      * @return  A map of error codes to counts of errors found.
      */
-    public Map<String, Integer> getErrorSummary() {
+    public Map<String, ErrorSummary> getErrorSummary() {
         return Collections.unmodifiableMap(errorSummary);
     }
 
@@ -902,11 +926,13 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @param entry The reported error.
      */
     private void updateSummary(CVRSEntry entry) {
-        Integer i = errorSummary.get(entry.getCategory());
-        if (i == null) {
-            i = Integer.valueOf(0);
+        String key = String.format("%-8s%s" , entry.getCategory(), entry.getPath());
+        ErrorSummary summaryRow = errorSummary.get(key);
+        if (summaryRow == null) {
+            errorSummary.put(key, summaryRow = new ErrorSummary(entry));
+        } else {
+            summaryRow.addOne();
         }
-        errorSummary.put(entry.getCategory(), i + 1);
     }
 
     /**
@@ -951,8 +977,9 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * Generate the summary output for a file
      */
     private void generateSummary() {
-        Map<String, Integer> summary = getErrorSummary();
-        int total = summary.values().stream().collect(Collectors.summingInt(s -> s));
+        Map<String, ErrorSummary> summary = getErrorSummary();
+        int total = summary.values().stream()
+                        .collect(Collectors.summingInt(s -> s == null ? 0 : s.count));
         if (getReport() != null) {
             getReport().printf("%s has %d errors in %d of %d records.%n",
                 getName(), total, getErrorCount(), getCount());
@@ -969,11 +996,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             }
         }
         if (getErrorCount() != 0 && getReport() != null) {
-            getReport().printf("%-8s%-8s%s%n", "Code", "Count", "Description");
-            for (Map.Entry<String, Integer> e: summary.entrySet()) {
+            getReport().printf("%-8s%-24s%-8s%-52s%s%n", "Code", "Field", "Count", "Description", "Example");
+            for (Entry<String, ErrorSummary> e: summary.entrySet()) {
                 String code = e.getKey();
-                String description = getErrorDescription(code);
-                getReport().printf("%-8s%5d   %s%n", code, e.getValue(), description);
+                ErrorSummary summaryRow = e.getValue();
+                String description = getErrorDescription(summaryRow.code);
+                getReport().printf("%-8s%-24s%5d   %-52s %5d %s%n",
+                    summaryRow.code, summaryRow.field,
+                    summaryRow.count, description, summaryRow.exampleLine, summaryRow.message);
             }
         }
     }
@@ -985,6 +1015,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      */
     private String getErrorDescription(String code) {
         String description = null;
+
         switch(code.substring(0,4)) {
         case "DATA":
             description =
