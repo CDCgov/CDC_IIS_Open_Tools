@@ -227,14 +227,14 @@ public class CVRSExtract implements CVRS {
     @FieldValidator(validator = ValueSetValidatorIfKnown.class, paramString = "SITE")
     @Requirement(value=RequirementType.DO_NOT_SEND, when = { MISSED_APPOINTMENT, REFUSAL })
     @CsvBindByName
-    @V2Field(value = "RXR-1-1", system="HL70163")
+    @V2Field(value = "RXR-2-1", system="HL70163")
     private String vax_admin_site;
 
 	/** The route of vaccine administration (e.g., oral, subcutaneous) */
     @FieldValidator(validator = ValueSetValidatorIfKnown.class, paramString = "ROUTE", maxLength = 10)
     @Requirement(value=RequirementType.DO_NOT_SEND, when = { MISSED_APPOINTMENT, REFUSAL })
     @CsvBindByName
-    @V2Field(value = "RXR-2-1", system="NCIT")
+    @V2Field(value = "RXR-1-1", system="NCIT")
     private String vax_route;
 
 	/** Dose # in vaccination series provided dose is considered valid (e.g., counts towards immunity). */

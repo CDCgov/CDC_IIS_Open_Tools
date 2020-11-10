@@ -60,7 +60,7 @@ public class ParserFactory extends CSVParser {
         return b.build();
     }
 
-    public static CsvToBean<CVRSExtract> newBeanReader(Reader r, BeanValidator validator, int maxErrors) {
+    public static CsvToBean<CVRSExtract> newTabDelimitedBeanReader(Reader r, BeanValidator validator, int maxErrors) {
         CsvToBeanBuilder<CVRSExtract> b = new CsvToBeanBuilder<CVRSExtract>(r);
         b.withIgnoreLeadingWhiteSpace(false)
          .withIgnoreQuotations(true)
@@ -70,6 +70,25 @@ public class ParserFactory extends CSVParser {
          .withStrictQuotes(false)
          .withKeepCarriageReturn(false)
          .withMultilineLimit(1)
+         .withType(CVRSExtract.class)
+         .withExceptionHandler(new TooManyErrorsHandler(maxErrors))
+         .withOrderedResults(true);
+
+        // Add a verifier if requested.
+        if (validator != null) {
+            b.withVerifier(validator);
+            for (Field f: BeanValidator.getIgnoredFields(validator.getVersion())) {
+                b.withIgnoreField(CVRSExtract.class, f);
+            }
+        }
+        return b.build();
+    }
+
+    public static CsvToBean<CVRSExtract> newCSVBeanReader(Reader r, BeanValidator validator, int maxErrors) {
+        CsvToBeanBuilder<CVRSExtract> b = new CsvToBeanBuilder<CVRSExtract>(r);
+        // Accept defaults for CSV Formatted files
+        b.withKeepCarriageReturn(false)
+         .withMultilineLimit(10)
          .withType(CVRSExtract.class)
          .withExceptionHandler(new TooManyErrorsHandler(maxErrors))
          .withOrderedResults(true);
@@ -97,6 +116,9 @@ public class ParserFactory extends CSVParser {
             // This is an HL7 Message, create a parser for HL7
             return new HL7MessageConverter(br, useDefaults, validator);
         }
-        return newBeanReader(br, validator, 0);
+        if (line.contains("\t")) {
+            return newTabDelimitedBeanReader(br, validator, 0);
+        }
+        return newCSVBeanReader(br, validator, 0);
     }
 }

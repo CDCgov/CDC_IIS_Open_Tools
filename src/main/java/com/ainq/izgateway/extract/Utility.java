@@ -94,6 +94,9 @@ public class Utility {
 
     public static File getNewFile(String name, File outputFolder, String ext) {
         String file = StringUtils.substringBeforeLast(name, ".");
+        if (".".equals(outputFolder.getPath())) {
+            return new File(String.format("%s.%s", file, ext));
+        }
         return new File(outputFolder, String.format("%s.%s", file, ext));
     }
 

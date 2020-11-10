@@ -10,11 +10,13 @@ import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListResourceBundle;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -22,6 +24,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,22 +51,46 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         };
     }
 
+    private static class ErrorSummary {
+        int count;
+        int exampleLine;
+        String message;
+        String code;
+        String field;
+        ErrorSummary(int exampleLine, String message, String code, String field) {
+            count = 1;
+            this.exampleLine = exampleLine;
+            this.message = message;
+            this.code = code;
+            this.field = field;
+        }
+
+        public ErrorSummary(CVRSEntry entry) {
+            this(entry.getLine(), entry.getDescription(), entry.getCategory(), entry.getPath());
+        }
+
+        void addOne() {
+            count++;
+        }
+    }
+
     /** Localizable Error Messages */
     protected static Object[][] Messages = {
-            { "DATA001", "%1$s (%2$s) contains an invalid date, should match %3$s", "Date is not correctly formatted" },
+            { "DATA001", "%1$s (%2$s) contains an invalid date, should match %3$s", "Date is not valid" },
             { "DATA002", "%1$s (%3$s) should contain value %2$s", "Does not contain expected fixed value" },
             { "DATA003", "%1$s (%3$s) is not a legal value for extract type %2$s", "Extract Type Invalid" },
             { "DATA004", "%1$s (%2$s) should not be present", "Should not be present" },
             { "DATA005", "%1$s (%3$s) does not match the regular expression %2$s", "Does not match expected format" },
             { "DATA006", "%1$s (%3$s) should contain value %2$s", "Does not contain expected value: REDACTED" },
             { "DATA007", "%1$s (%4$s) is not in value set %2$s%3$s", "Does not contain values from the expected value set" },
-            { "DATA008", "%1$s (%3$s) exceeds maximum length %2$s", "Field exceeds maximum length" },
+            { "DATA008", "%1$s (%2$s) exceeds maximum length %3$s", "Field exceeds maximum length" },
+            { "DATA009", "%1$s (%2$s) contains an incorrectly formatted date, should match %3$s", "Date is not correctly formatted" },
         };
 
     /** Default version of CVRS to use */
     public static final String DEFAULT_VERSION = "2";
     private static final Set<String> ERROR_CODES = Collections.unmodifiableSet(new TreeSet<>(Arrays.asList(
-            "DATA001", "DATA002", "DATA003", "DATA004", "DATA005", "DATA006", "DATA007",
+            "DATA001", "DATA002", "DATA003", "DATA004", "DATA005", "DATA006", "DATA007", "DATA008", "DATA009",
             "BUSR001", "BUSR002", "BUSR003", "BUSR004", "BUSR005", "BUSR006", "BUSR007", "BUSR008", "BUSR009", "BUSR010",
             // It actually stops at 13, but we won't have to fix this later when we add more.
             "BUSR011", "BUSR012", "BUSR013", "BUSR014", "BUSR015", "BUSR016", "BUSR017", "BUSR018", "BUSR019", "BUSR020",
@@ -72,6 +100,8 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             // These actually stop at 1
             "HL7_001", "HL7_002", "HL7_003"
         )));
+
+    private static final String INVALID_DATE_FORMAT = "DATA009";
     /** Default max number of errors to allow */
     public static int DEFAULT_MAX_ERRORS = 1000;
 
@@ -185,6 +215,11 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                     cvrsFolder = hl7Folder = arg.length() == 2 ? "." : arg.substring(2);
                     continue;
                 }
+
+                if (hasArgument(arg,"-r[folder]", "Write the repoort to <file>.rpt at the specified folder (defaults to standard output)") ) {
+                    reportFolder = arg.length() == 2 ? "-" : arg.substring(2);
+                    continue;
+                }
                 if (hasArgument(arg,"-s[error code,...]|ALL", "Suppress errors (e.g., -sDATA001,DATA002), use -sALL to supress all messages")) {
                     // Suppress specific errors
                     String errors = StringUtils.substring(arg, 2);
@@ -212,21 +247,19 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                     continue;
                 }
 
-                try (Validator v = new Validator(
-                    Utility.getReader(arg),
-                    suppressErrors.equals(ERROR_CODES) ? null : new BeanValidator(suppressErrors, version),
-                    useDefaults
-                );) {
-                    v.setReport(getOutputStream(arg, reportFolder, "rpt"));
-                    v.setCvrs(getOutputStream(arg, cvrsFolder, "txt"));
-                    v.setHL7(getOutputStream(arg, hl7Folder, "hl7"));
-                    v.setMaxErrors(maxErrors);
-                    v.setName(arg);
-                    v.setIgnoringErrors(writeAll);
-                    v.getReport().printf("Validating %s%n", arg);
-
-                    totalErrors += v.validateFile().size();
+                String files[] = { arg };
+                if (arg.contains("*") || arg.contains("?")) {
+                    File f = new File(arg);
+                    Collection<File> list = FileUtils.listFiles(f.getParentFile(),  new WildcardFileFilter(f.getName()), null);
+                    files = new String[list.size()];
+                    int i = 0;
+                    for (File found: list) {
+                        files[i++] = found.getPath();
+                    }
                 }
+
+                totalErrors += validateFiles(reportFolder, maxErrors, suppressErrors, version, writeAll,
+                    useDefaults, hl7Folder, cvrsFolder, files);
             }
 
             return totalErrors;
@@ -234,6 +267,36 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             t.printStackTrace();
             return -1;
         }
+    }
+
+    private static int validateFiles(String reportFolder, int maxErrors, Set<String> suppressErrors,
+        String version, boolean writeAll, boolean useDefaults, String hl7Folder, String cvrsFolder, String[] files)
+        throws IOException {
+        int errors = 0;
+        for (String file: files) {
+            try (Validator v = new Validator(
+                Utility.getReader(file),
+                suppressErrors.equals(ERROR_CODES) ? null : new BeanValidator(suppressErrors, version),
+                useDefaults
+            );) {
+                v.setReport(getOutputStream(file, reportFolder, "rpt"));
+                v.setCvrs(getOutputStream(file, cvrsFolder, "txt"));
+                v.setHL7(getOutputStream(file, hl7Folder, "hl7"));
+                v.setMaxErrors(maxErrors);
+                v.setName(file);
+                v.setIgnoringErrors(writeAll);
+                v.getReport().printf("Validating %s%n", file);
+                if (!v.getReport().equals(System.out)) {
+                    System.out.printf("Validating %s%n", file);
+                }
+                errors += v.validateFile().size();
+            } catch (IOException ioex) {
+                System.err.printf("Error processing %s: %s%n", file, ioex.getMessage());
+                //ioex.printStackTrace();
+                errors += 1;
+            }
+        }
+        return errors;
     }
 
     /** Helper method to get a formatted message
@@ -268,9 +331,12 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             return System.err;
         }
 
+
         File f1 = new File(arg), f2 = Utility.getNewFile(arg, new File(folder), ext);
-        if (!f2.getParentFile().exists()) {
-            f2.getParentFile().mkdirs();
+        File dir = f2.getCanonicalFile().getParentFile();
+
+        if (!dir.exists()) {
+            dir.mkdirs();
         }
         // Don't overwrite the input file!
         if (f1.getCanonicalPath().equals(f2.getCanonicalPath())) {
@@ -335,7 +401,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     private List<CVRSEntry> errors = null;
 
     /** Summary of Errors */
-    private Map<String, Integer> errorSummary = new TreeMap<>();
+    private Map<String, ErrorSummary> errorSummary = new TreeMap<>();
 
     /** Headers in the tab delimited text file in order */
     private String[] headers;
@@ -371,6 +437,10 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
 
     /** If true, use default conversion rules for missing fields */
     private boolean useDefaults;
+
+    /** If true, reformat invalid but recognizable dates */
+    private boolean reformatDates = false;
+
     /**
      * Create a new Validator instance for the specified reader,
      * and validating using the specified BeanValidator instance.
@@ -381,20 +451,59 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      */
     public Validator(Reader reader, BeanValidator validator, boolean useDefaults) throws IOException {
         this.reader = Utility.getBufferedReader(reader);
+        String[] validHeaders = CVRSExtract.getHeaders(validator == null ? null : validator.getVersion());
         headers = Utility.readHeaders(this.reader);
+
+        errors = new ArrayList<>();
+
         if (HL7MessageParser.isMessageDelimiter(headers[0])) {
-            headers = CVRSExtract.getHeaders(validator == null ? null : validator.getVersion());
+            headers = validHeaders;
+        } else if (headers.length == 1) {
+            CVRSEntry e = new CVRSEntry(null, "FMT_001", "Header", "File is not tab delimited.\n" + headers[0] + "\n");
+            errors.add(e);
+            headers = headers[0].split(",");
+            reformatDates = true;  // Presume that dates need to be reformed.
         }
+
+        checkHeaders(validHeaders);
         this.validator = validator;
         parser = ParserFactory.newParser(this.reader, null, useDefaults);
         iterator = parser.iterator();
     }
 
     /**
-     * Forces a close of the underlying reader.
+     *  Verify the headers match the valid headers.
+     *  @param validHeaders The valid headers to check against.
+     */
+    private void checkHeaders(String[] validHeaders) {
+        // Normalize headers before check
+        for (int i = 0; i < headers.length;  i++) {
+            headers[i] = headers[i].toLowerCase();
+        }
+        List<String> goodHeaders = new ArrayList<>(Arrays.asList(validHeaders));
+        if (headers != validHeaders && !goodHeaders.containsAll(Arrays.asList(headers))) {
+            // Collect the bad headers.
+            List<String> badHeaders =
+                Arrays.asList(headers).stream()
+                    .filter(h -> !goodHeaders.contains(h)).collect(Collectors.toList());
+            CVRSEntry e = new CVRSEntry(null, "FMT_002", "Header", String.format("Input contains invalid headers: %s", badHeaders));
+            errors.add(e);
+            goodHeaders.removeAll(badHeaders);
+            headers = goodHeaders.toArray(new String[goodHeaders.size()]);
+        }
+    }
+
+    /**
+     * Forces a close of the underlying reader, and all ouput files
+     * that are not stderr or stdout.
      */
     @Override
     public void close() throws IOException {
+        Arrays.asList(getReport(), this.getHl7(), this.getCvrs()).stream().forEach( s -> {
+            if (s != null && !s.equals(System.out) && !s.equals(System.err)) {
+                s.close();
+            }
+        });
         reader.close();
     }
     /**
@@ -450,7 +559,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * Get the summary error report.
      * @return  A map of error codes to counts of errors found.
      */
-    public Map<String, Integer> getErrorSummary() {
+    public Map<String, ErrorSummary> getErrorSummary() {
         return Collections.unmodifiableMap(errorSummary);
     }
 
@@ -485,6 +594,13 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      */
     public String getName() {
         return name ;
+    }
+
+    /**
+     * @return the reformatDates
+     */
+    public boolean isReformatDates() {
+        return reformatDates;
     }
 
     /**
@@ -617,6 +733,13 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     }
 
     /**
+     * @param reformatDates the reformatDates to set
+     */
+    public void setReformatDates(boolean reformatDates) {
+        this.reformatDates = reformatDates;
+    }
+
+    /**
      * Set the stream where the validation report should be written or null
      * to skip this step.
      * @param outputStream  the stream where CVRS records should be written or null
@@ -681,20 +804,37 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         ++count;
         currentExtract = null;
         currentExtract = iterator.next();
-        errors = new ArrayList<>();
+        if (errors == null) {
+            errors = new ArrayList<>();
+        } else if (count > 1) {
+            // Don't clear header errors.
+            errors.clear();
+        }
         if (validator != null) {
             try {
                 validator.verifyBean(currentExtract);
-            } catch (CVRSValidationException e) {
+            } catch (CVRSValidationException ex) {
                 errorCount++;
-                e.setLine(currentExtract.getValues(headers));
-                e.setLineNumber(count);
-                updateSummary(e);
-                errors.addAll(e.getEntries());
-                throw e;
+                ex.setLine(currentExtract.getValues(headers));
+                ex.setLineNumber(count);
+                updateSummary(ex);
+                errors.addAll(ex.getEntries());
+                if (reformatDates ) {
+                    ex.getEntries().stream()
+                      .filter(e -> Validator.INVALID_DATE_FORMAT.equals(e.getCategory()))
+                      .forEach(e -> reformatDate(e) );
+                }
+                throw ex;
             }
         }
         return currentExtract;
+    }
+
+    private void reformatDate(CVRSEntry e) {
+        // Get the broken value
+        String value = currentExtract.getField(e.getPath());
+        value = value.replace("^([0-9]+)/([0-9]+)(/([0-9]+))?$", "$3-$1-$2");
+        currentExtract.setField(e.getPath(), value);
     }
 
     /**
@@ -786,11 +926,13 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @param entry The reported error.
      */
     private void updateSummary(CVRSEntry entry) {
-        Integer i = errorSummary.get(entry.getCategory());
-        if (i == null) {
-            i = Integer.valueOf(0);
+        String key = String.format("%-8s%s" , entry.getCategory(), entry.getPath());
+        ErrorSummary summaryRow = errorSummary.get(key);
+        if (summaryRow == null) {
+            errorSummary.put(key, summaryRow = new ErrorSummary(entry));
+        } else {
+            summaryRow.addOne();
         }
-        errorSummary.put(entry.getCategory(), i + 1);
     }
 
     /**
@@ -835,8 +977,9 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * Generate the summary output for a file
      */
     private void generateSummary() {
-        Map<String, Integer> summary = getErrorSummary();
-        int total = summary.values().stream().collect(Collectors.summingInt(s -> s));
+        Map<String, ErrorSummary> summary = getErrorSummary();
+        int total = summary.values().stream()
+                        .collect(Collectors.summingInt(s -> s == null ? 0 : s.count));
         if (getReport() != null) {
             getReport().printf("%s has %d errors in %d of %d records.%n",
                 getName(), total, getErrorCount(), getCount());
@@ -853,11 +996,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             }
         }
         if (getErrorCount() != 0 && getReport() != null) {
-            getReport().printf("%-8s%-8s%s%n", "Code", "Count", "Description");
-            for (Map.Entry<String, Integer> e: summary.entrySet()) {
+            getReport().printf("%-8s%-24s%-8s%-52s%s%n", "Code", "Field", "Count", "Description", "Example");
+            for (Entry<String, ErrorSummary> e: summary.entrySet()) {
                 String code = e.getKey();
-                String description = getErrorDescription(code);
-                getReport().printf("%-8s%5d   %s%n", code, e.getValue(), description);
+                ErrorSummary summaryRow = e.getValue();
+                String description = getErrorDescription(summaryRow.code);
+                getReport().printf("%-8s%-24s%5d   %-52s %5d %s%n",
+                    summaryRow.code, summaryRow.field,
+                    summaryRow.count, description, summaryRow.exampleLine, summaryRow.message);
             }
         }
     }
@@ -869,6 +1015,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      */
     private String getErrorDescription(String code) {
         String description = null;
+
         switch(code.substring(0,4)) {
         case "DATA":
             description =

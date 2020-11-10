@@ -25,8 +25,8 @@ public class TestCommandLine {
     @CsvSource( {
         "src/test/resources/testgood.txt,0,src/test/resources/testgood.txt.rpt,",
         "src/test/resources/testgood.hl7,0,src/test/resources/testgood.hl7.rpt,",
-        "src/test/resources/testerror.txt,183,src/test/resources/testerror.txt.rpt,",
-        "src/test/resources/testerror.hl7,183,src/test/resources/testerror.hl7.rpt,",
+        "src/test/resources/testerror.txt,176,src/test/resources/testerror.txt.rpt,",
+        "src/test/resources/testerror.hl7,176,src/test/resources/testerror.hl7.rpt,",
         "src/test/resources/testdefault.hl7,0,src/test/resources/testdefault.hl7.rpt,-d"
     })
 
@@ -41,13 +41,14 @@ public class TestCommandLine {
         Path dir = Files.createTempDirectory("cvrs");
         String outputDir = dir.toFile().getCanonicalPath();
         int errors = Validator.main1(command, outputDir);
-        assertEquals(errorCount, errors);
 
         // If a baseline file was provided, compare against it.
         if (!StringUtils.isEmpty(baseline)) {
             File outputFile = Utility.getNewFile(file, dir.toFile(), "rpt");
             compareFiles(outputFile, new File(baseline), TestCommandLine::ignoreTomorrow);
         }
+
+        assertEquals(errorCount, errors);
 
         try {
             FileUtils.deleteDirectory(dir.toFile());

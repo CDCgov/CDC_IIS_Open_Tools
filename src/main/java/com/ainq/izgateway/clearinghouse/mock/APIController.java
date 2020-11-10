@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ainq.izgateway.extract.model.TokenRequest;
+import com.ainq.izgateway.extract.model.TokenResponse;
+import com.ainq.izgateway.extract.model.UploadResponse;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
@@ -39,25 +41,6 @@ public class APIController {
     }
     Cache<String,TokenResponse> issued =
         CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.HOURS).softValues().weakKeys().build();
-    @JsonSerialize
-    public static class TokenRequest {
-        public String clientID;
-        public String clientSecret;
-        public String scopes[];
-    }
-    @JsonSerialize
-    public static class TokenResponse {
-        public String token;
-        public long expiration;
-    }
-
-    @JsonSerialize
-    public static class UploadResponse {
-        public String id;
-        public String[] validationErrors;
-        public String[] processingErrors;
-        public boolean truncated;
-    }
     private static final long TOKEN_DURATION = TimeUnit.HOURS.toMillis(1);
 
     @PostMapping(path="/token/get", consumes="application/json", produces="application/json")

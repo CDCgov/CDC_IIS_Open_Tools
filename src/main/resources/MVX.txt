@@ -1,5 +1,7 @@
 AAA (COVID-19 Manufacturer A)
 BBB (COVID-19 Manufacturer B)
+MOD Moderna US, Inc.
+### Codes below this line are not used for CVRS Extract ###
 AB  Abbott Laboratories
 ACA Acambis, Inc
 AD  Adams Laboratories, Inc.

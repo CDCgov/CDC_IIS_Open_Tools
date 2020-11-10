@@ -1,6 +1,9 @@
 900 (COVID-19 Vaccine A)
 901 (COVID-19 Vaccine B)
 902 (COVID-19 Vaccine C)
+207 SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 100mcg/0.5mL dose
+208 SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 30mcg/0.5mL dose
+### Other codes below this line not used for CVRS Extract ###
 143 Adenovirus, type 4 and type 7, live, oral
 54 adenovirus vaccine, type 4, live, oral
 55 adenovirus vaccine, type 7, live, oral
