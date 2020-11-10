@@ -17,7 +17,7 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.ainq.izgateway.clearinghouse.mock.APIController.TokenResponse;
+import com.ainq.izgateway.extract.model.TokenResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration

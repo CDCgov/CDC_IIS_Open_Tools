@@ -41,13 +41,14 @@ public class TestCommandLine {
         Path dir = Files.createTempDirectory("cvrs");
         String outputDir = dir.toFile().getCanonicalPath();
         int errors = Validator.main1(command, outputDir);
-        assertEquals(errorCount, errors);
 
         // If a baseline file was provided, compare against it.
         if (!StringUtils.isEmpty(baseline)) {
             File outputFile = Utility.getNewFile(file, dir.toFile(), "rpt");
             compareFiles(outputFile, new File(baseline), TestCommandLine::ignoreTomorrow);
         }
+
+        assertEquals(errorCount, errors);
 
         try {
             FileUtils.deleteDirectory(dir.toFile());

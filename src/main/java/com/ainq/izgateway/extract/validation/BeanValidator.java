@@ -171,10 +171,12 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                 }
                 break;
             case "nodups":
-                Pair<Integer, Integer> definingEvent = addEventId(field1.toUpperCase(), bean.hashCode(), counter);
+                String f1 = StringUtils.defaultString(field1);
+                Pair<Integer, Integer> definingEvent = addEventId(
+                    f1.toUpperCase(), bean.hashCode(), counter);
                 success = definingEvent == null || definingEvent.hashCode() == bean.hashCode();
                 parts[2] = parts[0];
-                field2 = Integer.toString(definingEvent == null ? event_id.get(field1.toUpperCase()).getValue() : definingEvent.getValue());
+                field2 = Integer.toString(definingEvent == null ? event_id.get(f1.toUpperCase()).getValue() : definingEvent.getValue());
                 break;
             case "no_time_travel":
                 success = StringUtils.isEmpty(field1) || field1.compareTo(tomorrow) < 0;
@@ -185,7 +187,7 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                 success = StringUtils.isEmpty(field1) || !StringUtils.isEmpty(field2);
                 break;
             case "<":
-                if (!StringUtils.isEmpty(field1)) {
+                if (!StringUtils.isEmpty(field1) && !StringUtils.isEmpty(field2)) {
                    success = field1.compareTo(field2) <= 0;  // Maybe it could be same day
                 }
                 break;

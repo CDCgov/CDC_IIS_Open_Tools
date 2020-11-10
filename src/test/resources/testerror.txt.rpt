@@ -13,10 +13,10 @@ src/test/resources/testerror.txt DATA001***date_1 2      ERROR  vax_series_compl
 src/test/resources/testerror.txt DATA001***date_1 2      ERROR  admin_type               DATA007 admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
 src/test/resources/testerror.txt DATA001***date_1 2      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
 src/test/resources/testerror.txt DATA001***date_1 2      ERROR  recip_dob                BUSR005 recip_dob (2015-08-26) is after admin_date (10/24/2020)
-src/test/resources/testerror.txt DATA001***date_2 3      ERROR  admin_date               DATA001 admin_date (2020-10) contains an invalid date, should match yyyy-MM-dd
-src/test/resources/testerror.txt DATA001***date_2 3      ERROR  admin_type               DATA007 admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
-src/test/resources/testerror.txt DATA001***date_2 3      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
-src/test/resources/testerror.txt DATA001***date_2 3      ERROR  admin_address_county     BUSR002 admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator
+src/test/resources/testerror.txt DATA009***date_2 3      ERROR  admin_date               DATA009 admin_date (2020-10) contains an incorrectly formatted date, should match yyyy-MM-dd
+src/test/resources/testerror.txt DATA009***date_2 3      ERROR  admin_type               DATA007 admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.txt DATA009***date_2 3      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.txt DATA009***date_2 3      ERROR  admin_address_county     BUSR002 admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator
 src/test/resources/testerror.txt DATA006***s_city 4      ERROR  recip_address_city       DATA006 recip_address_city (Not redacted) should contain value Redacted
 src/test/resources/testerror.txt DATA006***s_city 4      ERROR  admin_type               DATA007 admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
 src/test/resources/testerror.txt DATA006***s_city 4      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
@@ -46,7 +46,7 @@ src/test/resources/testerror.txt DATA007***ip_sex 10     ERROR  recip_address_co
 src/test/resources/testerror.txt DATA007_cvx      11     ERROR  cvx                      DATA007 cvx (XXX) is not in value set CVX[900, 901 ... 187, 188]
 src/test/resources/testerror.txt DATA007_cvx      11     ERROR  admin_type               DATA007 admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
 src/test/resources/testerror.txt DATA007_cvx      11     ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
-src/test/resources/testerror.txt DATA008***Length 12     ERROR  mvx                      DATA008 mvx (3) exceeds maximum length AAAA
+src/test/resources/testerror.txt DATA008***Length 12     ERROR  mvx                      DATA008 mvx (AAAA) exceeds maximum length 3
 src/test/resources/testerror.txt DATA008***Length 12     ERROR  mvx                      DATA007 mvx (AAAA) is not in value set MVX[AAA, BBB ... WA, ZLB]
 src/test/resources/testerror.txt BUSR001***county 13     ERROR  cvx                      REQD001 cvx is required for Vaccination events
 src/test/resources/testerror.txt BUSR001***county 13     ERROR  dose_num                 REQD001 dose_num is required for Vaccination events
@@ -196,11 +196,12 @@ BUSR009     1   recip_address_zip implies recip_address_county
 BUSR010     2   admin_address_zip implies admin_address_county
 BUSR011     1   recip_dob no_time_travel
 BUSR012     3   admin_date no_time_travel
-DATA001     3   Date is not correctly formatted
+DATA001     2   Date is not valid
 DATA004     1   Should not be present
 DATA005     6   Does not match expected format
 DATA006     9   Does not contain expected value: REDACTED
 DATA007    26   Does not contain values from the expected value set
 DATA008     1   Field exceeds maximum length
+DATA009     1   Date is not correctly formatted
 DNTS002    72   A field is present that should not be for Refusal
 REQD001    31   A required field is missing for Vaccination
