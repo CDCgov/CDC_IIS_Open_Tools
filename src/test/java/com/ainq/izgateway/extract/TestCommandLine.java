@@ -25,8 +25,8 @@ public class TestCommandLine {
     @CsvSource( {
         "src/test/resources/testgood.txt,0,src/test/resources/testgood.txt.rpt,",
         "src/test/resources/testgood.hl7,0,src/test/resources/testgood.hl7.rpt,",
-        "src/test/resources/testerror.txt,183,src/test/resources/testerror.txt.rpt,",
-        "src/test/resources/testerror.hl7,183,src/test/resources/testerror.hl7.rpt,",
+        "src/test/resources/testerror.txt,176,src/test/resources/testerror.txt.rpt,",
+        "src/test/resources/testerror.hl7,176,src/test/resources/testerror.hl7.rpt,",
         "src/test/resources/testdefault.hl7,0,src/test/resources/testdefault.hl7.rpt,-d"
     })
 

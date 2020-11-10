@@ -2,6 +2,7 @@ package com.ainq.izgateway.extract.sender;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -41,11 +42,28 @@ public class StreamConverter implements HttpMessageConverter<InputStream> {
         throws IOException, HttpMessageNotWritableException {
         byte buffer[] = new byte[4096];
         int length = 0;
-
-        while ((length = t.read(buffer)) > 0) {
-            outputMessage.getBody().write(buffer, 0, length);
+        boolean foundLf = false;
+        boolean testCR = true;
+        OutputStream body = outputMessage.getBody();
+        while ((length = t.read()) > 0) {
+            if (length == '\r') {
+                continue;
+            }
+            body.write(length);
         }
-        outputMessage.getBody().flush();
+        while ((length = t.read(buffer)) > 0) {
+
+            for (int i = 0; !foundLf && i < length; i++) {
+                if (buffer[i] == '\n') {
+                    foundLf = true;
+                    break;
+                }
+                // Convert first line (header) to Upper Case
+                buffer[i] = (byte) Character.toUpperCase(buffer[i]);
+            }
+            body.write(buffer, 0, length);
+        }
+        body.flush();
     }
 
 }

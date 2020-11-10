@@ -157,7 +157,7 @@ public class Sender implements WebMvcConfigurer, CommandLineRunner {
 
     private <R, B> R sendPost(String endpointUrl, HttpEntity<B> requestBody, Class<? extends R> clazz) {
         RestTemplate tokenTemplate = getRestTemplate();
-        String url = String.format("%s%s%s", base, base.endsWith("/") ? "" : "/", TOKEN_GEN_URL);
+        String url = String.format("%s%s%s", base, base.endsWith("/") ? "" : "/", endpointUrl);
 
         return tokenTemplate.postForObject(url, requestBody, clazz);
     }
