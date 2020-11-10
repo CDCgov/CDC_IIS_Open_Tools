@@ -74,6 +74,10 @@ public class ValueSetValidator extends SuppressibleValidator implements StringVa
             List<String> examples = new ArrayList<>();
             boolean elide = false;
             while ( (line = r.readLine()) != null) {
+                if (line.startsWith("##")) {
+                    // There is no more data to add for validation.
+                    break;
+                }
                 String parts[] = line.trim().split("\\s+");
                 if (parts[0].length() != 0) {
                     values.add(parts[0].toUpperCase());

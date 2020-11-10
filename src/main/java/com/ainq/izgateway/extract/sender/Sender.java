@@ -109,7 +109,8 @@ public class Sender implements WebMvcConfigurer, CommandLineRunner {
                 resp = uploadCVRSBatch(arg);
             }
             ObjectMapper m = new ObjectMapper();
-            m.writeValue(System.out, resp);
+
+            m.writerWithDefaultPrettyPrinter().writeValue(System.out, resp);
         }
     }
 
