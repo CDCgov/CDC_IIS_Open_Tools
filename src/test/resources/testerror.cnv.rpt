@@ -1,4 +1,5 @@
 Validating src/test/resources/testerror.txt
+File                             Vax_Event_Id     Line   Level  Field                    Error  Description
 src/test/resources/testerror.txt DATA001***ip_dob 1      ERROR  recip_dob                HL7_001 Message does not round trip at recip_dob, '2015-26-08' != ''
 src/test/resources/testerror.txt DATA001***date_1 2      ERROR  admin_date               HL7_001 Message does not round trip at admin_date, '10/24/2020' != ''
 src/test/resources/testerror.txt REQD001***issing 50     ERROR  vax_refusal              HL7_001 Message does not round trip at vax_refusal, '' != 'NO'

@@ -90,9 +90,10 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     }
 
     private Reporter consoleReporter = new Reporter() {
+        boolean reported = false;
         public void printDetailHeader() {
-            System.out.printf("Validating %s%n", getName());
-            getReport().format("%-32s %-16s %s%n", "File", "Vax_Event_Id", CVRSEntry.header());
+            reported = false;
+            getReport().printf("Validating %s%n", getName());
         }
 
         /**
@@ -103,6 +104,10 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
          */
         @Override
         public void printDetailRow(CVRSEntry entry) {
+            if (!reported) {
+                getReport().format("%-32s %-16s %s%n", "File", "Vax_Event_Id", CVRSEntry.header());
+                reported = true;
+            }
             getReport().format("%-32s %-16s %s%n",
                 StringUtils.abbreviateMiddle(getName(), "***", 32),
                 StringUtils.abbreviateMiddle(currentExtract.getVax_event_id(), "***", 16),
@@ -1111,23 +1116,18 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @throws IOException If there was an error reading the stream.
      */
     private List<CVRSEntry> validateFile() throws IOException {
-        boolean reported = false;
+        if (getReport() != null) {
+            reporter.printDetailHeader();
+        }
         while (hasNext()) {
             try {
                 validateOne();
                 report();
             } catch (CVRSValidationException ex) {
-                if (!reported) {
-                    if (getReport() != null) {
-                        reporter.printDetailHeader();
-                    }
-                    reported = true;
-                }
                 report();
             }
             allErrors.addAll(errors);
         }
-
         generateSummary();
         return allErrors;
     }
