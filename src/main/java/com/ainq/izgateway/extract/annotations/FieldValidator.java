@@ -40,6 +40,8 @@ public @interface FieldValidator {
 
     /**
      * The maximum length of the field
+     *
+     * @return The maximum length of the field.
      */
     int maxLength() default 255;
 }

@@ -298,6 +298,9 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     /**
      * Main entry point for Command Line.
      * @param args  Command line arguments
+     * @param reportFolder The folder where reports should be placed.
+     * If reportFolder is set to "-", reports will be written System.out.  If set to "--" reports will be written to System.err;
+     * @return The number of validation errors found, or 0 if none. Values less than 0 indicate an execution error (e.g., missing input file).
      * @throws IOException  If a file could not be read, written or found.
      */
     public static int main1(String args[], String reportFolder) throws IOException {
@@ -625,6 +628,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      *
      * @param reader    The stream to read data from.
      * @param validator The BeanValidator used to valid the CVRSExtract (can be null, which skips most validation).
+     * @param useDefaults If true, use default values for missing fields in HL7 messages.
      * @throws IOException  If an error occured while reading content (headers)
      */
     public Validator(Reader reader, BeanValidator validator, boolean useDefaults) throws IOException {

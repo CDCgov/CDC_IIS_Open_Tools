@@ -17,7 +17,7 @@ public interface ExtractTypeBasedValidator {
     ExtractType getExtractType();
     /**
      * Set the Extract Type to validate for
-     * @param The Extract Type to validate
+     * @param type The Extract Type to validate
      * @return  this for fluent operation
      */
     ExtractTypeBasedValidator setExtractType(ExtractType type);

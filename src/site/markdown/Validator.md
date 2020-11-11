@@ -321,5 +321,7 @@ these tools for their environment.
 
 2. CSV Conversion has not been fully tested.  Consider it to be an unsupported feature
    because the CRVS Extract is intended to be exchanged using tab-delimited format.
+   See https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/issues/18
 
 3. JSON output has not been fully tested.
+   See https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/issues/19

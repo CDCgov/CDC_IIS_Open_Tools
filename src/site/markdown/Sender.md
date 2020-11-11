@@ -27,10 +27,11 @@ file ...
 ## Known Issues
 1. Sender does not yet have a capability to configure the X.509 certificate or
 the trust store used for sending, so this utility cannot yet be used to send to a
-production environment.
+production environment. See https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/issues/16
 
 2. extract-validator contains both the Sender console application and a Mock server (not yet complete),
 both of which rely on Spring Boot.  As a result, running Sender will also launch a local instance of Jetty
 listening on port 8080.  If other services are already using port 8080, Sender will fail to load.
 Until these applications are refactored into their own projects, this problem will prevent two instances
 of Sender (or one instance when another application is listening on port 8080) from running at the same time.
+See https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/issues/17
