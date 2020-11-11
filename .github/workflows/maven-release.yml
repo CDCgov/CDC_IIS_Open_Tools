@@ -30,21 +30,26 @@ jobs:
       - name: Upload jar
         uses: actions/upload-artifact@v2
         with:
-          path: extract-validator.jar
+          name: extract-validator
+          path: target/extract-validator.jar
       - name: Upload sources
         uses: actions/upload-artifact@v2
         with:
+          name: extract-validator-sources
           path: target/extract-validator-sources.jar
       - name: Upload javadoc
         uses: actions/upload-artifact@v2
         with:
+          name: extract-validator-javadoc
           path: target/extract-validator-javadoc.jar
       - name: Upload library
         uses: actions/upload-artifact@v2
         with:
+          name: lib
           path: target/lib/
       - name: Upload documentation
         uses: actions/upload-artifact@v2
         with:
+          name: site
           path: target/site/
         
