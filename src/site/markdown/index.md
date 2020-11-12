@@ -14,10 +14,10 @@ included in this site:
 * [CDC CVRS_What's New in Version 2 (Word)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_1.0.0/doc/CDC_CVRS_What's_New_in_Version_2_CLEARED_20201028.docx)
 * [CDC CVRS Instructions v2 (Word)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_1.0.0/doc/CDC_CVRS_Instructions_v2_CLEARED_20201028.docx)
 
-## Scripts
+## [Scripts](Upload.html)
 The [scripts](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_1.0.0/scripts) folder contains scripts that can be used to support file uploads.
 These scripts rely on [CURL](https://curl.haxx.se/) (pronounced either as C-U-R-L or
-"curl" as in the wave curls), a widely availablee command line tool for interacting
+"curl" as in the wave curls), a widely available command line tool for interacting
 with WEB APIs.
 
 ## Mirth Channel (TBD)
@@ -27,7 +27,7 @@ testing, and a sender that will send files dropped into a folder to the specifie
 ## Java Code
 Java code and documentation are included that support Validation of flat files and HL7 Version 2 Messages.
 
-### Validator
+### [Validator](Validator.html)
 
 The Validator is a command line tool and collection of Java classes that can be used
 to support validation and conversion.
@@ -35,9 +35,13 @@ to support validation and conversion.
 Validator is implemented in the `com.ainq.izgateway.extract.Validator` class and has
 a command line interface described in the [Validator](Validator.html) description page.
 
-### Sender
+### [Sender](Sender.html)
 Sender is a simple file uploader that will send CVRSExtract files to the COVID-19 Clearinghouse Test
 (or other designated) endpoint.  It requires test endpoint credentials in order to function.
+
+### [Mock](Mock.html)
+Mock is a mock server implementing parts of the COVID-19 Clearinghouse API to support automation testing
+within the local system.
 
 ## SOAP Message Sender
 

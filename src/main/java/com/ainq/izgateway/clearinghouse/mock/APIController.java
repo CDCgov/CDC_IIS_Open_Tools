@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -105,21 +106,25 @@ public class APIController {
 
         String files[] = { inputData.getAbsolutePath() };
 
-        Validator.validateFiles(
-            ".",    // Put the report in the same folder as the input
-            Validator.DEFAULT_MAX_ERRORS,   // Use default for max errors
-            Collections.emptySet(),   // Don't suppress any errors
-            Validator.DEFAULT_VERSION,  // Use the default version
-            false,  // Don't write invalid data during conversion (not really applicable)
-            true,   // Do use JSON for the output report
-            false,  // Don't use defaults foor conversion (not really applicable)
-            null,   // Where to put converted HL7 outputs (not applicable)
-            null,   // Where to put converted CVRS outputs (not applicable)
-            files   // The file to  convert
-        );
+        try {
+            Validator.validateFiles(
+                ".",    // Put the report in the same folder as the input
+                Validator.DEFAULT_MAX_ERRORS,   // Use default for max errors
+                Collections.emptySet(),   // Don't suppress any errors
+                Validator.DEFAULT_VERSION,  // Use the default version
+                false,  // Don't write invalid data during conversion (not really applicable)
+                true,   // Do use JSON for the output report
+                false,  // Don't use defaults foor conversion (not really applicable)
+                null,   // Where to put converted HL7 outputs (not applicable)
+                null,   // Where to put converted CVRS outputs (not applicable)
+                files   // The file to  convert
+            );
 
-        File f = Utility.getNewFile("cvrs.in", outputFolder, "rpt.json");
-        response = translateResponse(f);
+            File f = Utility.getNewFile("cvrs.in", outputFolder, "rpt.json");
+            response = translateResponse(f);
+        } finally {
+            FileUtils.deleteDirectory(outputFolder);
+        }
         return response;
     }
 

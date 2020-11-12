@@ -456,7 +456,6 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @param useDefaults   Whether or not to use HL7 Message Defaults for missing segments
      * @param hl7Folder Where to put converted HL7 Messages
      * @param cvrsFolder Where to put converted CVRS Tab Delimited Output
-     * @param out   Where to redirect the output report to
      * @param files The files to process
      * @return  The number of errors found
      * @throws IOException  If a read error occurs

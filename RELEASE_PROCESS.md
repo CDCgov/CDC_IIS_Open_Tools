@@ -12,20 +12,18 @@
 6. Commit these changes
 7. Verify the build one more time after making these changes
 ```
-   mvn clean package site
+   mvn clean test package site
 ```
 8. Test the documentation created in target\site
    1. Verify that all links work
    2. Verify that all content points to the right version in GitHub
-9. ZIP the documentation site using 7Z, WINZIP, jar or other archiving utility
-```
-   7z a extract-validator-site.zip site
-```
- -OR-
-```
-  jar -M -c -f extract-validator-site-1.0.0betax.zip site
-```
-10. Rename the following files in the target folder:
+9. Download the saved artifacts from the Release
+[action](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/actions)
+into a tempory folder.
+
+10. Rename the following files where VERSION is the version number for the release being
+prepared.
+
 * extract-validator.jar extract-validator-VERSION.jar
 * extract-validator-javadoc.jar extract-validator-javadoc-VERSION.jar
 * extract-validator-sources.jar extract-validator-sources-VERSION.jar
@@ -34,7 +32,7 @@
 11. Create a New Release in GitHub named VERSION where VERSION is the version number for the release
 12. Set the tag to VERSION for the release
 13. Add the renamed files from step 10 to the release
-14. Copy the contents of src/site/markdown/RELEASE_NOTES.md to the Release Notes in GitHub
+14. Copy the contents describing this release found in src/site/markdown/RELEASE_NOTES.md to the Release Notes in GitHub
 15. Publish the Release
 16. Merge changes back to master using a pull request.
 17. Change the VERSION in POM.xml to the next release number + SNAPSHOT in the Master Branch
