@@ -5,37 +5,78 @@ to support validation.
 
 Validator is implemented in the `com.ainq.izgateway.extract.Validator` class.
 
+**New features are marked in bold**
+
 ## Usage
 ```
     $ java -jar extract-validator.jar [options]? [files] ...
 ```
 
-### Options
+### Conversion Options
+The following options enable conversion to different file formats. NOTE: There is no
+need to specify the input file format, as this is automatically detected.
+
 -7[folder]
-: Write HL7 Message Format to files in the specified output folder. The file
+: Convert to HL7 Message Format to files in the specified output folder. The file
 will be named the same as the input file, but will have the .hl7 extension.
 To write the HL7 message to standard output, use -7-
 To write the HL7 message to standard error output, use -7--
 
 -c[folder]
-: Write Tab Delimited Format from files.  Uses .txt as the extension
+: Convert to Tab Delimited Format to files in the specified output folder.  Uses .txt as the extension
 and otherwise works like -7 above.
 
 -b[folder]
-: Write both HL7 Message and Tab Delimited format output files.
-
--i
-: Write all inputs to output, ignoring errors. Use with -b, -c, or -7 options above.
--I
-: Write only the inputs that are valid to the output (stop ignoring errors).
+: Convert to both HL7 Message and Tab Delimited format output files.
 
 -n
-: Turn off output writing.
+: No conversions.
+
+-i
+: Convert all input records to the output, ignoring errors. Use with -b, -c, or -7 options above.
+-I
+: Convert only the inputs that are valid to the output (stop ignoring errors).
+
+**-d**
+: **Enable default value processing for HL7 Message Conversion**
+: This option will replace values not provided in HL7 messages with UNK (or other
+appropriate value) to report unknown values.
+
+**-D**
+: **Disable default value processing for HL7 Message Conversion**
+: This option will not populate empty values in the message with UNK.
+
+### Reporting Options
+
+**-r[folder]**
+: **Specify the folder where report files will be placed.  Uses .rpt as the extension**
+**for report files in text format or .rpt.json in JSON format.**
+
+**-j**
+: **Write the report in JSON format suitable for use with other applications**
+
+**-J**
+: **Revert to reporting in text format (default behavior)**
+
+-s[error code,...]|ALL
+: Suppress validation for the specified errors (e.g., -sDATA001,DATA002)
+: Use -sALL to supress all messages
+
+-S[error code,...]|ALL
+: Stop suppressing validation for the specified errors (e.g., -sDATA001,DATA002)
+
+
+### Version Control
 
 -v1
 : Use Version 1 CVRS Validation Tables
--v1
+
+-v2
 : Use Version 2 CVRS Validation Tables
+
+### Scripting and Debugging
+The following options make it easy to quickly modify scripts to turn on/off
+specific parts of the command line processing.
 
 -e
 : Exit, ignoring further command line arguments
@@ -46,35 +87,34 @@ and otherwise works like -7 above.
 -K
 : End a comment
 
--s[error code,...]|ALL
-: Suppress validation for the specified errors (e.g., -sDATA001,DATA002)
-: Use -sALL to supress all messages
+### Input Files
+file ...
+: One or more HL7 V2 VXU Message or Tab Delimited Files
 
--S[error code,...]|ALL
-: Stop suppressing validation for the specified errors (e.g., -sDATA001,DATA002)
+: if file is -, the standard input will be validated. This enables Validator
+to test output from another application when used with pipes on the command line.
+```
+   $ command-to-produce-extract | java -jar extract-validator.jar [options] -
+```
 
--d
-: Enable default value processing for HL7 Message Conversion
+: The type of file will automatically detected from its content.
 
--D
-: Disable default value processing for HL7 Message Conversion
+: **CSV is now a supported input format.**  This was done to enable validation
+of CSV files being contributed from various sources.  When the input format is CSV
+dates in the MM/DD/YYYY format will be accepted as well as in YYYY-MM-DD format.
 
-file ... One ore more HL7 V2 VXU Message or Tab Delimited Files
+: Tab Delimited Files must conform to the CDC CVRS Tab Delimited Format
 
-The type of file will automatically detected from its content.
-
-Tab Delimited Files must conform to the CDC CVRS Tab Delimited Format
-
-HL7 VXU Message Files can contain a single HL7 V2 Message, multiple messages, and may
+: HL7 VXU Message Files can contain a single HL7 V2 Message, multiple messages, and may
 be formatted as an HL7 Batch using FHS, FTS, BHS and BTS Segments.
 
-Each HL7 V2 Segment must be terminated by a newline or carriage-return or
+: Each HL7 V2 Segment must be terminated by a newline or carriage-return or
 carriage-return/newline pair of characters.
 
-Messages in the file are delimited by HL7 Segments (MHS, FHS, BHS, BTS and BHS segments).
+: Messages in the file are delimited by HL7 Segments (MHS, FHS, BHS, BTS and BHS segments).
 File and Batch Header and Trailer segments are ignored.
 
-## Output
+## Text Output
 Output generated by this tool contains a detailed report followed by a summary report for each
 file that is validated.
 
@@ -113,90 +153,246 @@ The last line of the detail report indicates the total number of errors found,
 the total number of records with errors, and the total number of records read.
 
 ### Summary Report
-The Summary report lists the error codes, counts of errors found for that code, and a general description
-of the problem reported.
+The Summary report lists the error codes, field name, counts of errors, a
+general description of the problem reported, and the line number and error message for
+first example where the problem appears for that error and field combination.
 
 ```
-Code    Count   Description
-BUSR001    27   recip_address_county in recip_address_state FIPS
-BUSR002    43   admin_address_county in admin_address_state FIPS
-BUSR003     3   recip_address_zip in recip_address_state STATE
-BUSR009    65   recip_address_zip implies recip_address_county
-DATA005   100   Does not match expected format
-DATA007    75   Does not contain values from the expected value set
-HL7_001    15   Message does not round trip (possibly due to input errors).
-REQD001   157   A required field is missing for Vaccination
-REQD002     6   A required field is missing for Refusal
+Code    Field                   Count   Description                                         Example
+BUSR001 recip_address_county       12   recip_address_county in recip_address_state FIPS         1 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+BUSR002 admin_address_county        4   admin_address_county in admin_address_state FIPS         3 admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator
+BUSR003 recip_address_zip           2   recip_address_zip in recip_address_state STATE          15 recip_address_zip (1529) does not match recip_address_state (MI) for Recipient
+BUSR004 admin_address_zip           2   admin_address_zip in admin_address_state STATE          15 admin_address_zip (1529) does not match admin_address_state (MI) for Vaccine Administrator
+BUSR005 recip_dob                   5   recip_dob < admin_date                                   2 recip_dob (2015-08-26) is after admin_date (10/24/2020)
+BUSR007 recip_address_zip           1   recip_address_zip implies recip_address_state           18 If recip_address_zip (48504) is present, recip_address_state () should be present for Recipient
+BUSR008 admin_address_zip           1   admin_address_zip implies admin_address_state           19 If admin_address_zip (49053) is present, admin_address_state () should be present for Vaccine Administrator
+BUSR009 recip_address_zip           1   recip_address_zip implies recip_address_county          20 If recip_address_zip (49964) is present, recip_address_county () should be present for Recipient
+BUSR010 admin_address_zip           2   admin_address_zip implies admin_address_county          20 If admin_address_zip (49053) is present, admin_address_county () should be present for Vaccine Administrator
+BUSR011 recip_dob                   1   recip_dob no_time_travel                                22 If recip_dob (2032-11-01) is present it should be less than tomorrow (DON'T CARE)
+BUSR012 admin_date                  3   admin_date no_time_travel                               22 If admin_date (2022-10-04) is present it should less than tomorrow (DON'T CARE)
+DATA001 admin_date                  1   Date is not valid                                        2 admin_date (10/24/2020) contains an invalid date, should match yyyy-MM-dd
+DATA001 recip_dob                   1   Date is not valid                                        1 recip_dob (2015-26-08) contains an invalid date, should match yyyy-MM-dd|yyyy-MM
+DATA004 pprl_id                     1   Should not be present                                    6 pprl_id (Present) should not be present
 ```
 
-### Error Codes
+## JSON Output
+When used with the -j flag, output appears in JSON format.
+
+This report includes the validated file name, details for each error, the total number
+of errors found, the number of records with one or more errors, and the total number
+of records read. If conversion is being perform, the number of tab-delimited CVRS records,
+or the number of HL7 messages written are also provided.
+
+A brief listing of the top level elements of the report are shown below:
+```
+{
+    "filename": "src\\test\\resources\\testerror.txt",
+    "detail": [ ... ],
+    "totalErrors": 176,
+    "failedRecords": 52,
+    "totalRecords": 52,
+    "cvrsWritten": 0,
+    "hl7Written": 0,
+    "summary": [ ... ]
+}
+```
+### Detailed Report Items
+Detail line items are provided in the "detail" entry above.
+This is an array of records which contains one detail entry for each detected error.
+Details include the vaccination event identifier, the line number where the error was
+found, the error code, affected field, and error level, and the error message describing
+the problem with value in error.
+
+```
+    {
+        "vax_event_id": "DATA001_recip_dob",
+        "line": 1,
+        "code": "DATA001",
+        "field": "recip_dob",
+        "level": "ERROR",
+        "message": "recip_dob (2015-26-08) contains an invalid date, should match yyyy-MM-dd|yyyy-MM"
+    },
+```
+
+### Summary Report Items
+Summary line items organize the detailed report sorted by error code and field in error,
+and include the number of errors like this encountered in the file, a description
+of the problem, and all examples of the data in error (enabling ready construction of
+a collapsible view of the summary in HTML).
+
+This is illustrated below.
+```
+    "summary": [
+        {
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "count": 2,
+            "description": "recip_address_county in recip_address_state FIPS",
+            "examples": [
+                {
+                    "line": 1,
+                    "vax_event_id": "DATA001_recip_dob",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 2,
+                    "vax_event_id": "DATA001_admin_date_1",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                }
+        }
+    ]
+```
+## Error Codes
 The sections below list the reported error codes and their meaning.
 Other error codes indicate an abnormal condition (an uncaught exception) and given the exception name for the code.
 
-#### DATA Errors
+### DATA Errors
 DATA Error codes denote conditions where a field failed to meet data type validation criteria.
 
-DATA001: Invalid Date
-DATA002: Does not match an expected fixed value (not used for anything at this point)
-DATA003: Does not contain expected value from (D|I|P) (only used for ext_type)
-DATA004: Should not be present (applies to pprl_id)
-DATA005: Does not match expected format
-DATA006: Does not contain expected value (Redacted)
-DATA007: Is not in the expected Value Set
+DATA001
+: Invalid Date
+
+DATA002
+: Does not match an expected fixed value (not used for anything at this point)
+
+DATA003
+: Does not contain expected value from (D|I|P) (only used for ext_type)
+
+DATA004
+: Should not be present (applies to pprl_id)
+
+DATA005
+: Does not match expected format
+
+DATA006
+: Does not contain expected value (Redacted)
+
+DATA007
+: Is not in the expected Value Set
+
+DATA008
+: Field exceeds maximum length
+
+DATA009
+: Date is not correctly formatted
+
+### Format Errors
+**FMT_ Error codes indicate a problem in the file format.**
+
+FMT_001
+: File is not tab delimited.
+
+The file is not tab delimited (may be a CSV file)
+
+FMT_002
+: Input contains invalid headers: [ admin_type]
+
+One of the header fields is mispelled, invalid or contains spaces
+
+FMT_003
+: File is not a CVRS
+
+File cannot be parsed in CVRS Format
 
 ### Missing Required data
 REQD Error codes indicate that required data was not provided for an event (e.g., Vaccination, Refusal, Missed Appointment)
 
-REQD001: Required for Missed Appointment (not reported in V2)
-REQD002: Required for Refusal
-REQD003: Required for Vaccination
+REQD001
+: Required for Missed Appointment (not reported in V2)
+
+REQD002
+: Required for Refusal
+
+REQD003
+: Required for Vaccination
+
 
 ### Do Not Send Data
 DNTS Error codes indicate that data was provided that was marked as do not send for an event.
 
-DNTS001: Do not send for Missed Appointment (not reported in V2)
-DNTS002: Do not send for Refusal
-DNTS003: Do not send for Vaccination (not used)
+DNTS001
+: Do not send for Missed Appointment (not reported in V2)
+
+DNTS002
+: Do not send for Refusal
+
+DNTS003
+: Do not send for Vaccination (not used)
+
 
 ### Business Rule Validations
 BUSR Error codes indicate that one or more cross-field business rules failed validation.
 
-BUSR001:  FIPS County and State code should match for recipient address.
-BUSR002:  FIPS County and State code should match for admin address.
-BUSR003:  ZIP Code and State code should match for recipient address.
-BUSR004:  ZIP Code and State code should match for admin address.
-BUSR005:  Date of birth should be less than administration date.
-BUSR006:  vax_refusal and recip_missed_appt cannot both be yes (not active in V2)
-BUSR007:  If a Zip code is present, county code should also be present for recipient address (this is a warning only)
-BUSR008:  If a Zip code is present, state should also be present for recipient address (this is a warning only)
-BUSR009:  If a Zip code is present, county code should also be present for admin address (this is a warning only)
-BUSR010:  If a Zip code is present, state should also be present for admin address (this is a warning only)
-BUSR011:  Recipient date of birth should be less than tomorrow’s date.
-BUSR012:  Admin date should be less than tomorrow’s date.
-BUSR013:  vax_event_id should not be duplicated in any batch.
+BUSR001
+:  FIPS County and State code should match for recipient address.
+
+BUSR002
+:  FIPS County and State code should match for admin address.
+
+BUSR003
+:  ZIP Code and State code should match for recipient address.
+
+BUSR004
+:  ZIP Code and State code should match for admin address.
+
+BUSR005
+:  Date of birth should be less than administration date.
+
+BUSR006
+:  vax_refusal and recip_missed_appt cannot both be yes (not active in V2)
+
+BUSR007
+:  If a Zip code is present, county code should also be present for recipient address (this is a warning only)
+
+BUSR008
+:  If a Zip code is present, state should also be present for recipient address (this is a warning only)
+
+BUSR009
+:  If a Zip code is present, county code should also be present for admin address (this is a warning only)
+
+BUSR010
+:  If a Zip code is present, state should also be present for admin address (this is a warning only)
+
+BUSR011
+:  Recipient date of birth should be less than tomorrow's date.
+
+BUSR012
+:  Admin date should be less than tomorrow's date.
+
+BUSR013
+:  vax_event_id should not be duplicated in any batch.
 
 ### HL7 Conversion/Parsing Errors
 HL7_ Error codes indicate that an error was detected converting to HL7 Format at the specified field.
 
-HL7_001: Message does not round trip (content from Tab Delimited format converted to HL7 and back is not the same)
-HL7_002: Missing required value
-HL7_003: HL7 Parsing Error (usually on dates that are not formatted correctly)
+HL7_001
+: Message does not round trip. Content from Tab Delimited format converted to HL7 and back is not the same
+
+HL7_003
+: HL7 Parsing Error. Usually occurs on dates that are not formatted correctly
 
 ## Exit Codes
 If all records validated successfully, the program will return an exit code of 0.
-If one or more records had a validation error or warning, the progream will return an exit code of 1.
+If one or more records had a validation error or warning, the program will return an exit code **indicating**
+**the number of errors found**.
 If an exception occurs that causes program termination, an exit code of < 1 will be returned to indicate
 an execution error.
 
-## Logging
-These tools use HL7 HAPI V2 for Conversion to HL7 V2 Messages.  Those tools rely upon SLF4J for logging.
+## Known Issues
+1. Validator uses HL7 HAPI V2 for reading and converting HL7 V2 Messages. Those libraries rely upon SLF4J for logging.
 While using these tools from the command line, you may see the following reported in the standard error stream:
 ```
 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 ```
-
 This is completely harmless.  We have not selected a logger binding so that these tools may be used with
 other services that will provide such a binding, without forcing users of this software to reconfigure
 these tools for their environment.
+
+2. CSV Conversion has not been fully tested.  Consider it to be an unsupported feature
+   because the CRVS Extract is intended to be exchanged using tab-delimited format.
+   See https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/issues/18
+
+3. JSON output has not been fully tested.
+   See https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/issues/19

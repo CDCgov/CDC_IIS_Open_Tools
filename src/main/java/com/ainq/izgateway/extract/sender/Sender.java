@@ -87,6 +87,7 @@ public class Sender implements WebMvcConfigurer, CommandLineRunner {
             System.err.println("Nothing to do!");
         }
         String line = null;
+        boolean errors = false;
         for (String arg: args) {
             // Examine the file to determine if
             // 1. It can be read?
@@ -97,9 +98,15 @@ public class Sender implements WebMvcConfigurer, CommandLineRunner {
                 line = new String(data, 0, len);
             } catch (FileNotFoundException fnex) {
                 System.err.printf("Cannot find %s%n", arg);
+                errors = true;
                 continue;
             } catch (IOException ioex) {
                 System.err.printf("Error reading %s%n", arg);
+                errors = true;
+                continue;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                errors = true;
                 continue;
             }
             UploadResponse resp = null;
@@ -112,6 +119,7 @@ public class Sender implements WebMvcConfigurer, CommandLineRunner {
 
             m.writerWithDefaultPrettyPrinter().writeValue(System.out, resp);
         }
+        System.exit(errors ? -1 : 0);
     }
 
     @Bean

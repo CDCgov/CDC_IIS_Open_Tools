@@ -381,7 +381,9 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                     if (parts.length > 3) {
                         stateToZip.put(parts[0], parts[3]);
                     }
-                    stateToCounty.put(parts[0], parts[2]);
+                    if (parts.length > 2) {
+                        stateToCounty.put(parts[0], parts[2]);
+                    }
                 }
             } catch (IOException e) {
                 throw new RuntimeException("Cannot read STATE.txt Resource");

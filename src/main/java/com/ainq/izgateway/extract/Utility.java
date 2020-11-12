@@ -61,10 +61,19 @@ public class Utility {
      * @throws IOException  If an IO Error occured while reading.
      */
     public static String[] readHeaders(BufferedReader r) throws IOException {
+        // We read into a fixed size buffer in case someone
+        // sends data that doesn't have any new lines.  The CVRS
+        // header currently fits into 640 bytes.
         r.mark(1024);
-        String header = r.readLine();
+        char buffer[] = new char[1024];
+        if (r.read(buffer) < 0) {
+            return null;
+        }
+        String header = new String(buffer);
+        // Get the actual header line.
+        header = StringUtils.substringBefore(header, "\n").replace("\r", "");
         r.reset();
-        return header.split("\\t");
+        return header == null ? null : header.split("\\t");
     }
 
     /**

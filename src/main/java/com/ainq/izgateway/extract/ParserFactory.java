@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.Set;
 
 import com.ainq.izgateway.extract.validation.BeanValidator;
@@ -112,6 +113,9 @@ public class ParserFactory extends CSVParser {
         br.mark(1024);
         String line = br.readLine();
         br.reset();
+        if (line == null) {
+            return Collections.emptyList();
+        }
         if (HL7MessageParser.isMessageDelimiter(line)) {
             // This is an HL7 Message, create a parser for HL7
             return new HL7MessageConverter(br, useDefaults, validator);
