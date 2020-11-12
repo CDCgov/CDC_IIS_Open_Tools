@@ -53,10 +53,10 @@ appropriate value) to report unknown values.
 **for report files in text format or .rpt.json in JSON format.**
 
 **-j**
-: **Write the report in JSON format suitable for use with other applications***
+: **Write the report in JSON format suitable for use with other applications**
 
 **-J**
-: **Revert to reporting in text format *default behavior)**
+: **Revert to reporting in text format (default behavior)**
 
 -s[error code,...]|ALL
 : Suppress validation for the specified errors (e.g., -sDATA001,DATA002)
@@ -87,8 +87,15 @@ specific parts of the command line processing.
 -K
 : End a comment
 
+### Input Files
 file ...
 : One or more HL7 V2 VXU Message or Tab Delimited Files
+
+: if file is -, the standard input will be validated. This enables Validator
+to test output from another application when used with pipes on the command line.
+```
+   $ command-to-produce-extract | java -jar extract-validator.jar [options] -
+```
 
 : The type of file will automatically detected from its content.
 
@@ -242,63 +249,127 @@ Other error codes indicate an abnormal condition (an uncaught exception) and giv
 ### DATA Errors
 DATA Error codes denote conditions where a field failed to meet data type validation criteria.
 
-DATA001: Invalid Date
-DATA002: Does not match an expected fixed value (not used for anything at this point)
-DATA003: Does not contain expected value from (D|I|P) (only used for ext_type)
-DATA004: Should not be present (applies to pprl_id)
-DATA005: Does not match expected format
-DATA006: Does not contain expected value (Redacted)
-DATA007: Is not in the expected Value Set
-DATA008: Field exceeds maximum length
-DATA009: Date is not correctly formatted
+DATA001
+: Invalid Date
+
+DATA002
+: Does not match an expected fixed value (not used for anything at this point)
+
+DATA003
+: Does not contain expected value from (D|I|P) (only used for ext_type)
+
+DATA004
+: Should not be present (applies to pprl_id)
+
+DATA005
+: Does not match expected format
+
+DATA006
+: Does not contain expected value (Redacted)
+
+DATA007
+: Is not in the expected Value Set
+
+DATA008
+: Field exceeds maximum length
+
+DATA009
+: Date is not correctly formatted
 
 ### Format Errors
 **FMT_ Error codes indicate a problem in the file format.**
 
-FMT_001: File is not tab delimited.
-> The file is not tab delimited (may be a CSV file)
-FMT_002: Input contains invalid headers: [ admin_type]
-> One of the header fields is mispelled, invalid or contains spaces
+FMT_001
+: File is not tab delimited.
+
+The file is not tab delimited (may be a CSV file)
+
+FMT_002
+: Input contains invalid headers: [ admin_type]
+
+One of the header fields is mispelled, invalid or contains spaces
+
+FMT_003
+: File is not a CVRS
+
+File cannot be parsed in CVRS Format
 
 ### Missing Required data
 REQD Error codes indicate that required data was not provided for an event (e.g., Vaccination, Refusal, Missed Appointment)
 
-REQD001: Required for Missed Appointment (not reported in V2)
-REQD002: Required for Refusal
-REQD003: Required for Vaccination
+REQD001
+: Required for Missed Appointment (not reported in V2)
+
+REQD002
+: Required for Refusal
+
+REQD003
+: Required for Vaccination
+
 
 ### Do Not Send Data
 DNTS Error codes indicate that data was provided that was marked as do not send for an event.
 
-DNTS001: Do not send for Missed Appointment (not reported in V2)
-DNTS002: Do not send for Refusal
-DNTS003: Do not send for Vaccination (not used)
+DNTS001
+: Do not send for Missed Appointment (not reported in V2)
+
+DNTS002
+: Do not send for Refusal
+
+DNTS003
+: Do not send for Vaccination (not used)
+
 
 ### Business Rule Validations
 BUSR Error codes indicate that one or more cross-field business rules failed validation.
 
-BUSR001:  FIPS County and State code should match for recipient address.
-BUSR002:  FIPS County and State code should match for admin address.
-BUSR003:  ZIP Code and State code should match for recipient address.
-BUSR004:  ZIP Code and State code should match for admin address.
-BUSR005:  Date of birth should be less than administration date.
-BUSR006:  vax_refusal and recip_missed_appt cannot both be yes (not active in V2)
-BUSR007:  If a Zip code is present, county code should also be present for recipient address (this is a warning only)
-BUSR008:  If a Zip code is present, state should also be present for recipient address (this is a warning only)
-BUSR009:  If a Zip code is present, county code should also be present for admin address (this is a warning only)
-BUSR010:  If a Zip code is present, state should also be present for admin address (this is a warning only)
-BUSR011:  Recipient date of birth should be less than tomorrow's date.
-BUSR012:  Admin date should be less than tomorrow's date.
-BUSR013:  vax_event_id should not be duplicated in any batch.
+BUSR001
+:  FIPS County and State code should match for recipient address.
+
+BUSR002
+:  FIPS County and State code should match for admin address.
+
+BUSR003
+:  ZIP Code and State code should match for recipient address.
+
+BUSR004
+:  ZIP Code and State code should match for admin address.
+
+BUSR005
+:  Date of birth should be less than administration date.
+
+BUSR006
+:  vax_refusal and recip_missed_appt cannot both be yes (not active in V2)
+
+BUSR007
+:  If a Zip code is present, county code should also be present for recipient address (this is a warning only)
+
+BUSR008
+:  If a Zip code is present, state should also be present for recipient address (this is a warning only)
+
+BUSR009
+:  If a Zip code is present, county code should also be present for admin address (this is a warning only)
+
+BUSR010
+:  If a Zip code is present, state should also be present for admin address (this is a warning only)
+
+BUSR011
+:  Recipient date of birth should be less than tomorrow's date.
+
+BUSR012
+:  Admin date should be less than tomorrow's date.
+
+BUSR013
+:  vax_event_id should not be duplicated in any batch.
 
 ### HL7 Conversion/Parsing Errors
 HL7_ Error codes indicate that an error was detected converting to HL7 Format at the specified field.
 
-HL7_001: Message does not round trip
-> Content from Tab Delimited format converted to HL7 and back is not the same
-HL7_002: Missing required value
-HL7_003: HL7 Parsing Error
-> Usually occurs on dates that are not formatted correctly
+HL7_001
+: Message does not round trip. Content from Tab Delimited format converted to HL7 and back is not the same
+
+HL7_003
+: HL7 Parsing Error. Usually occurs on dates that are not formatted correctly
 
 ## Exit Codes
 If all records validated successfully, the program will return an exit code of 0.

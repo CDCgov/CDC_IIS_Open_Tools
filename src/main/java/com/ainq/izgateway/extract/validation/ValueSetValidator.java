@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Set;
 import java.util.TreeSet;
@@ -22,6 +24,8 @@ public class ValueSetValidator extends SuppressibleValidator implements StringVa
     private String activeValueSet;
     private Set<String> values = new TreeSet<String>();
     private String examples = "";
+    private static Map<String, Set<String>> valueSets = new HashMap<>();
+    private static Map<String, String> exampleMap = new HashMap<>();
 
     @Override
     public boolean isValid(String value) {
@@ -61,6 +65,12 @@ public class ValueSetValidator extends SuppressibleValidator implements StringVa
                 }
             }
         }
+        Set<String> loaded = valueSets.get(activeValueSet);
+        if (loaded != null) {
+            values.addAll(loaded);
+            examples = exampleMap.get(activeValueSet);
+            return;
+        }
 
         InputStream s = getClass().getClassLoader().getResourceAsStream(activeValueSet + ".txt");
         if (s == null) {
@@ -92,8 +102,10 @@ public class ValueSetValidator extends SuppressibleValidator implements StringVa
                     }
                 }
             }
+            valueSets.put(activeValueSet, new TreeSet<>(values));
             this.examples = !elide ? examples.toString() :
                 String.format("[%s, %s ... %s, %s]", examples.get(0), examples.get(1), examples.get(2), examples.get(3));
+            exampleMap.put(activeValueSet, this.examples);
         } catch (IOException e) {
             MissingResourceException ex = new MissingResourceException("Error reading value set: " + activeValueSet, this.getClass().getCanonicalName(), activeValueSet);
             ex.initCause(e);

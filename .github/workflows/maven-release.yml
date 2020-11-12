@@ -1,4 +1,4 @@
-name: Master Branch
+name: Release Branch
 
 on:
   push:

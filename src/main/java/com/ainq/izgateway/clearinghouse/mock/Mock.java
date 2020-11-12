@@ -12,9 +12,9 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {
     "com.ainq.izgateway.clearinghouse.mock"
 })
-public class Application {
+public class Mock {
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(Mock.class, args);
 	}
 
 	/**

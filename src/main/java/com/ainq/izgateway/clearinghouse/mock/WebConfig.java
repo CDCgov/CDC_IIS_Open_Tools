@@ -28,12 +28,12 @@ public class WebConfig implements WebMvcConfigurer {
 
         @Override
         public boolean canRead(Class<?> clazz, MediaType mediaType) {
-            return mediaType.getSubtype().endsWith("json");
+            return mediaType == null || mediaType.getSubtype().endsWith("json");
         }
 
         @Override
         public boolean canWrite(Class<?> clazz, MediaType mediaType) {
-            return mediaType.getSubtype().endsWith("json");
+            return mediaType == null || mediaType.getSubtype().endsWith("json");
         }
 
         @Override
