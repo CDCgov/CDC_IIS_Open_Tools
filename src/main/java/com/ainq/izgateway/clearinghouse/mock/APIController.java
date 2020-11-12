@@ -114,7 +114,8 @@ public class APIController {
                 Validator.DEFAULT_VERSION,  // Use the default version
                 false,  // Don't write invalid data during conversion (not really applicable)
                 true,   // Do use JSON for the output report
-                false,  // Don't use defaults foor conversion (not really applicable)
+                false,  // Don't use defaults for conversion (not really applicable)
+                false,  // Don't apply any fixes
                 null,   // Where to put converted HL7 outputs (not applicable)
                 null,   // Where to put converted CVRS outputs (not applicable)
                 files   // The file to  convert

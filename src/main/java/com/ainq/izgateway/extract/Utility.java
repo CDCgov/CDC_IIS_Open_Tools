@@ -44,12 +44,14 @@ public class Utility {
      * @param values    The values to write
      */
     public static void printRow(PrintStream w, String[] values) {
-        w.print(StringUtils.defaultString(values[0]));
-        for (int i = 1; i < values.length; i++) {
-            w.print("\t");
-            w.print(StringUtils.defaultString(values[i]).replace("\t", " "));
+        if (values.length > 0) {
+            w.print(StringUtils.defaultString(values[0]));
+            for (int i = 1; i < values.length; i++) {
+                w.print("\t");
+                w.print(StringUtils.defaultString(values[i]).replace("\t", " "));
+            }
+            w.println();
         }
-        w.println();
     }
 
     /**
@@ -65,14 +67,18 @@ public class Utility {
         // sends data that doesn't have any new lines.  The CVRS
         // header currently fits into 640 bytes.
         r.mark(1024);
+        int len;
         char buffer[] = new char[1024];
-        if (r.read(buffer) < 0) {
+        if ((len = r.read(buffer)) < 0) {
             return null;
         }
+        // Strip Byte Order Mark if Present
         String header = new String(buffer);
+
         // Get the actual header line.
         header = StringUtils.substringBefore(header, "\n").replace("\r", "");
         r.reset();
+
         return header == null ? null : header.split("\\t");
     }
 

@@ -5,7 +5,7 @@ import com.opencsv.bean.BeanField;
 import com.opencsv.bean.validators.StringValidator;
 import com.opencsv.exceptions.CsvValidationException;
 
-public class FixedValidator extends SuppressibleValidator implements StringValidator {
+public class FixedValidator extends SuppressibleValidator implements Fixable, StringValidator {
     private String param = "";
     protected String msg = "DATA002";
     @Override
@@ -23,5 +23,10 @@ public class FixedValidator extends SuppressibleValidator implements StringValid
     @Override
     public void setParameterString(String value) {
         this.param = value;
+    }
+
+    @Override
+    public String fixIt(String value) {
+        return param;
     }
 }

@@ -30,6 +30,8 @@ public class TestCommandLine {
         "src/test/resources/testdefault.hl7,0,src/test/resources/testdefault.hl7.rpt,-d",
         "src/test/resources/testMissingHeaders.txt,1,src/test/resources/testMissingHeaders.txt.rpt,",
         "src/test/resources/testerror.txt,176,src/test/resources/testerror.txt.rpt.json,-j",
+        "src/test/resources/notacvrs.txt,21,src/test/resources/notacvrs.txt.rpt,",
+        "src/test/resources/empty.txt,0,src/test/resources/empty.txt.rpt,"
     })
 
     public void testCommandLine(String file, int errorCount, String baseline, String args) throws IOException, InterruptedException {

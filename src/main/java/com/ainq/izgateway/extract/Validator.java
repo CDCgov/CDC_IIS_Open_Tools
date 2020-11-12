@@ -319,6 +319,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                    cvrsFolder = null;
             boolean useJson = false;
             boolean skip = false;
+            boolean fixIt = false;
             for (String arg: args) {
                 if (hasArgument(arg,"-k", "Start comment")) {
                     skip = true;
@@ -340,6 +341,15 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                     continue;
                 }
                 if (hasArgument(arg,"-I", "Write only valid inputs to output (default)")) {
+                    writeAll = false;
+                    continue;
+                }
+
+                if (hasArgument(arg,"-f", "Attempt to correct the value")) {
+                    writeAll = true;
+                    continue;
+                }
+                if (hasArgument(arg,"-F", "Stop correcting values")) {
                     writeAll = false;
                     continue;
                 }
@@ -436,7 +446,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 }
 
                 totalErrors += validateFiles(reportFolder, maxErrors, suppressErrors, version, writeAll, useJson,
-                    useDefaults, hl7Folder, cvrsFolder, files);
+                    useDefaults, fixIt, hl7Folder, cvrsFolder, files);
             }
 
             return totalErrors;
@@ -469,6 +479,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         boolean writeAll,
         boolean useJson,
         boolean useDefaults,
+        boolean fixIt,
         String hl7Folder,
         String cvrsFolder,
         String[] files
@@ -477,9 +488,9 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         for (String file: files) {
             try (Validator v = new Validator(
                 Utility.getReader(file),
-                suppressErrors.equals(ERROR_CODES) ? 
-                    new NullValidator(suppressErrors, version) : 
-                    new BeanValidator(suppressErrors, version),
+                suppressErrors.equals(ERROR_CODES) ?
+                    new NullValidator(suppressErrors, version) :
+                    new BeanValidator(suppressErrors, version, fixIt),
                 useDefaults
             );) {
                 v.setReport(getOutputStream(file, reportFolder, useJson ? "rpt.json" : "rpt"));
@@ -487,6 +498,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 v.setHL7(getOutputStream(file, hl7Folder, "hl7"));
                 v.setMaxErrors(maxErrors);
                 v.setName(file);
+                v.setFixIt(fixIt);
                 v.setIgnoringErrors(writeAll);
                 if (useJson) {
                     v.reporter = v.jsonReporter;
@@ -649,6 +661,8 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     /** The number of records in error */
     private int errorCount = 0;
 
+    /** Set to true to fix up values to something legitimately close */
+    private boolean fixIt = false;
     /**
      * Create a new Validator instance for the specified reader,
      * and validating using the specified BeanValidator instance.
@@ -662,16 +676,23 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         this.reader = Utility.getBufferedReader(reader);
         String[] validHeaders = CVRSExtract.getHeaders(validator == null ? DEFAULT_VERSION : validator.getVersion());
         headers = Utility.readHeaders(this.reader);
-
         errors = new ArrayList<>();
 
         if (headers != null) {
+            // Check for a Byte Order Mark
+            if (headers[0].charAt(0) == '\ufeff') {
+                CVRSEntry e = new CVRSEntry(null, "FMT_005", "Header", "File starts with a Unicode Byte Order Mark (FEFF)");
+                addError(e);
+                // Strip the BOM and continue
+                headers[0] = headers[0].substring(1);
+                this.reader.skip(1);
+            }
             if (HL7MessageParser.isMessageDelimiter(headers[0])) {
                 headers = validHeaders;
             } else if (headers.length == 1) {
-                CVRSEntry e = new CVRSEntry(null, "FMT_001", "Header", "File is not tab delimited.\n" + headers[0] + "\n");
+                CVRSEntry e = new CVRSEntry(null, "FMT_001", "Header", "File is not tab delimited. First Row: " + headers[0]);
                 addError(e);
-                headers = headers[0].split(",");
+                headers = headers[0].replace("\"","").split("\\s*,\\s*");
                 reformatDates = true;  // Presume that dates need to be reformed.
             }
         }
@@ -838,6 +859,13 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     }
 
     /**
+     * @return the fixIt
+     */
+    public boolean isFixIt() {
+        return fixIt;
+    }
+
+    /**
      * @return the reformatDates
      */
     public boolean isReformatDates() {
@@ -928,6 +956,15 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         if (cvrs != null) {
             Utility.printRow(cvrs, getHeaders());
         }
+        return this;
+    }
+
+    /**
+     * @param fixIt the fixIt to set
+     * @return this for fluent use.
+     */
+    public Validator setFixIt(boolean fixIt) {
+        this.fixIt = fixIt;
         return this;
     }
 
