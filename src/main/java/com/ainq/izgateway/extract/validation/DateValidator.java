@@ -36,7 +36,8 @@ public class DateValidator extends SuppressibleValidator implements StringValida
     @Override
     public void validate(String value, @SuppressWarnings("rawtypes") BeanField field) throws CsvValidationException {
         if (!isValid(value)) {
-            SimpleDateFormat usFormat = new SimpleDateFormat("MM/dd/yyyy".substring(value.length()));
+            SimpleDateFormat usFormat = new SimpleDateFormat(
+                "MM/dd/yyyy".substring(0, Math.min(value.length(), 10)));
             try {
                 usFormat.parse(value);
                 throw Validator.error(null, "DATA009", field.getField().getName(), value, param);
