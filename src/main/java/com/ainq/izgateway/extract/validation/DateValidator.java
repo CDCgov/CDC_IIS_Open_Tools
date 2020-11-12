@@ -2,6 +2,7 @@ package com.ainq.izgateway.extract.validation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,7 +12,7 @@ import com.opencsv.bean.BeanField;
 import com.opencsv.bean.validators.StringValidator;
 import com.opencsv.exceptions.CsvValidationException;
 
-public class DateValidator extends SuppressibleValidator implements StringValidator, Suppressible {
+public class DateValidator extends SuppressibleValidator implements Fixable, StringValidator, Suppressible {
     private String param = null;
     private static String DEFAULT_FORMAT = "yyyy-MM-dd|yyyy-MM";
     private SimpleDateFormat sdf[] = { new SimpleDateFormat(DEFAULT_FORMAT) };
@@ -59,5 +60,24 @@ public class DateValidator extends SuppressibleValidator implements StringValida
             sdf[count].setLenient(false);
             count++;
         }
+    }
+
+    @Override
+    public String fixIt(String value) {
+        String newValue = null;
+        if (!StringUtils.isEmpty(value)) {
+            String yearPart = value.replaceAll("^.*(\\d{4}).*$", "$1");
+            String monthPart = value.replaceAll("^(\\d{2})/.*$|-(\\d{2})-", "$1$2");
+            String dayPart = value.replaceAll("^\\d{2}/(\\d{2}).*$|\\d{2}-(\\d{2})[^-]?$", "$1$2");
+            newValue = String.format("%04d-%02d-%02d", yearPart, monthPart, dayPart);
+        } else {
+            // Go with today.
+            Calendar cal = Calendar.getInstance();
+            newValue = String.format("%04d-%02d-%02d", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DATE));
+        }
+        if (isValid(newValue)) {
+            return newValue;
+        }
+        return value;
     }
 }

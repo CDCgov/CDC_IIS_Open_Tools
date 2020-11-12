@@ -61,14 +61,17 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
     private static final int ERROR_CODE = 0, MESSAGE = 1, RULE = 2, LEVEL = 3, VERSIONS = 4;
     private static final String DEFAULT_LEVEL = "ERROR";
     private static final String DEFAULT_VERSIONS = "1,2"; // Applies to all versions.
-
     /** Map of states to FIP Prefixes to validate county in state */
     private static Map<String, String> stateToCounty = new TreeMap<>();
     /** Map of states to zip-code prefixes to validate zip in state */
     private static Map<String, String> stateToZip = new TreeMap<>();
 
+    private Map<String, StringValidator> fieldValidatorCache = new HashMap<>();
+
     private Map<String, Pair<Integer, Integer>> event_id = new HashMap<>();
     private int counter;
+
+    private boolean fixIt;
 
     /**
      * Construct a new validator using the default CVRS Version
@@ -76,7 +79,7 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
      * @param suppressed    The errors to suppress.
      */
     public BeanValidator(Set<String> suppressed) {
-        this(suppressed == null ? Collections.emptySet() : suppressed, Validator.DEFAULT_VERSION);
+        this(suppressed == null ? Collections.emptySet() : suppressed, Validator.DEFAULT_VERSION, false);
     }
 
     /**
@@ -86,8 +89,20 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
      * @param version   The version of the CVRS to validate against.
      */
     public BeanValidator(Set<String> suppressed, String version) {
+        this(suppressed, version, false);
+    }
+
+    /**
+     * Construct a new validator using the specified CVRS Version
+     *
+     * @param suppressed    The errors to suppress.
+     * @param version   The version of the CVRS to validate against.
+     * @param fixIt If an attempt should be made to correct the data
+     */
+    public BeanValidator(Set<String> suppressed, String version, boolean fixIt) {
         setSuppressed(suppressed == null ? Collections.emptySet() : suppressed);
         setVersion(version);
+        this.fixIt = fixIt;
     }
 
     /**
@@ -263,6 +278,14 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                     e.setRow(values);
                     errors.add(e);
                 }
+                if (fixIt) {
+                    try {
+                        f.set(bean, "UNK");
+                    } catch (IllegalArgumentException | IllegalAccessException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
             }
 
             Requirement dns = getRequirement(f, RequirementType.DO_NOT_SEND, getVersion());
@@ -274,6 +297,14 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                     e.setRow(values);
                     errors.add(e);
                 }
+                if (fixIt) {
+                    try {
+                        f.set(bean, null);
+                    } catch (IllegalArgumentException | IllegalAccessException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
             }
 
             FieldValidator fv = f.getAnnotation(FieldValidator.class);
@@ -284,24 +315,12 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                     CVRSEntry e1 = new CVRSEntry(bean, "DATA008", f.getName(), Validator.getMessage("DATA008", f.getName(), value, fv.maxLength()));
                     errors.add(e1);
                 }
-                StringValidator sv;
+                StringValidator sv = null;
                 try {
-                    sv = fv.validator().getConstructor().newInstance();
-                    if (sv instanceof Suppressible) {
-                        ((Suppressible) sv).setSuppressed(getSuppressed());
-                    }
-                    if (sv instanceof SuppressibleValidator) {
-                        ((SuppressibleValidator) sv).setVersion(getVersion());
-                    }
-                    if (sv instanceof ExtractTypeBasedValidator) {
-                        ((ExtractTypeBasedValidator) sv).setExtractType(extractType);
-                    }
-                    if (fv.paramString() != null) {
-                        sv.setParameterString(fv.paramString());
-                    }
+                    extractType = getExtractType(bean);
+                    sv = getFieldValidator(f.getName(), extractType, fv);
                     sv.validate(value, vbf);
-                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-                    | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+                } catch (ReflectiveOperationException | SecurityException e) {
                     throw new RuntimeException("Unable to construct " + fv.validator().getName(), e);
                 } catch (CsvValidationException e) {
                     if (e instanceof CsvFieldValidationException) {
@@ -315,9 +334,48 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                             errors.add(e1);
                         }
                     }
+                    if (fixIt && sv instanceof Fixable) {
+                        try {
+                            f.set(bean, ((Fixable) sv).fixIt(value));
+                        } catch (IllegalArgumentException | IllegalAccessException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * Retrieve the field validator for the specified field
+     * @param fieldName   The field to retrieve the validator for.
+     * @param extractType   The type of extract being validated.
+     * @param fv    The field validator to use
+     * @return  An initialized field validator
+     * @throws ReflectiveOperationException   If a reflection error occurred.
+     */
+    private StringValidator getFieldValidator(String fieldName, ExtractType extractType, FieldValidator fv)
+        throws ReflectiveOperationException {
+        String key = fieldName + "_" + (extractType == null ? null : extractType.getCode());
+        StringValidator sv = fieldValidatorCache.get(key);
+        if (sv == null) {
+            sv = fv.validator().getConstructor().newInstance();
+            if (sv instanceof Suppressible) {
+                ((Suppressible) sv).setSuppressed(getSuppressed());
+            }
+            if (sv instanceof SuppressibleValidator) {
+                ((SuppressibleValidator) sv).setVersion(getVersion());
+            }
+            if (sv instanceof ExtractTypeBasedValidator) {
+                ((ExtractTypeBasedValidator) sv).setExtractType(extractType);
+            }
+            if (fv.paramString() != null) {
+                sv.setParameterString(fv.paramString());
+            }
+            fieldValidatorCache.put(key, sv);
+        }
+        return sv;
     }
 
     public static Requirement getRequirement(Field f, RequirementType type, String version) {

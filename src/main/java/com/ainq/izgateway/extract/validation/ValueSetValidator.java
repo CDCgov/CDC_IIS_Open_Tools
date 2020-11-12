@@ -19,7 +19,7 @@ import com.opencsv.bean.BeanField;
 import com.opencsv.bean.validators.StringValidator;
 import com.opencsv.exceptions.CsvValidationException;
 
-public class ValueSetValidator extends SuppressibleValidator implements StringValidator {
+public class ValueSetValidator extends SuppressibleValidator implements Fixable, StringValidator {
     private String valueSetName;
     private String activeValueSet;
     private Set<String> values = new TreeSet<String>();
@@ -50,6 +50,16 @@ public class ValueSetValidator extends SuppressibleValidator implements StringVa
         values.clear();
     }
 
+    @Override
+    public String fixIt(String value) {
+        ensureValuesLoaded();
+        if (isValid("UNK")) {
+            return "UNK";
+        } else if (isValid("U")) {
+            return "U";
+        }
+        return null;
+    }
     private void ensureValuesLoaded() {
         if (!values.isEmpty()) {
             return;
@@ -112,4 +122,5 @@ public class ValueSetValidator extends SuppressibleValidator implements StringVa
             throw ex;
         }
     }
+
 }
