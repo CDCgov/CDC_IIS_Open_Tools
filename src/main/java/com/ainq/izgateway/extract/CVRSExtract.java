@@ -318,7 +318,7 @@ public class CVRSExtract implements CVRS {
 	/** The professional designation of the person administering the vaccination. (e.g., MD, LPN, RN). May also be referenced as vaccination administering provider type. */
     @FieldValidator(validator = ValueSetValidatorIfKnown.class, paramString = "PROVIDER_SUFFIX")
     @Requirement(value=RequirementType.DO_NOT_SEND, when = { MISSED_APPOINTMENT, REFUSAL }, versions = "1")
-    @Requirement(value=RequirementType.DO_NOT_SEND, when = { REFUSAL }, versions = "2")
+    @Requirement(value=RequirementType.IGNORE, when = { VACCINATION, MISSED_APPOINTMENT, REFUSAL }, versions = "2")
     @CsvBindByName
     @V2Field(value = "RXA-10-21")
     private String vax_prov_suffix;

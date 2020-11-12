@@ -1,6 +1,6 @@
 
 {
-    "filename": "src\\test\\resources\\testerror.txt",
+    "filename": "src/test/resources/testerror.txt",
     "detail": [
         {
             "vax_event_id": "DATA001_recip_dob",
@@ -51,7 +51,7 @@
             "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
         },
         {
-            "vax_event_id": "DATA001_admin_date_1",
+            "vax_event_id": "DATA009_admin_date_1",
             "line": 2,
             "code": "DATA009",
             "field": "admin_date",
@@ -59,7 +59,7 @@
             "message": "admin_date (10/24/2020) contains an incorrectly formatted date, should match yyyy-MM-dd"
         },
         {
-            "vax_event_id": "DATA001_admin_date_1",
+            "vax_event_id": "DATA009_admin_date_1",
             "line": 2,
             "code": "REQD001",
             "field": "cvx",
@@ -67,7 +67,7 @@
             "message": "cvx is required for Vaccination events"
         },
         {
-            "vax_event_id": "DATA001_admin_date_1",
+            "vax_event_id": "DATA009_admin_date_1",
             "line": 2,
             "code": "REQD001",
             "field": "dose_num",
@@ -75,7 +75,7 @@
             "message": "dose_num is required for Vaccination events"
         },
         {
-            "vax_event_id": "DATA001_admin_date_1",
+            "vax_event_id": "DATA009_admin_date_1",
             "line": 2,
             "code": "REQD001",
             "field": "vax_series_complete",
@@ -83,7 +83,7 @@
             "message": "vax_series_complete is required for Vaccination events"
         },
         {
-            "vax_event_id": "DATA001_admin_date_1",
+            "vax_event_id": "DATA009_admin_date_1",
             "line": 2,
             "code": "DATA007",
             "field": "admin_type",
@@ -91,7 +91,7 @@
             "message": "admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
         },
         {
-            "vax_event_id": "DATA001_admin_date_1",
+            "vax_event_id": "DATA009_admin_date_1",
             "line": 2,
             "code": "BUSR001",
             "field": "recip_address_county",
@@ -99,7 +99,7 @@
             "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
         },
         {
-            "vax_event_id": "DATA001_admin_date_1",
+            "vax_event_id": "DATA009_admin_date_1",
             "line": 2,
             "code": "BUSR005",
             "field": "recip_dob",
@@ -107,7 +107,7 @@
             "message": "recip_dob (2015-08-26) is after admin_date (10/24/2020)"
         },
         {
-            "vax_event_id": "DATA009_admin_date_2",
+            "vax_event_id": "DATA001_admin_date_2",
             "line": 3,
             "code": "DATA001",
             "field": "admin_date",
@@ -115,7 +115,7 @@
             "message": "admin_date (2020-10) contains an invalid date, should match yyyy-MM-dd"
         },
         {
-            "vax_event_id": "DATA009_admin_date_2",
+            "vax_event_id": "DATA001_admin_date_2",
             "line": 3,
             "code": "DATA007",
             "field": "admin_type",
@@ -123,7 +123,7 @@
             "message": "admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
         },
         {
-            "vax_event_id": "DATA009_admin_date_2",
+            "vax_event_id": "DATA001_admin_date_2",
             "line": 3,
             "code": "BUSR001",
             "field": "recip_address_county",
@@ -131,7 +131,7 @@
             "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
         },
         {
-            "vax_event_id": "DATA009_admin_date_2",
+            "vax_event_id": "DATA001_admin_date_2",
             "line": 3,
             "code": "BUSR002",
             "field": "admin_address_county",
@@ -656,7 +656,7 @@
             "code": "BUSR011",
             "field": "recip_dob",
             "level": "ERROR",
-            "message": "If recip_dob (2032-11-01) is present it should be less than tomorrow (2020-11-12)"
+            "message": "If recip_dob (2032-11-01) is present it should be less than tomorrow (DON'T CARE)"
         },
         {
             "vax_event_id": "BUSR011_recip_dob_not_future",
@@ -664,7 +664,7 @@
             "code": "BUSR012",
             "field": "admin_date",
             "level": "ERROR",
-            "message": "If admin_date (2022-10-04) is present it should less than tomorrow (2020-11-12)"
+            "message": "If admin_date (2022-10-04) is present it should less than tomorrow (DON'T CARE)"
         },
         {
             "vax_event_id": "BUSR012_admin_date_not_future",
@@ -680,7 +680,7 @@
             "code": "BUSR012",
             "field": "admin_date",
             "level": "ERROR",
-            "message": "If admin_date (2032-10-04) is present it should less than tomorrow (2020-11-12)"
+            "message": "If admin_date (2032-10-04) is present it should less than tomorrow (DON'T CARE)"
         },
         {
             "vax_event_id": "BUSR013_vax_event_id_nodups",
@@ -696,7 +696,7 @@
             "code": "BUSR012",
             "field": "admin_date",
             "level": "ERROR",
-            "message": "If admin_date (2032-10-04) is present it should less than tomorrow (2020-11-12)"
+            "message": "If admin_date (2032-10-04) is present it should less than tomorrow (DON'T CARE)"
         },
         {
             "vax_event_id": "DNTS002_ndc",
@@ -1428,12 +1428,12 @@
                 },
                 {
                     "line": 2,
-                    "vax_event_id": "DATA001_admin_date_1",
+                    "vax_event_id": "DATA009_admin_date_1",
                     "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
                 },
                 {
                     "line": 3,
-                    "vax_event_id": "DATA009_admin_date_2",
+                    "vax_event_id": "DATA001_admin_date_2",
                     "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
                 },
                 {
@@ -1491,7 +1491,7 @@
             "examples": [
                 {
                     "line": 3,
-                    "vax_event_id": "DATA009_admin_date_2",
+                    "vax_event_id": "DATA001_admin_date_2",
                     "message": "admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator"
                 },
                 {
@@ -1555,7 +1555,7 @@
             "examples": [
                 {
                     "line": 2,
-                    "vax_event_id": "DATA001_admin_date_1",
+                    "vax_event_id": "DATA009_admin_date_1",
                     "message": "recip_dob (2015-08-26) is after admin_date (10/24/2020)"
                 },
                 {
@@ -1646,7 +1646,7 @@
                 {
                     "line": 22,
                     "vax_event_id": "BUSR011_recip_dob_not_future",
-                    "message": "If recip_dob (2032-11-01) is present it should be less than tomorrow (2020-11-12)"
+                    "message": "If recip_dob (2032-11-01) is present it should be less than tomorrow (DON'T CARE)"
                 }
             ]
         },
@@ -1659,17 +1659,17 @@
                 {
                     "line": 22,
                     "vax_event_id": "BUSR011_recip_dob_not_future",
-                    "message": "If admin_date (2022-10-04) is present it should less than tomorrow (2020-11-12)"
+                    "message": "If admin_date (2022-10-04) is present it should less than tomorrow (DON'T CARE)"
                 },
                 {
                     "line": 23,
                     "vax_event_id": "BUSR012_admin_date_not_future",
-                    "message": "If admin_date (2032-10-04) is present it should less than tomorrow (2020-11-12)"
+                    "message": "If admin_date (2032-10-04) is present it should less than tomorrow (DON'T CARE)"
                 },
                 {
                     "line": 24,
                     "vax_event_id": "BUSR013_vax_event_id_nodups",
-                    "message": "If admin_date (2032-10-04) is present it should less than tomorrow (2020-11-12)"
+                    "message": "If admin_date (2032-10-04) is present it should less than tomorrow (DON'T CARE)"
                 }
             ]
         },
@@ -1681,7 +1681,7 @@
             "examples": [
                 {
                     "line": 3,
-                    "vax_event_id": "DATA009_admin_date_2",
+                    "vax_event_id": "DATA001_admin_date_2",
                     "message": "admin_date (2020-10) contains an invalid date, should match yyyy-MM-dd"
                 }
             ]
@@ -1872,12 +1872,12 @@
                 },
                 {
                     "line": 2,
-                    "vax_event_id": "DATA001_admin_date_1",
+                    "vax_event_id": "DATA009_admin_date_1",
                     "message": "admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
                 },
                 {
                     "line": 3,
-                    "vax_event_id": "DATA009_admin_date_2",
+                    "vax_event_id": "DATA001_admin_date_2",
                     "message": "admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
                 },
                 {
@@ -2042,7 +2042,7 @@
             "examples": [
                 {
                     "line": 2,
-                    "vax_event_id": "DATA001_admin_date_1",
+                    "vax_event_id": "DATA009_admin_date_1",
                     "message": "admin_date (10/24/2020) contains an incorrectly formatted date, should match yyyy-MM-dd"
                 }
             ]
@@ -2496,7 +2496,7 @@
                 },
                 {
                     "line": 2,
-                    "vax_event_id": "DATA001_admin_date_1",
+                    "vax_event_id": "DATA009_admin_date_1",
                     "message": "cvx is required for Vaccination events"
                 },
                 {
@@ -2539,7 +2539,7 @@
                 },
                 {
                     "line": 2,
-                    "vax_event_id": "DATA001_admin_date_1",
+                    "vax_event_id": "DATA009_admin_date_1",
                     "message": "dose_num is required for Vaccination events"
                 },
                 {
@@ -2673,7 +2673,7 @@
                 },
                 {
                     "line": 2,
-                    "vax_event_id": "DATA001_admin_date_1",
+                    "vax_event_id": "DATA009_admin_date_1",
                     "message": "vax_series_complete is required for Vaccination events"
                 },
                 {

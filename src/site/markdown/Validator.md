@@ -280,19 +280,16 @@ DATA009
 **FMT_ Error codes indicate a problem in the file format.**
 
 FMT_001
-: File is not tab delimited.
-
-The file is not tab delimited (may be a CSV file)
+: File is not tab delimited.  The file is not tab delimited (may be a CSV file)
 
 FMT_002
-: Input contains invalid headers: [ admin_type]
-
-One of the header fields is mispelled, invalid or contains spaces
+: Input contains invalid headers: [ admin_type]. One of the header fields is mispelled, invalid or contains spaces
 
 FMT_003
-: File is not a CVRS
+: File is not a CVRS.  The file cannot be parsed in CVRS Format
 
-File cannot be parsed in CVRS Format
+FMT_004
+: File is missing headers [recip_race_6]. The file is missing the indicated headers.
 
 ### Missing Required data
 REQD Error codes indicate that required data was not provided for an event (e.g., Vaccination, Refusal, Missed Appointment)

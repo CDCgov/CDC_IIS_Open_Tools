@@ -27,13 +27,17 @@ public class TestCommandLine {
         "src/test/resources/testgood.hl7,0,src/test/resources/testgood.hl7.rpt,",
         "src/test/resources/testerror.txt,176,src/test/resources/testerror.txt.rpt,",
         "src/test/resources/testerror.hl7,176,src/test/resources/testerror.hl7.rpt,",
-        "src/test/resources/testdefault.hl7,0,src/test/resources/testdefault.hl7.rpt,-d"
+        "src/test/resources/testdefault.hl7,0,src/test/resources/testdefault.hl7.rpt,-d",
+        "src/test/resources/testMissingHeaders.txt,1,src/test/resources/testMissingHeaders.txt.rpt,",
+        "src/test/resources/testerror.txt,176,src/test/resources/testerror.txt.rpt.json,-j",
     })
 
     public void testCommandLine(String file, int errorCount, String baseline, String args) throws IOException, InterruptedException {
 
         String command[] = { file };
+        boolean isJson = false;
         if (!StringUtils.isEmpty(args)) {
+            isJson = args.contains("-j");
             String opts[] = args.split("\\s+");
             command = Arrays.copyOf(opts, opts.length + 1);
             command[opts.length] = file;
@@ -44,7 +48,7 @@ public class TestCommandLine {
 
         // If a baseline file was provided, compare against it.
         if (!StringUtils.isEmpty(baseline)) {
-            File outputFile = Utility.getNewFile(file, dir.toFile(), "rpt");
+            File outputFile = Utility.getNewFile(file, dir.toFile(), isJson ? "rpt.json" : "rpt");
             compareFiles(outputFile, new File(baseline), TestCommandLine::ignoreTomorrow);
         }
 
