@@ -47,7 +47,7 @@ src/test/resources/testerror.txt DATA007_cvx      11     ERROR  cvx             
 src/test/resources/testerror.txt DATA007_cvx      11     ERROR  admin_type               DATA007 admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
 src/test/resources/testerror.txt DATA007_cvx      11     ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
 src/test/resources/testerror.txt DATA008***Length 12     ERROR  mvx                      DATA008 mvx (AAAA) exceeds maximum length 3
-src/test/resources/testerror.txt DATA008***Length 12     ERROR  mvx                      DATA007 mvx (AAAA) is not in value set MVX[AAA, BBB ... WA, ZLB]
+src/test/resources/testerror.txt DATA008***Length 12     ERROR  mvx                      DATA007 mvx (AAAA) is not in value set MVX[AAA, BBB ... WAL, ZLB]
 src/test/resources/testerror.txt BUSR001***county 13     ERROR  cvx                      REQD001 cvx is required for Vaccination events
 src/test/resources/testerror.txt BUSR001***county 13     ERROR  dose_num                 REQD001 dose_num is required for Vaccination events
 src/test/resources/testerror.txt BUSR001***county 13     ERROR  vax_series_complete      REQD001 vax_series_complete is required for Vaccination events
@@ -203,7 +203,7 @@ DATA006 recip_last_name             1   Does not contain expected value: REDACTE
 DATA006 recip_middle_name           1   Does not contain expected value: REDACTED               34 recip_middle_name () should contain value Redacted
 DATA007 admin_type                 23   Does not contain values from the expected value set      1 admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
 DATA007 cvx                         1   Does not contain values from the expected value set     11 cvx (XXX) is not in value set CVX[900, 901 ... 187, 188]
-DATA007 mvx                         1   Does not contain values from the expected value set     12 mvx (AAAA) is not in value set MVX[AAA, BBB ... WA, ZLB]
+DATA007 mvx                         1   Does not contain values from the expected value set     12 mvx (AAAA) is not in value set MVX[AAA, BBB ... WAL, ZLB]
 DATA007 recip_sex                   1   Does not contain values from the expected value set     10 recip_sex (UNK) is not in value set SEX[M, F, U]
 DATA008 mvx                         1   Field exceeds maximum length                            12 mvx (AAAA) exceeds maximum length 3
 DATA009 admin_date                  1   Date is not correctly formatted                          2 admin_date (10/24/2020) contains an incorrectly formatted date, should match yyyy-MM-dd

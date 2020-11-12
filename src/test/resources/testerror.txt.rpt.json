@@ -384,7 +384,7 @@
             "code": "DATA007",
             "field": "mvx",
             "level": "ERROR",
-            "message": "mvx (AAAA) is not in value set MVX[AAA, BBB ... WA, ZLB]"
+            "message": "mvx (AAAA) is not in value set MVX[AAA, BBB ... WAL, ZLB]"
         },
         {
             "vax_event_id": "BUSR001_recip_address_county",
@@ -2004,7 +2004,7 @@
                 {
                     "line": 12,
                     "vax_event_id": "DATA008_mvx_maxLength",
-                    "message": "mvx (AAAA) is not in value set MVX[AAA, BBB ... WA, ZLB]"
+                    "message": "mvx (AAAA) is not in value set MVX[AAA, BBB ... WAL, ZLB]"
                 }
             ]
         },
