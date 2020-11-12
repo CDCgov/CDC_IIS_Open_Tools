@@ -1,3 +1,7 @@
+# Release Notes for 1.0.1
+This is a patch to fix a bug found after release which threw exceptions
+on incorrectly formatted dates.
+
 # Release Notes for 1.0.0
 This is the first release of the validation tools.  It includes the following files:
 
