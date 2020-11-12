@@ -74,6 +74,7 @@ class TestValidator {
         CVRSExtract extract = null;
         try (Validator v = new Validator(new StringReader(b.toString()), bv, false);) {
             v.setName(test);
+            v.setReport(System.out);
             extract = v.validateOne();
         }
         // Reset identfier checking, since we are going to reuse the same validator.
@@ -83,6 +84,7 @@ class TestValidator {
         CVRSExtract extract2 = null;
         try (Validator v = new Validator(new StringReader(Converter.toHL7String(extract, Validator.DEFAULT_VERSION)), isGood ? bv : null, false);) {
             v.setName(test);
+            v.setReport(System.out);
             extract2 = v.validateOne();
         }
 
