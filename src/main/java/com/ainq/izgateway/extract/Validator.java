@@ -249,6 +249,12 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             { "DATA007", "%1$s (%4$s) is not in value set %2$s%3$s", "Does not contain values from the expected value set" },
             { "DATA008", "%1$s (%2$s) exceeds maximum length %3$s", "Field exceeds maximum length" },
             { "DATA009", "%1$s (%2$s) contains an incorrectly formatted date, should match %3$s", "Date is not correctly formatted" },
+            { "REQD001", "%1$s is required for Vaccination events", "This field must be sent for Vaccination events" },
+            { "REQD002", "%1$s is required for Refusal events", "This field must be sent for Refusal events" },
+            { "REQD003", "%1$s is required for Missed Appointment events", "This field must be sent for Missed Appointment events" },
+            { "DNTS001", "%1$s (%2$s) should not be present for Vaccination events", "This field should not be sent for Vaccination events" },
+            { "DNTS002", "%1$s (%2$s) should not be present for Refusal events", "This field should not be sent for Refusal events" },
+            { "DNTS003", "%1$s (%2$s) should not be present for Missed Appointment events", "This field should not be sent for Missed Appointment events" },
         };
 
     /** Default version of CVRS to use */
@@ -274,6 +280,9 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
 
     /** Map of options to argument help text */
     private static Map<String, String> helpText = new TreeMap<>((s,t) -> s.compareToIgnoreCase(t) );
+
+    /** Static variable so that it always impacts redaction */
+    private static boolean redact = false;
 
     /**
      * Helper method to generate a validation exception with a formatted message.
@@ -320,6 +329,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             boolean useJson = false;
             boolean skip = false;
             boolean fixIt = false;
+            redact  = Arrays.asList(args).stream().anyMatch(a -> a.startsWith("-x") || a.startsWith("-X"));
             for (String arg: args) {
                 if (hasArgument(arg,"-k", "Start comment")) {
                     skip = true;
@@ -327,6 +337,10 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 }
                 if (hasArgument(arg,"-K", "End comment")) {
                     skip = false;
+                    continue;
+                }
+                if (hasArgument(arg, "-x | -X", "Redact data before validation or conversion") || arg.startsWith("-X")) {
+                    // This argument was already processed.
                     continue;
                 }
                 // If skip = true, only skip options will be processed and other arguments will be
@@ -503,8 +517,13 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 if (useJson) {
                     v.reporter = v.jsonReporter;
                 }
-                if (!v.getReport().equals(System.out)) {
-                    System.out.printf("Validating %s%n", file);
+                // If we aren't seeing status updates on the console
+                if (!System.out.equals(v.getReport())) {
+                    // and writing one won't mess up existing reporting
+                    if (!System.out.equals(v.getCvrs()) && !System.out.equals(v.getHl7())) {
+                        // Then tell the user what we are doing right now
+                        System.out.printf("Validating %s%n", file);
+                    }
                 }
                 errors += v.validateFile().size();
             } catch (IOException ioex) {
@@ -699,7 +718,26 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         checkHeaders(validHeaders);
         this.validator = validator;
         parser = ParserFactory.newParser(this.reader, null, useDefaults);
-        iterator = parser.iterator();
+        // Wrap the iterator with one that ensures data is always redacting
+        // if the redact feature is enabled.
+        iterator = new Iterator<CVRSExtract>() {
+            Iterator<CVRSExtract> myIterator = parser.iterator();
+            @Override
+            public boolean hasNext() {
+                // TODO Auto-generated method stub
+                return myIterator.hasNext();
+            }
+
+            @Override
+            public CVRSExtract next() {
+                // TODO Auto-generated method stub
+                CVRSExtract ex = myIterator.next();
+                if (isRedacting()) {
+                    ex.redact();
+                }
+                return ex;
+            }
+        };
     }
 
     private void addError(CVRSEntry e) {
@@ -863,6 +901,13 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      */
     public boolean isFixIt() {
         return fixIt;
+    }
+
+    /**
+     * @return the redact
+     */
+    public static boolean isRedacting() {
+        return redact;
     }
 
     /**
