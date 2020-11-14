@@ -43,6 +43,7 @@ import com.ainq.izgateway.extract.validation.BeanValidator;
 import com.ainq.izgateway.extract.validation.CVRSEntry;
 import com.ainq.izgateway.extract.validation.CVRSValidationException;
 import com.ainq.izgateway.extract.validation.NullValidator;
+import com.fasterxml.jackson.core.JsonFactory;
 import com.ainq.izgateway.extract.exceptions.CsvFieldValidationException;
 
 import ca.uhn.hl7v2.HL7Exception;
@@ -189,6 +190,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 b.add("totalErrors", total);
                 b.add("failedRecords",  getErrorCount());
                 b.add("totalRecords", getCount());
+                /* TODO: Add this for release 1.1.0
+                b.add("version", validator == null ? Validator.DEFAULT_VERSION : validator.getVersion());
+                JsonArrayBuilder s = Json.createArrayBuilder();
+                if (validator != null && validator.getSuppressed() != null) {
+                     validator.getSuppressed().forEach(supp -> s.add(supp));
+                }
+                b.add("suppressed", s.build());
+                */
                 if (getCvrs() != null) {
                     b.add("cvrsWritten",  getCvrsCount());
                 }
@@ -249,6 +258,12 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             { "DATA007", "%1$s (%4$s) is not in value set %2$s%3$s", "Does not contain values from the expected value set" },
             { "DATA008", "%1$s (%2$s) exceeds maximum length %3$s", "Field exceeds maximum length" },
             { "DATA009", "%1$s (%2$s) contains an incorrectly formatted date, should match %3$s", "Date is not correctly formatted" },
+            { "REQD001", "%1$s is required for Vaccination events", "This field must be sent for Vaccination events" },
+            { "REQD002", "%1$s is required for Refusal events", "This field must be sent for Refusal events" },
+            { "REQD003", "%1$s is required for Missed Appointment events", "This field must be sent for Missed Appointment events" },
+            { "DNTS001", "%1$s (%2$s) should not be present for Vaccination events", "This field should not be sent for Vaccination events" },
+            { "DNTS002", "%1$s (%2$s) should not be present for Refusal events", "This field should not be sent for Refusal events" },
+            { "DNTS003", "%1$s (%2$s) should not be present for Missed Appointment events", "This field should not be sent for Missed Appointment events" },
         };
 
     /** Default version of CVRS to use */
@@ -274,6 +289,9 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
 
     /** Map of options to argument help text */
     private static Map<String, String> helpText = new TreeMap<>((s,t) -> s.compareToIgnoreCase(t) );
+
+    /** Static variable so that it always impacts redaction */
+    private static boolean redact = false;
 
     /**
      * Helper method to generate a validation exception with a formatted message.
@@ -320,6 +338,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             boolean useJson = false;
             boolean skip = false;
             boolean fixIt = false;
+            redact  = Arrays.asList(args).stream().anyMatch(a -> a.startsWith("-x") || a.startsWith("-X"));
             for (String arg: args) {
                 if (hasArgument(arg,"-k", "Start comment")) {
                     skip = true;
@@ -327,6 +346,10 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 }
                 if (hasArgument(arg,"-K", "End comment")) {
                     skip = false;
+                    continue;
+                }
+                if (hasArgument(arg, "-x | -X", "Redact data before validation or conversion") || arg.startsWith("-X")) {
+                    // This argument was already processed.
                     continue;
                 }
                 // If skip = true, only skip options will be processed and other arguments will be
@@ -345,12 +368,12 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                     continue;
                 }
 
-                if (hasArgument(arg,"-f", "Attempt to correct the value")) {
-                    writeAll = true;
+                if (hasArgument(arg,"-f", "Attempt to correct invalid values")) {
+                    fixIt = true;
                     continue;
                 }
                 if (hasArgument(arg,"-F", "Stop correcting values")) {
-                    writeAll = false;
+                    fixIt = false;
                     continue;
                 }
 
@@ -414,7 +437,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                         suppressErrors.clear();  // ensure later equality check works.
                         suppressErrors.addAll(ERROR_CODES);
                     } else {
-                        suppressErrors.addAll(Arrays.asList(errors.split("[:,; ]+")));
+                        List<String> suppressed = Arrays.asList(errors.split("[:,; ]+"));
+                        for (String suppress: suppressed) {
+                            for (String code: ERROR_CODES) {
+                                if (code.startsWith(suppress.toUpperCase())) {
+                                    suppressErrors.add(code);
+                                }
+                            }
+                        }
                     }
                     continue;
                 }
@@ -444,7 +474,10 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                         files[i++] = found.getPath();
                     }
                 }
-
+                // Force use of defaults when redacting and converting from HL7
+                if (redact && hl7Folder != null) {
+                    useDefaults = true;
+                }
                 totalErrors += validateFiles(reportFolder, maxErrors, suppressErrors, version, writeAll, useJson,
                     useDefaults, fixIt, hl7Folder, cvrsFolder, files);
             }
@@ -485,6 +518,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         String[] files
     ) throws IOException {
         int errors = 0;
+        boolean needsHeader = true;
         for (String file: files) {
             try (Validator v = new Validator(
                 Utility.getReader(file),
@@ -494,7 +528,12 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 useDefaults
             );) {
                 v.setReport(getOutputStream(file, reportFolder, useJson ? "rpt.json" : "rpt"));
-                v.setCvrs(getOutputStream(file, cvrsFolder, "txt"));
+                PrintStream cvrs = getOutputStream(file, cvrsFolder, "txt");
+                if (!System.out.equals(cvrs)) {
+                    needsHeader = true;
+                }
+                v.needsHeader = needsHeader;
+                v.setCvrs(cvrs);
                 v.setHL7(getOutputStream(file, hl7Folder, "hl7"));
                 v.setMaxErrors(maxErrors);
                 v.setName(file);
@@ -503,8 +542,13 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 if (useJson) {
                     v.reporter = v.jsonReporter;
                 }
-                if (!v.getReport().equals(System.out)) {
-                    System.out.printf("Validating %s%n", file);
+                // If we aren't seeing status updates on the console
+                if (!System.out.equals(v.getReport())) {
+                    // and writing one won't mess up existing reporting
+                    if (!System.out.equals(v.getCvrs()) && !System.out.equals(v.getHl7())) {
+                        // Then tell the user what we are doing right now
+                        System.out.printf("Validating %s%n", file);
+                    }
                 }
                 errors += v.validateFile().size();
             } catch (IOException ioex) {
@@ -619,6 +663,11 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
 
     /** Headers in the tab delimited text file in order */
     private String[] headers;
+    /** Headers in orginal CVRS order (used during conversion to CVRS) */
+    private String[] validHeaders;
+
+    /** True if a header row is needed */
+    private boolean needsHeader = true;
 
     /** The HL7 output stream */
     private PrintStream hl7 = null;
@@ -663,6 +712,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
 
     /** Set to true to fix up values to something legitimately close */
     private boolean fixIt = false;
+
     /**
      * Create a new Validator instance for the specified reader,
      * and validating using the specified BeanValidator instance.
@@ -674,7 +724,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      */
     public Validator(Reader reader, BeanValidator validator, boolean useDefaults) throws IOException {
         this.reader = Utility.getBufferedReader(reader);
-        String[] validHeaders = CVRSExtract.getHeaders(validator == null ? DEFAULT_VERSION : validator.getVersion());
+        validHeaders = CVRSExtract.getHeaders(validator == null ? DEFAULT_VERSION : validator.getVersion());
         headers = Utility.readHeaders(this.reader);
         errors = new ArrayList<>();
 
@@ -699,7 +749,26 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         checkHeaders(validHeaders);
         this.validator = validator;
         parser = ParserFactory.newParser(this.reader, null, useDefaults);
-        iterator = parser.iterator();
+        // Wrap the iterator with one that ensures data is always redacting
+        // if the redact feature is enabled.
+        iterator = new Iterator<CVRSExtract>() {
+            Iterator<CVRSExtract> myIterator = parser.iterator();
+            @Override
+            public boolean hasNext() {
+                // TODO Auto-generated method stub
+                return myIterator.hasNext();
+            }
+
+            @Override
+            public CVRSExtract next() {
+                // TODO Auto-generated method stub
+                CVRSExtract ex = myIterator.next();
+                if (isRedacting()) {
+                    ex.redact();
+                }
+                return ex;
+            }
+        };
     }
 
     private void addError(CVRSEntry e) {
@@ -866,6 +935,13 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
     }
 
     /**
+     * @return the redact
+     */
+    public static boolean isRedacting() {
+        return redact;
+    }
+
+    /**
      * @return the reformatDates
      */
     public boolean isReformatDates() {
@@ -953,8 +1029,15 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      */
     public Validator setCvrs(PrintStream outputStream) {
         cvrs = outputStream;
-        if (cvrs != null) {
-            Utility.printRow(cvrs, getHeaders());
+        // These gyrations with needsHeader are to ensure
+        // we get only one header when writing multiple
+        // files to a single output stream.
+        if (!System.out.equals(cvrs)) {
+            needsHeader = true;
+        }
+        if (cvrs != null && needsHeader) {
+            Utility.printRow(cvrs, validHeaders);
+            needsHeader = false;
         }
         return this;
     }
@@ -1137,7 +1220,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      */
     private void convertToTabDelimited() {
         cvrsCount++;
-        Utility.printRow(cvrs, currentExtract.getValues(headers));
+        Utility.printRow(cvrs, currentExtract.getValues(validHeaders));
     }
 
     /**

@@ -5,7 +5,7 @@ to support validation.
 
 Validator is implemented in the `com.ainq.izgateway.extract.Validator` class.
 
-**New features are marked in bold**
+New features are marked in bold
 
 ## Usage
 ```
@@ -37,26 +37,42 @@ and otherwise works like -7 above.
 -I
 : Convert only the inputs that are valid to the output (stop ignoring errors).
 
-**-d**
-: **Enable default value processing for HL7 Message Conversion**
+-d
+: Enable default value processing for HL7 Message Conversion
 : This option will replace values not provided in HL7 messages with UNK (or other
 appropriate value) to report unknown values.
 
-**-D**
-: **Disable default value processing for HL7 Message Conversion**
+-D
+: Disable default value processing for HL7 Message Conversion
 : This option will not populate empty values in the message with UNK.
+
+-f
+: Fix content which is missing, or does not match the value set. This option is used
+to create test data from invalid inputs. It operates by replacing missing data with
+UNK, and removing other data that does not match specified value sets.  It is NOT intended
+to support production use.
+
+-F
+: Stop fixing content.
+
+-x | -X
+: Redact data.  If this flag is specified anywhere on the command line, all data will
+be Redacted before any validation or conversion is performed.  Normally command line
+options and files are processed in sequential order.  However, it's important enough
+in this case to avoid mistakes about data redaction so that once set, there's no way to turn
+this feature off, and it can appear anywhere on the command line, and case doesn't matter.
 
 ### Reporting Options
 
-**-r[folder]**
-: **Specify the folder where report files will be placed.  Uses .rpt as the extension**
-**for report files in text format or .rpt.json in JSON format.**
+-r[folder]
+: Specify the folder where report files will be placed.  Uses .rpt as the extension
+for report files in text format or .rpt.json in JSON format.
 
-**-j**
-: **Write the report in JSON format suitable for use with other applications**
+-j
+: Write the report in JSON format suitable for use with other applications
 
-**-J**
-: **Revert to reporting in text format (default behavior)**
+-J
+: Revert to reporting in text format (default behavior)
 
 -s[error code,...]|ALL
 : Suppress validation for the specified errors (e.g., -sDATA001,DATA002)
@@ -99,7 +115,7 @@ to test output from another application when used with pipes on the command line
 
 : The type of file will automatically detected from its content.
 
-: **CSV is now a supported input format.**  This was done to enable validation
+: CSV is now a supported input format.  This was done to enable validation
 of CSV files being contributed from various sources.  When the input format is CSV
 dates in the MM/DD/YYYY format will be accepted as well as in YYYY-MM-DD format.
 
@@ -122,27 +138,27 @@ file that is validated.
 The detailed report is printed on the standard output stream.
 ```
 File                             Vax_Event_Id     Line   Level  Field                    Error  Description
-src\test\resour***102_01_COA.txt 1149755          1      ERROR  vtrcks_prov_pin          DATA005 vtrcks_prov_pin (1379) does not match the regular expression ^\d{6}?
-src\test\resour***102_01_COA.txt 1149755          1      ERROR  admin_address_county     DATA007 admin_address_county (90035) is not in value set COUNTY[45001, 22001 ... 48507, 46137]
-src\test\resour***102_01_COA.txt 1149755          1      ERROR  admin_address_county     BUSR002 admin_address_county (90035) does not match admin_address_state (CO) for Vaccine Administrator
-src\test\resour***102_01_COA.txt 1149755          1      WARN   recip_address_zip        BUSR009 If recip_address_zip (80134) is present, recip_address_county () should be present for Recipient
+src\test\resour*102_01_COA.txt 1149755          1      ERROR  vtrcks_prov_pin          DATA005 vtrcks_prov_pin (1379) does not match the regular expression ^\d{6}?
+src\test\resour*102_01_COA.txt 1149755          1      ERROR  admin_address_county     DATA007 admin_address_county (90035) is not in value set COUNTY[45001, 22001 ... 48507, 46137]
+src\test\resour*102_01_COA.txt 1149755          1      ERROR  admin_address_county     BUSR002 admin_address_county (90035) does not match admin_address_state (CO) for Vaccine Administrator
+src\test\resour*102_01_COA.txt 1149755          1      WARN   recip_address_zip        BUSR009 If recip_address_zip (80134) is present, recip_address_county () should be present for Recipient
 	.
 	.
 	.
-src\test\resour***102_01_COA.txt R9819            101    ERROR  recip_address_state      HL7_001 Message does not round trip at recip_address_state, '  ' != ''
-src\test\resour***102_01_COA.txt R9820            102    ERROR  recip_address_state      DATA007 recip_address_state (  ) is not in value set STATE[AL, AK ... WI, WY]
-src\test\resour***102_01_COA.txt R9820            102    ERROR  recip_race_1             REQD002 recip_race_1 is required for Refusal events
-src\test\resour***102_01_COA.txt R9820            102    ERROR  recip_ethnicity          REQD002 recip_ethnicity is required for Refusal events
-src\test\resour***102_01_COA.txt R9820            102    ERROR  admin_name               REQD002 admin_name is required for Refusal events
-src\test\resour***102_01_COA.txt R9820            102    ERROR  admin_type               REQD002 admin_type is required for Refusal events
-src\test\resour***102_01_COA.txt R9820            102    ERROR  admin_address_state      DATA007 admin_address_state (  ) is not in value set STATE[AL, AK ... WI, WY]
-src\test\resour***102_01_COA.txt R9820            102    ERROR  recip_address_state      HL7_001 Message does not round trip at recip_address_state, '  ' != ''
+src\test\resour*102_01_COA.txt R9819            101    ERROR  recip_address_state      HL7_001 Message does not round trip at recip_address_state, '  ' != ''
+src\test\resour*102_01_COA.txt R9820            102    ERROR  recip_address_state      DATA007 recip_address_state (  ) is not in value set STATE[AL, AK ... WI, WY]
+src\test\resour*102_01_COA.txt R9820            102    ERROR  recip_race_1             REQD002 recip_race_1 is required for Refusal events
+src\test\resour*102_01_COA.txt R9820            102    ERROR  recip_ethnicity          REQD002 recip_ethnicity is required for Refusal events
+src\test\resour*102_01_COA.txt R9820            102    ERROR  admin_name               REQD002 admin_name is required for Refusal events
+src\test\resour*102_01_COA.txt R9820            102    ERROR  admin_type               REQD002 admin_type is required for Refusal events
+src\test\resour*102_01_COA.txt R9820            102    ERROR  admin_address_state      DATA007 admin_address_state (  ) is not in value set STATE[AL, AK ... WI, WY]
+src\test\resour*102_01_COA.txt R9820            102    ERROR  recip_address_state      HL7_001 Message does not round trip at recip_address_state, '  ' != ''
 src\test\resources\iis_example_files\20201102_01_COA.txt has 491 errors in 100 of 102 records.
 ```
 
 The first line of the detail report are column headings describing the content.
-* File - The name of the file being tested, with *** replacing middle characters for long file names
-* Vax_Event_Id - The Value of the Vax_Event_Id associated with the record (may also be elided with ***)
+* File - The name of the file being tested, with * replacing middle characters for long file names
+* Vax_Event_Id - The Value of the Vax_Event_Id associated with the record (may also be elided with *)
 * Line - The line number where the record was found (not counting the header row)
 * Level - ERROR, WARN, or INFO to indicate the error severity. ERRORs must be fixed. WARN and INFO are advisory.
 * Field - The field in error.  One of the CVRS Field names or ??? if a field name is unknown.
@@ -277,7 +293,7 @@ DATA009
 : Date is not correctly formatted
 
 ### Format Errors
-**FMT_ Error codes indicate a problem in the file format.**
+FMT_ Error codes indicate a problem in the file format.
 
 FMT_001
 : File is not tab delimited.  The file is not tab delimited (may be a CSV file)
@@ -370,8 +386,8 @@ HL7_003
 
 ## Exit Codes
 If all records validated successfully, the program will return an exit code of 0.
-If one or more records had a validation error or warning, the program will return an exit code **indicating**
-**the number of errors found**.
+If one or more records had a validation error or warning, the program will return an exit code indicating
+the number of errors found.
 If an exception occurs that causes program termination, an exit code of < 1 will be returned to indicate
 an execution error.
 

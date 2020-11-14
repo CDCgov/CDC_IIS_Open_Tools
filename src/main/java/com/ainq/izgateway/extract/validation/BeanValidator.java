@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +65,15 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
     /** Map of states to zip-code prefixes to validate zip in state */
     private static Map<String, String> stateToZip = new TreeMap<>();
 
+    /** A cache of Reusable StringValidator objects that can be called to
+     * validate a field.
+     */
     private Map<String, StringValidator> fieldValidatorCache = new HashMap<>();
+
+    /** A cache of Reusable ValidatorBeanField objects for calling the validate
+     *  method of StringValidator
+     */
+    private static Map<String, ValidatorBeanField> validatorBeanFields = new HashMap<>();
 
     private Map<String, Pair<Integer, Integer>> event_id = new HashMap<>();
     private int counter;
@@ -243,6 +250,22 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         return fields;
     }
 
+    private static String getField(CVRSExtract bean, Field field) {
+        try {
+            return (String) field.get(bean);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            throw new RuntimeException("Error retrieving bean field: " + field.getName(), e);
+        }
+    }
+
+    private static void setField(CVRSExtract bean, Field field, String value) {
+        try {
+            field.set(bean, value);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            throw new RuntimeException("Error Setting bean field: " + field.getName() + " to '" + value + "'", e);
+        }
+    }
+
     private void checkRequirements(CVRSExtract bean, List<CVRSEntry> errors) {
         String values[] = bean.getValues();
         EventType eventType = getEventType(bean);
@@ -256,97 +279,113 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
 
             f.setAccessible(true);
             String value;
-            try {
-                // If the field isn't used in this version of the CVRS
-                // Set the field to null in the extracted bean.
-                if (getRequirement(f, RequirementType.IGNORE, getVersion()) != null) {
-                    f.set(bean, null);
-                }
-                // Get the value.
-                value = (String)f.get(bean);
-            } catch (IllegalArgumentException | IllegalAccessException e1) {
-                // SHOULDN'T Happen, we've already done this successfully by now.
-                throw new RuntimeException("Error retrieving bean field: " + f.getName(), e1);
+
+            // If the field isn't used in this version of the CVRS
+            // Set the field to null in the extracted bean.
+            if (getRequirement(f, RequirementType.IGNORE, getVersion()) != null) {
+                setField(bean, f, null);
+            }
+            // Get the value.
+            value = getField(bean, f);
+
+            if (StringUtils.isEmpty(value)) {
+                String code = hasRequiredEvent(f, RequirementType.REQUIRED, getVersion(), eventType);
+                checkRequirement("UNK", bean, errors, values, f, value, code);
             }
 
-            Requirement req = getRequirement(f, RequirementType.REQUIRED, getVersion());
-            if (req != null && Arrays.asList(req.when()).contains(eventType)) {
-                String code = String.format("REQD%03d", eventType.ordinal() + 1);
-                if (!getSuppressed().contains(code) && StringUtils.isEmpty(value)) {
-                    CVRSEntry e = new CVRSEntry(bean, code, f.getName(),
-                        String.format("%s is required for %s events", f.getName(), eventType));
-                    e.setRow(values);
-                    errors.add(e);
-                }
-                if (fixIt) {
-                    try {
-                        f.set(bean, "UNK");
-                    } catch (IllegalArgumentException | IllegalAccessException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            Requirement dns = getRequirement(f, RequirementType.DO_NOT_SEND, getVersion());
-            if (dns != null && Arrays.asList(dns.when()).contains(eventType)) {
-                String code = String.format("DNTS%03d", eventType.ordinal() + 1);
-                if (!getSuppressed().contains(code) && !StringUtils.isEmpty(value)) {
-                    CVRSEntry e = new CVRSEntry(bean, code, f.getName(), String.format("%s (%s) should not be present for %s events",
-                        f.getName(), value, eventType));
-                    e.setRow(values);
-                    errors.add(e);
-                }
-                if (fixIt) {
-                    try {
-                        f.set(bean, null);
-                    } catch (IllegalArgumentException | IllegalAccessException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
+            if (!StringUtils.isEmpty(value)) {
+                String code = hasRequiredEvent(f, RequirementType.DO_NOT_SEND, getVersion(), eventType);
+                checkRequirement(null, bean, errors, values, f, value, code);
             }
 
             FieldValidator fv = f.getAnnotation(FieldValidator.class);
-            ValidatorBeanField vbf = new ValidatorBeanField(f);
             if (fv != null) {
-                int length = value == null ? 0 : value.length();
-                if (length > fv.maxLength()) {
-                    CVRSEntry e1 = new CVRSEntry(bean, "DATA008", f.getName(), Validator.getMessage("DATA008", f.getName(), value, fv.maxLength()));
-                    errors.add(e1);
+                if (StringUtils.length(value) > fv.maxLength()) {
+                    checkRequirement(value.substring(0, fv.maxLength()), bean, errors, values, f, value, "DATA008");
                 }
-                StringValidator sv = null;
-                try {
-                    extractType = getExtractType(bean);
-                    sv = getFieldValidator(f.getName(), extractType, fv);
-                    sv.validate(value, vbf);
-                } catch (ReflectiveOperationException | SecurityException e) {
-                    throw new RuntimeException("Unable to construct " + fv.validator().getName(), e);
-                } catch (CsvValidationException e) {
-                    if (e instanceof CsvFieldValidationException) {
-                        errors.add(((CsvFieldValidationException) e).getValidationEntry());
-                    } else {
-                        String message = e.getMessage();
-                        String code = StringUtils.substringBefore(message, ":");
-                        if (!getSuppressed().contains(code)) {
-                            CVRSEntry e1 = new CVRSEntry(bean, code, null, StringUtils.substringAfter(message, ":"));
-                            e1.setRow(values);
-                            errors.add(e1);
-                        }
-                    }
-                    if (fixIt && sv instanceof Fixable) {
-                        try {
-                            f.set(bean, ((Fixable) sv).fixIt(value));
-                        } catch (IllegalArgumentException | IllegalAccessException e1) {
-                            // TODO Auto-generated catch block
-                            e1.printStackTrace();
-                        }
-                    }
-                }
+                StringValidator sv = getFieldValidator(f.getName(), extractType, fv);
+                validateAndFix(bean, f, sv, value, errors, values);
             }
         }
     }
 
+    private void checkRequirement(String newValue, CVRSExtract bean, List<CVRSEntry> errors, String[] values, Field f, String value, String code) {
+        if (code != null && !getSuppressed().contains(code)) {
+            if (fixIt) {
+                setField(bean, f, newValue);
+            } else {
+                addUnsuppressedError(errors, values, bean, f, code, Validator.getMessage(code, f.getName(), value, StringUtils.length(newValue)));
+            }
+        }
+    }
+
+    /**
+     * Given an error condition specified by code, if it hasn't been suppressed, then
+     * create a new error entry, and save it in errors,
+     * @param errors    The place to save errors
+     * @param values    The values in the current bean
+     * @param bean      The current bean
+     * @param f         The current field
+     * @param code      The error code
+     * @param message   The message to go with the error
+     */
+    private void addUnsuppressedError(List<CVRSEntry> errors, String[] values, CVRSExtract bean, Field f, String code, String message) {
+        if (!getSuppressed().contains(code)) {
+            CVRSEntry e1 = new CVRSEntry(bean, code, f.getName(), message);
+            e1.setRow(values);
+            errors.add(e1);
+        }
+    }
+
+    /**
+     * Get a ValidatorBeanField for a CVRS record, reusing an existing one
+     * where it exists, or creating a new one if it does not.
+     *
+     * @param f The field to get the ValidatorBeanField for.
+     * @return  The new or reused ValidatorBeanField
+     */
+    private static ValidatorBeanField getValidatorBeanField(Field f) {
+        ValidatorBeanField vbf = validatorBeanFields.get(f.getName());
+        if (vbf == null) {
+            vbf = new ValidatorBeanField(f);
+            validatorBeanFields.put(f.getName(), vbf);
+        }
+        return vbf;
+    }
+
+    /**
+     * Validate a value, and if fixing errors, retrying after fixing the
+     * value, reporting the first error found in retrying fails.
+     * @param bean  The bean being validated
+     * @param f The field in the bean
+     * @param sv    The StringValidator used to validate it
+     * @param value The value to validate
+     * @param errors    A place to hold errors
+     * @param values    The values for the bean
+     */
+    private void validateAndFix(CVRSExtract bean, Field f, StringValidator sv, String value, List<CVRSEntry> errors, String[] values) {
+        ValidatorBeanField vbf = getValidatorBeanField(f);
+        try {
+            sv.validate(value, vbf);
+            return;
+        } catch (CsvValidationException e) {
+            if (fixIt && sv instanceof Fixable) {
+                String newValue = ((Fixable) sv).fixIt(value);
+                if (sv.isValid(newValue)) {
+                    setField(bean, f, newValue);
+                    return;
+                }
+            }
+
+            if (e instanceof CsvFieldValidationException) {
+                errors.add(((CsvFieldValidationException) e).getValidationEntry());
+            } else {
+                addUnsuppressedError(errors, values, bean, f,
+                    StringUtils.substringBefore(e.getMessage(), ":"),
+                    StringUtils.substringAfter(e.getMessage(), ":"));
+            }
+        }
+    }
     /**
      * Retrieve the field validator for the specified field
      * @param fieldName   The field to retrieve the validator for.
@@ -355,12 +394,15 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
      * @return  An initialized field validator
      * @throws ReflectiveOperationException   If a reflection error occurred.
      */
-    private StringValidator getFieldValidator(String fieldName, ExtractType extractType, FieldValidator fv)
-        throws ReflectiveOperationException {
+    private StringValidator getFieldValidator(String fieldName, ExtractType extractType, FieldValidator fv) {
         String key = fieldName + "_" + (extractType == null ? null : extractType.getCode());
         StringValidator sv = fieldValidatorCache.get(key);
         if (sv == null) {
-            sv = fv.validator().getConstructor().newInstance();
+            try {
+                sv = fv.validator().getConstructor().newInstance();
+            } catch (ReflectiveOperationException | SecurityException e) {
+                throw new RuntimeException("Unable to construct " + fv.validator().getName(), e);
+            }
             if (sv instanceof Suppressible) {
                 ((Suppressible) sv).setSuppressed(getSuppressed());
             }
@@ -384,6 +426,17 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
             if (req.value() == type && Arrays.asList(req.versions()).contains(version)) {
                 return req;
             }
+        }
+        return null;
+    }
+
+    public static String hasRequiredEvent(Field f, RequirementType type, String version, EventType eventType) {
+        Requirement req = getRequirement(f, type, version);
+        if (req == null) {
+            return null;
+        }
+        if (Arrays.asList(req.when()).contains(eventType)) {
+            return String.format("%s%03d", type.getCode(), eventType.ordinal() + 1);
         }
         return null;
     }
