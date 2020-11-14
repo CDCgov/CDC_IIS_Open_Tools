@@ -43,6 +43,7 @@ import com.ainq.izgateway.extract.validation.BeanValidator;
 import com.ainq.izgateway.extract.validation.CVRSEntry;
 import com.ainq.izgateway.extract.validation.CVRSValidationException;
 import com.ainq.izgateway.extract.validation.NullValidator;
+import com.fasterxml.jackson.core.JsonFactory;
 import com.ainq.izgateway.extract.exceptions.CsvFieldValidationException;
 
 import ca.uhn.hl7v2.HL7Exception;
@@ -189,6 +190,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 b.add("totalErrors", total);
                 b.add("failedRecords",  getErrorCount());
                 b.add("totalRecords", getCount());
+                /* TODO: Add this for release 1.1.0
+                b.add("version", validator == null ? Validator.DEFAULT_VERSION : validator.getVersion());
+                JsonArrayBuilder s = Json.createArrayBuilder();
+                if (validator != null && validator.getSuppressed() != null) {
+                     validator.getSuppressed().forEach(supp -> s.add(supp));
+                }
+                b.add("suppressed", s.build());
+                */
                 if (getCvrs() != null) {
                     b.add("cvrsWritten",  getCvrsCount());
                 }
@@ -359,12 +368,12 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                     continue;
                 }
 
-                if (hasArgument(arg,"-f", "Attempt to correct the value")) {
-                    writeAll = true;
+                if (hasArgument(arg,"-f", "Attempt to correct invalid values")) {
+                    fixIt = true;
                     continue;
                 }
                 if (hasArgument(arg,"-F", "Stop correcting values")) {
-                    writeAll = false;
+                    fixIt = false;
                     continue;
                 }
 
@@ -428,7 +437,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                         suppressErrors.clear();  // ensure later equality check works.
                         suppressErrors.addAll(ERROR_CODES);
                     } else {
-                        suppressErrors.addAll(Arrays.asList(errors.split("[:,; ]+")));
+                        List<String> suppressed = Arrays.asList(errors.split("[:,; ]+"));
+                        for (String suppress: suppressed) {
+                            for (String code: ERROR_CODES) {
+                                if (code.startsWith(suppress.toUpperCase())) {
+                                    suppressErrors.add(code);
+                                }
+                            }
+                        }
                     }
                     continue;
                 }
@@ -458,7 +474,10 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                         files[i++] = found.getPath();
                     }
                 }
-
+                // Force use of defaults when redacting and converting from HL7
+                if (redact && hl7Folder != null) {
+                    useDefaults = true;
+                }
                 totalErrors += validateFiles(reportFolder, maxErrors, suppressErrors, version, writeAll, useJson,
                     useDefaults, fixIt, hl7Folder, cvrsFolder, files);
             }
@@ -499,6 +518,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         String[] files
     ) throws IOException {
         int errors = 0;
+        boolean needsHeader = true;
         for (String file: files) {
             try (Validator v = new Validator(
                 Utility.getReader(file),
@@ -508,7 +528,12 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 useDefaults
             );) {
                 v.setReport(getOutputStream(file, reportFolder, useJson ? "rpt.json" : "rpt"));
-                v.setCvrs(getOutputStream(file, cvrsFolder, "txt"));
+                PrintStream cvrs = getOutputStream(file, cvrsFolder, "txt");
+                if (!System.out.equals(cvrs)) {
+                    needsHeader = true;
+                }
+                v.needsHeader = needsHeader;
+                v.setCvrs(cvrs);
                 v.setHL7(getOutputStream(file, hl7Folder, "hl7"));
                 v.setMaxErrors(maxErrors);
                 v.setName(file);
@@ -638,6 +663,11 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
 
     /** Headers in the tab delimited text file in order */
     private String[] headers;
+    /** Headers in orginal CVRS order (used during conversion to CVRS) */
+    private String[] validHeaders;
+
+    /** True if a header row is needed */
+    private boolean needsHeader = true;
 
     /** The HL7 output stream */
     private PrintStream hl7 = null;
@@ -682,6 +712,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
 
     /** Set to true to fix up values to something legitimately close */
     private boolean fixIt = false;
+
     /**
      * Create a new Validator instance for the specified reader,
      * and validating using the specified BeanValidator instance.
@@ -693,7 +724,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      */
     public Validator(Reader reader, BeanValidator validator, boolean useDefaults) throws IOException {
         this.reader = Utility.getBufferedReader(reader);
-        String[] validHeaders = CVRSExtract.getHeaders(validator == null ? DEFAULT_VERSION : validator.getVersion());
+        validHeaders = CVRSExtract.getHeaders(validator == null ? DEFAULT_VERSION : validator.getVersion());
         headers = Utility.readHeaders(this.reader);
         errors = new ArrayList<>();
 
@@ -998,8 +1029,15 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      */
     public Validator setCvrs(PrintStream outputStream) {
         cvrs = outputStream;
-        if (cvrs != null) {
-            Utility.printRow(cvrs, getHeaders());
+        // These gyrations with needsHeader are to ensure
+        // we get only one header when writing multiple
+        // files to a single output stream.
+        if (!System.out.equals(cvrs)) {
+            needsHeader = true;
+        }
+        if (cvrs != null && needsHeader) {
+            Utility.printRow(cvrs, validHeaders);
+            needsHeader = false;
         }
         return this;
     }
@@ -1182,7 +1220,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      */
     private void convertToTabDelimited() {
         cvrsCount++;
-        Utility.printRow(cvrs, currentExtract.getValues(headers));
+        Utility.printRow(cvrs, currentExtract.getValues(validHeaders));
     }
 
     /**

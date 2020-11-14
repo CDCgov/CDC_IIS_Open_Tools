@@ -66,15 +66,24 @@ public class DateValidator extends SuppressibleValidator implements Fixable, Str
     public String fixIt(String value) {
         String newValue = null;
         if (!StringUtils.isEmpty(value)) {
+            value = value.replaceAll("[0-9-/]","");
+            if (value.length() == 0) {
+                return value;
+            }
             String yearPart = value.replaceAll("^.*(\\d{4}).*$", "$1");
             String monthPart = value.replaceAll("^(\\d{2})/.*$|-(\\d{2})-", "$1$2");
             String dayPart = value.replaceAll("^\\d{2}/(\\d{2}).*$|\\d{2}-(\\d{2})[^-]?$", "$1$2");
-            newValue = String.format("%04d-%02d-%02d", yearPart, monthPart, dayPart);
-        } else {
-            // Go with today.
-            Calendar cal = Calendar.getInstance();
-            newValue = String.format("%04d-%02d-%02d", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DATE));
+            if (yearPart.length() == 4 && monthPart.length() == 2 && dayPart.length() == 2) {
+                newValue = String.format("%s-%s-%s", yearPart, monthPart, dayPart);
+                if (isValid(newValue)) {
+                    return newValue;
+                }
+            }
         }
+        // Go with today.
+        Calendar cal = Calendar.getInstance();
+        newValue = String.format("%04d-%02d-%02d", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DATE));
+
         if (isValid(newValue)) {
             return newValue;
         }

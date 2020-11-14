@@ -371,13 +371,9 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         } catch (CsvValidationException e) {
             if (fixIt && sv instanceof Fixable) {
                 String newValue = ((Fixable) sv).fixIt(value);
-                try {
-                    sv.validate(newValue, vbf);
+                if (sv.isValid(newValue)) {
                     setField(bean, f, newValue);
                     return;
-                } catch (CsvValidationException e2) {
-                    // Swallow this and fall through, reporting
-                    // the first error.
                 }
             }
 
