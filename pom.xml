@@ -2,13 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ainq.izgateway</groupId>
-	<artifactId>extract-validator</artifactId>
+	<artifactId>cvrs-extract</artifactId>
+	<packaging>pom</packaging>
 	<version>1.1.0-SNAPSHOT</version>
-	<name>Extract Validator</name>
-	<description>A Validator for flat files and HL7 Messages conforming to the IG Gateway Extract format.</description>
+	<name>CVRS Extract Tools</name>
+	<description>This project contains various tools to support exchange of the CVRS Extract for the CDC COVID-19 Data Clearinghouse.</description>
 
 	<properties>
-		<springApplicationName>extract-validator</springApplicationName>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,28 +23,8 @@
 	</properties>
 	<dependencies>
 		<!-- HL7 HL7 V2 artifacts -->
-		<dependency>
-			<groupId>ca.uhn.hapi</groupId>
-			<artifactId>hapi-base</artifactId>
-			<version>${hapi.v2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi</groupId>
-			<artifactId>hapi-structures-v251</artifactId>
-			<version>${hapi.v2.version}</version>
-		</dependency>
 		<!-- This dependency must be installed locally using install-lib.cmd as it is not in a MAVEN Repository. -->
-		<dependency>
-			<version>1.0.0</version>
-			<groupId>com.github.hl7-tools</groupId>
-			<artifactId>validation-report</artifactId>
-		</dependency>
 		<!-- JSON -->
-		<dependency>
-			<groupId>javax.json</groupId>
-			<artifactId>javax.json-api</artifactId>
-			<version>1.1.4</version>
-		</dependency>
 
 		<!-- Test -->
 		<dependency>
@@ -70,74 +50,12 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.6</version>
 		</dependency>
-		<dependency>
-			<groupId>com.opencsv</groupId>
-			<artifactId>opencsv</artifactId>
-			<version>5.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.11.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<version>${spring.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.logging.log4j</groupId>
-					<artifactId>log4j-to-slf4j</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jetty</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>30.0-jre</version>
-		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<version>${spring.version}</version>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>1.7.30</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.2.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.json</artifactId>
-			<version>1.1.4</version>
-		</dependency>
 
 	</dependencies>
 
 	<build>
-		<finalName>extract-validator</finalName>
+		<finalName>cvrs-extract</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -390,4 +308,9 @@
 		</plugins>
 	</reporting>
 
+	<modules>
+		<module>extract-validator</module>
+		<module>clearinghouse-mock</module>
+		<module>clearinghouse-sender</module>
+	</modules>
 </project>
