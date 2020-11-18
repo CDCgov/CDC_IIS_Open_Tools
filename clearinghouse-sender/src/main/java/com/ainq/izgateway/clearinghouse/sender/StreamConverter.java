@@ -1,10 +1,9 @@
-package com.ainq.izgateway.extract.sender;
+package com.ainq.izgateway.clearinghouse.sender;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.http.HttpInputMessage;
@@ -43,7 +42,6 @@ public class StreamConverter implements HttpMessageConverter<InputStream> {
         byte buffer[] = new byte[4096];
         int length = 0;
         boolean foundLf = false;
-        boolean testCR = true;
         OutputStream body = outputMessage.getBody();
         while ((length = t.read()) > 0) {
             if (length == '\r') {

@@ -1,4 +1,4 @@
-package com.ainq.izgateway.extract.sender;
+package com.ainq.izgateway.clearinghouse.sender;
 
 import java.io.IOException;
 import java.net.URI;

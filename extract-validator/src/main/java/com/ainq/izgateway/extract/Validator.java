@@ -43,7 +43,6 @@ import com.ainq.izgateway.extract.validation.BeanValidator;
 import com.ainq.izgateway.extract.validation.CVRSEntry;
 import com.ainq.izgateway.extract.validation.CVRSValidationException;
 import com.ainq.izgateway.extract.validation.NullValidator;
-import com.fasterxml.jackson.core.JsonFactory;
 import com.ainq.izgateway.extract.exceptions.CsvFieldValidationException;
 
 import ca.uhn.hl7v2.HL7Exception;
@@ -52,6 +51,7 @@ import ca.uhn.hl7v2.model.Message;
  * A Validator for the CDC COVID-19 Vaccination Report Specification Extract File Formats
  */
 public class Validator implements Iterator<CVRSExtract>, Closeable {
+    @SuppressWarnings("unused")
     private final static Logger LOGGER = LoggerFactory.getLogger(Validator.class);
     /** Bundle for Error messages */
     public static class MyResources extends ListResourceBundle {

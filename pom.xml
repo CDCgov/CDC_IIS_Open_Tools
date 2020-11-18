@@ -18,8 +18,8 @@
 		<hapi.v2.version>2.3</hapi.v2.version>
 		<dependency.locations.enabled>false</dependency.locations.enabled>
 		<maven.javadoc.skip>false</maven.javadoc.skip>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.source>8</maven.compiler.source>
+		<maven.compiler.target>8</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<!-- HL7 HL7 V2 artifacts -->

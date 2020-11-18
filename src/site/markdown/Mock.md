@@ -4,14 +4,14 @@ The Sender is a command line tool that runs a mock version of the Clearinghouse 
 
 ## Usage
 ```
-    $ java -cp extract-validator.jar com.ainq.izgateway.clearinghouse.Mock \
-        -Dserver.port=port
+    $ java -jar clearinghouse-mock.jar -Dserver.port=port [-Dfeature=value]
 ```
 
 -Dserver.port=_port_
 : Specify the server port (default is 8080)
 
-This is a Spring Boot application using the Jetty Server.  Other options are available, see
+-D_feature_=_value_
+This is a Spring Boot application using the Jetty Server.  Other features are available for configuration, see
 [the Spring Boot documentation](https://docs.spring.io/spring-boot/docs/2.1.9.RELEASE/reference/html/howto-embedded-web-servers.html)
 for details.
 
