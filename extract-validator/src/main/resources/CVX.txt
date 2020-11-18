@@ -32,7 +32,7 @@
 130	DTaP-IPV
 132	DTaP-IPV-HIB-HEP B, historical
 170	DTAP/IPV/HIB - non-US
-1	DTP
+01	DTP
 198	DTP-hepB-Hib Pentavalent Non-US
 22	DTP-Hib
 102	DTP-Hib-Hep B
@@ -47,7 +47,7 @@
 85	Hep A, unspecified formulation
 104	Hep A-Hep B
 193	Hep A-Hep B, pediatric/adolescent
-8	Hep B, adolescent or pediatric
+08	Hep B, adolescent or pediatric
 42	Hep B, adolescent/high risk infant
 43	Hep B, adult
 44	Hep B, dialysis
@@ -106,9 +106,9 @@
 64	leishmaniasis
 65	leprosy
 66	Lyme disease
-4	M/R
+04	M/R
 67	malaria
-5	measles
+05	measles
 68	melanoma
 191	meningococcal A polysaccharide (non-US)
 192	meningococcal AC polysaccharide (non-US)
@@ -124,14 +124,14 @@
 32	meningococcal MPSV4
 203	meningococcal polysaccharide (groups A, C, Y, W-135) TT conjugate
 167	meningococcal, unknown serogroups
-3	MMR
+03	MMR
 94	MMRV
-7	mumps
+07	mumps
 127	Novel influenza-H1N1-09
 128	Novel Influenza-H1N1-09, all formulations
 125	Novel Influenza-H1N1-09, nasal
 126	Novel influenza-H1N1-09, preservative-free
-2	OPV
+02	OPV
 179	OPV ,monovalent, unspecified
 178	OPV bivalent
 182	OPV, Unspecified
@@ -164,12 +164,12 @@
 71	RSV-IGIV
 93	RSV-MAb
 145	RSV-MAb (new)
-6	rubella
+06	rubella
 38	rubella/mumps
 206	Smallpox monkeypox vaccine (National Stockpile)
 76	Staphylococcus bacterio lysate
 138	Td (adult)
-9	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed
+09	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed
 113	Td (adult), 5 Lf tetanus toxoid, preservative free, adsorbed
 139	Td(adult) unspecified formulation
 196	Td, adsorbed, preservative free, adult use, Lf unspecified
