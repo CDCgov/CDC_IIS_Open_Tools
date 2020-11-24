@@ -1,3 +1,20 @@
+# Release Notes for 1.1.0
+In this release, the deliverables have been repackaged to support use of the
+validation/conversion tools separately from the web services client and mock
+server. Tools now target Java 1.8 (a.k.a. Java 8) to enable them to be used
+with older virtual machines (this does not prevent them from being used in
+a Java 9 or later edition).
+
+This release will include the following files:
+
+* extract-validator-1.1.0.jar Command Line tool for validation and File Conversion
+* extract-validator-lib-1.1.0.zip Library for use of software with other applications.
+* extract-validator-javadoc-1.1.0.jar Java Doc for tools
+* extract-validator-sources-1.1.0.jar Source Code for tools
+* extract-validator-site-1.1.0.zip Documentation Files
+* clearinghouse-sender-1.1.0.jar Command Line tool to send data to the clearinghouse.
+* clearinghouse-mock-1.1.0.jar Command Line tool to mock the clearinghouse APIs for upload.
+
 # Release Notes for 1.0.1
 This is a patch to fix a bug found after release which threw exceptions
 on incorrectly formatted dates.
@@ -5,8 +22,8 @@ on incorrectly formatted dates.
 # Release Notes for 1.0.0
 This is the first release of the validation tools.  It includes the following files:
 
-* validator-extract-1.0.0.jar Command Line tool for validation and File Conversion
-* validator-extract-lib-1.0.0.zip Library for use of software with other applications.
+* extract-validator-1.0.0.jar Command Line tool for validation and File Conversion
+* extract-validator-lib-1.0.0.zip Library for use of software with other applications.
 * extract-validator-javadoc-1.0.0.jar Java Doc for tools
 * extract-validator-sources-1.0.0.jar Source Code for tools
 * extract-validator-site-1.0.0.zip Documentation Files

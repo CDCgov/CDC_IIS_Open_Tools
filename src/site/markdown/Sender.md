@@ -5,8 +5,7 @@ and report the status of its content.
 
 ## Usage
 ```
-    $ java -cp extract-validator.jar com.ainq.izgateway.extract.sender.Sender \
-        -DclientId=clientIDValue -DclientSecret=clientSecretValue file ...
+    $ java -cp clearinghouse-sender.jar -DclientId=clientIDValue -DclientSecret=clientSecretValue file ...
 ```
 
 -DclientId=_clientIDValue_
