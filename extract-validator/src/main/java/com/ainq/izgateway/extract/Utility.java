@@ -2,14 +2,14 @@ package com.ainq.izgateway.extract;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.nio.charset.StandardCharsets;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -166,7 +166,15 @@ public class Utility {
     public static Reader getReader(String arg) throws IOException {
         return getBufferedReader(
             "-".equals(arg) ? new InputStreamReader(System.in)
-                            : new FileReader(arg, StandardCharsets.UTF_8));
+                            : getFileReader(arg));
+    }
+
+    public static InputStreamReader getFileReader(String arg) throws FileNotFoundException, UnsupportedEncodingException {
+       return new InputStreamReader(new FileInputStream(arg), "UTF-8");
+    }
+
+    public static PrintStream getPrintStream(File f2) throws FileNotFoundException, UnsupportedEncodingException {
+        return new PrintStream(f2, "UTF-8");
     }
 
 }

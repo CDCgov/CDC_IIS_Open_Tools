@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,6 +31,7 @@ import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOCase;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
@@ -467,7 +467,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 String files[] = { arg };
                 if (arg.contains("*") || arg.contains("?")) {
                     File f = new File(arg);
-                    Collection<File> list = FileUtils.listFiles(f.getParentFile(),  new WildcardFileFilter(f.getName()), null);
+                    Collection<File> list = FileUtils.listFiles(f.getParentFile(),  new WildcardFileFilter(f.getName(), IOCase.SYSTEM), null);
                     files = new String[list.size()];
                     int i = 0;
                     for (File found: list) {
@@ -604,7 +604,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             ext = "new." + ext;
             f2 = Utility.getNewFile(arg, new File(folder), ext);
         }
-        return new PrintStream(f2, StandardCharsets.UTF_8);
+        return Utility.getPrintStream(f2);
     }
 
     /**

@@ -2,9 +2,8 @@ package com.ainq.izgateway.clearinghouse.sender;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.io.Reader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.ainq.izgateway.extract.HL7MessageParser;
+import com.ainq.izgateway.extract.Utility;
 import com.ainq.izgateway.extract.model.TokenRequest;
 import com.ainq.izgateway.extract.model.TokenResponse;
 import com.ainq.izgateway.extract.model.UploadResponse;
@@ -92,7 +92,7 @@ public class Sender implements WebMvcConfigurer, CommandLineRunner {
             // Examine the file to determine if
             // 1. It can be read?
             // 2. What type of data it contains
-            try (FileReader r = new FileReader(arg, StandardCharsets.UTF_8)) {
+            try (Reader r = Utility.getFileReader(arg)) {
                 char data[] = new char[4096];
                 int len = r.read(data);
                 line = new String(data, 0, len);
