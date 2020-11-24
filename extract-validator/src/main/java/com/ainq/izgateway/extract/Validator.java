@@ -728,7 +728,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         headers = Utility.readHeaders(this.reader);
         errors = new ArrayList<>();
 
-        if (headers != null) {
+        if (headers != null && headers.length != 0 && headers[0].length() != 0) {
             // Check for a Byte Order Mark
             if (headers[0].charAt(0) == '\ufeff') {
                 CVRSEntry e = new CVRSEntry(null, "FMT_005", "Header", "File starts with a Unicode Byte Order Mark (FEFF)");

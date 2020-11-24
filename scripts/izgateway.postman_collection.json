@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "3e62a173-544b-4dc2-9f30-e1dffdd3cd46",
+		"name": "izgateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Token Request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "91740a25-e24a-4947-a44a-a1bfc8fb8ef7",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"clientID\": \"{{clientID}}\",\r\n    \"clientSecret\": \"{{clientSecret}}\",\r\n    \"scopes\": [\r\n        \"UPLOAD\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://covdch-dev.ohms.oracle.com/v0/token/gen",
+					"protocol": "https",
+					"host": [
+						"covdch-dev",
+						"ohms",
+						"oracle",
+						"com"
+					],
+					"path": [
+						"v0",
+						"token",
+						"gen"
+					]
+				},
+				"description": "Request a new token using clientID and clientSecret "
+			},
+			"response": []
+		},
+		{
+			"name": "Send Bad Data",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"user-agent": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/plain",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "vax_event_id\text_type\tpprl_id\trecip_id\trecip_first_name\trecip_middle_name\trecip_last_name\trecip_dob\trecip_sex\trecip_address_street\trecip_address_street_2\trecip_address_city\trecip_address_county\trecip_address_state\trecip_address_zip\trecip_race_1\trecip_race_2\trecip_race_3\trecip_race_4\trecip_race_5\trecip_race_6\trecip_ethnicity\tadmin_date\tcvx\tndc\tmvx\tlot_number\tvax_expiration\tvax_admin_site\tvax_route\tdose_num\tvax_series_complete\tresponsible_org\tadmin_name\tvtrcks_prov_pin\tadmin_type\tadmin_address_street\tadmin_address_street_2\tadmin_address_city\tadmin_address_county\tadmin_address_state\tadmin_address_zip\tvax_prov_suffix\tvax_refusal\tcmorbid_status\tserology\r\nDATA001_recip_dob\tD\t\t1\tRedacted\tRedacted\tRedacted\t2015-26-08\tF\tRedacted\tRedacted\tRedacted\t49053\tMI\t48877\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t\t\t\t\t\t\t\t\t\tCOVID-A\tLuna\t999999\tCL\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49053\t\tNo\tUNK\tUNK\r\nDATA001_admin_date_1\tD\t\t2\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t49053\tMI\t49968\tUNK\t\t\t\t\t\tUNK\t10/24/2020\t\t\t\t\t\t\t\t\t\tCOVID-B\tBuffalo\t999999\tPH\t\t\t\t26077\t\t\t\tNo\tUNK\tUNK\r\nDATA001_admin_date_2\tD\t\t3\tRedacted\tRedacted\tRedacted\t2015-08\tF\tRedacted\tRedacted\tRedacted\t49053\tMI\t48303\tUNK\t\t\t\t\t\tUNK\t2020-10\t902\t\t\t\t\t\t\t\t\tCOVID-C\tCap\t999999\tPO\t98 Monroe Center St NW\t\tGrand Rapids\t49053\tMI\t49053\t\tYes\tUNK\tUNK\r\nDATA006_recip_address_city\tD\t\t4\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tNot redacted\t49053\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2021-07-25\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\tPOD\t\t\t\t26011\t\t\tOTH\tNo\tUNK\tUNK\r\nDATA005_ext_type\tQ\t\t5\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t49053\tMI\t48065\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t\t\t\t\t\t\t\t\t\tCOVID-D\tLibrary\t577689\tPOD\t\t\t\t26011\t\t\t\tNo\tUNK\tUNK\r\nDATA004_pprl_id\tD\tPresent\t6\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t49053\tMI\t48710\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t902\t\t\t\t\tLT\tC38284\t1\tNo\tCOVID-C\tCap\t788899\tPO\t98 Monroe Center St NW\t\tGrand Rapids\t49053\tMI\t49053\tMD\tNo\tUNK\tUNK\r\nDATA006_recip_first_name_not_redacted\tP\tPresent\t6\tUnRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t49053\tMI\t48710\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t902\t\t\t\t\tLT\tC38284\t1\tNo\tCOVID-C\tCap\t788899\tPO\t98 Monroe Center St NW\t\tGrand Rapids\t49053\tMI\t49053\tMD\tNo\tUNK\tUNK\r\nDATA005_recip_address_zip\tD\t\t7\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t49053\tMI\t48504-\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t901\t99999-9999-01\tPFR\tP9999-05\t2021-07-25\tLT\tC38676\t2\tYes\tCOVID-B\tBuffalo\t999999\tPH\t\t\t\t26077\t\t\tOTH\tNo\tUNK\tUNK\r\nDATA006_recip_first_name\tD\t\t7\tNOT Redacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t49053\tMI\t48504\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t901\t99999-9999-01\tPFR\tP9999-05\t2021-07-25\tRA\tC38299\t1\tNo\tCOVID-B\tBuffalo\t999999\tPH\t\t\t\t26077\t\t\tMD\tNo\tUNK\tUNK\r\nDATA007_recip_sex\tD\t\t8\tRedacted\tRedacted\tRedacted\t2015-08-26\tUNK\tRedacted\tRedacted\tRedacted\t49053\tMI\t49964\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t902\t\t\t\t\tRA\tC38676\t2\tYes\tCOVID-A\tLuna\t999999\tCL\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49053\tOTH\tNo\tUNK\tUNK\r\nDATA007_cvx\tD\t\t8\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t49053\tMI\t49964\tUNK\t\t\t\t\t\tUNK\t2020-10-04\tXXX\t\t\t\t\tRA\tC38676\t2\tYes\tCOVID-A\tLuna\t999999\tCL\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49053\tOTH\tNo\tUNK\tUNK\r\nDATA008_mvx_maxLength\tD\t\t4\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t900\t80777-9999-00\tAAAA\tM9999-05\t2020-11-01\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\t1\t\t\t\t26011\t\t\tOTH\tNo\tUNK\tUNK\r\nBUSR001_recip_address_county\tD\t\t2\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t49053\tMI\t49968\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t\t\t\t\t\t\t\t\t\tCOVID-B\tBuffalo\t999999\tPH\t\t\t\t26077\t\t\t\tNo\tUNK\tUNK\r\nBUSR002_admin_address_county\tD\t\t6\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t26001\tMI\t48710\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t902\t\t\t\t\tLT\tC38284\t1\tNo\tCOVID-C\tCap\t788899\tPO\t98 Monroe Center St NW\t\tGrand Rapids\t49053\tMI\t49053\tMD\tNo\tUNK\tUNK\r\nBUSR003_recip_address_zip\tD\t\t1\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t1529\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t\t\t\t\t\t\t\t\t\tCOVID-A\tLuna\t999999\tCL\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t1529\t\tNo\tUNK\tUNK\r\nBUSR004_admin_address_zip\tD\t\t3\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t1529\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t902\t\t\t\t\t\t\t\t\tCOVID-C\tCap\t999999\tPO\t98 Monroe Center St NW\t\tGrand Rapids\t26001\tMI\t1529\t\tYes\tUNK\tUNK\r\nBUSR005_recip_dob_lt_admin_date\tD\t\t4\tRedacted\tRedacted\tRedacted\t2020-11-01\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2021-07-25\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\tPOD\t\t\t\t26011\t\t\tOTH\tNo\tUNK\tUNK\r\nBUSR007_recip_address_zip_implies_state\tD\t\t7\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\t\t48504\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t901\t99999-9999-01\tPFR\tP9999-05\t2021-07-25\tLT\tC38676\t2\tYes\tCOVID-B\tBuffalo\t999999\tPH\t\t\t\t26077\t\t\tOTH\tNo\tUNK\tUNK\r\nBUSR008_admin_address_zip_implies_state\tD\t\t8\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t49964\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t902\t\t\t\t\tRA\tC38676\t2\tYes\tCOVID-A\tLuna\t999999\tCL\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\t\t49053\tOTH\tNo\tUNK\tUNK\r\nBUSR009_recip_address_zip_implies_county\tD\t\t8\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t\tMI\t49964\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t902\t\t\t\t\tLD\tC38284\t1\tNo\tCOVID-A\tLuna\t999999\tCL\t80 Ottaowa Ave NW\t\tGrand Rapids\t\tMI\t49053\tRN\tNo\tUNK\tUNK\r\nBUSR010_admin_address_zip_implies_county\tD\t\t9\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t26001\tMI\t49456\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t901\t99999-9999-01\tPFR\tP9999-05\t2021-07-25\tLVL\tC38276\t2\tYes\tCOVID-A\tLuna\t999999\tCL\t80 Ottaowa Ave NW\t\tGrand Rapids\t\tMI\t49053\tLPN\tNo\tUNK\tUNK\r\nBUSR011_recip_dob_not_future\tD\t\t4\tRedacted\tRedacted\tRedacted\t2032-11-01\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2022-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2021-07-25\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\tPOD\t\t\t\t26011\t\t\tOTH\tNo\tUNK\tUNK\r\nBUSR012_admin_date_not_future\tD\t\t4\tRedacted\tRedacted\tRedacted\t2020-11-01\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2032-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2021-07-25\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\tPOD\t\t\t\t26011\t\t\tOTH\tNo\tUNK\tUNK\r\nBUSR013_vax_event_id_nodups\tD\t\t4\tRedacted\tRedacted\tRedacted\t2020-11-01\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2032-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2021-07-25\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\tPOD\t\t\t\t26011\t\t\tOTH\tNo\tUNK\tUNK\r\nDNTS002_ndc\tD\t\t4\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2020-11-01\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\t1\t\t\t\t26011\t\t\tOTH\tYes\tUNK\tUNK\r\nDNTS002_mvx\tD\t\t4\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2020-11-01\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\t1\t\t\t\t26011\t\t\tOTH\tYes\tUNK\tUNK\r\nDNTS002_lot_number\tD\t\t4\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2020-11-01\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\t1\t\t\t\t26011\t\t\tOTH\tYes\tUNK\tUNK\r\nDNTS002_vax_expiration\tD\t\t4\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2020-11-01\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\t1\t\t\t\t26011\t\t\tOTH\tYes\tUNK\tUNK\r\nDNTS002_vax_admin_site\tD\t\t4\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2020-11-01\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\t1\t\t\t\t26011\t\t\tOTH\tYes\tUNK\tUNK\r\nDNTS002_vax_route\tD\t\t4\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2020-11-01\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\t1\t\t\t\t26011\t\t\tOTH\tYes\tUNK\tUNK\r\nDNTS002_dose_num\tD\t\t4\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2020-11-01\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\t1\t\t\t\t26011\t\t\tOTH\tYes\tUNK\tUNK\r\nDNTS002_vax_series_complete\tD\t\t4\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48787\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t900\t80777-9999-00\tAAA\tM9999-05\t2020-11-01\tRVL\tC38276\t1\tNo\tCOVID-D\tLibrary\t577689\t1\t\t\t\t26011\t\t\tOTH\tYes\tUNK\tUNK\r\nDATA006_recip_first_name_missing\tD\t\t5\t\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t26001\tMI\t48065\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t\t\t\t\t\t\t\t\t\tCOVID-D\tLibrary\t577689\t2\t\t\t\t26011\t\t\t\tNo\tUNK\tUNK\r\nDATA006_recip_middle_name_missing\tD\t\t6\tRedacted\t\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t26001\tMI\t48710\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t902\t\t\t\t\tLT\tC38284\t1\tNo\tCOVID-C\tCap\t788899\t17\t98 Monroe Center St NW\t\tGrand Rapids\t26001\tMI\t49504\tMD\tNo\tUNK\tUNK\r\nDATA006_recip_last_name_missing\tD\t\t7\tRedacted\tRedacted\t\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48504\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tLT\tC38676\t2\tYes\tCOVID-B\tBuffalo\t999999\t22\t\t\t\t26077\t\t\tOTH\tNo\tUNK\tUNK\r\nREQD001_recip_dob_missing\tD\t\t7\tRedacted\tRedacted\tRedacted\t\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48504\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tRA\tC38299\t1\tNo\tCOVID-B\tBuffalo\t999999\t17\t\t\t\t26077\t\t\tMD\tNo\tUNK\tUNK\r\nREQD001_recip_sex_missing\tD\t\t8\tRedacted\tRedacted\tRedacted\t2015-08-26\t\tRedacted\tRedacted\tRedacted\t26001\tMI\t49964\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t902\t\t\t\t\tRA\tC38676\t2\tYes\tCOVID-A\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tOTH\tNo\tUNK\tUNK\r\nDATA006_recip_address_street_missing\tD\t\t8\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\t\tRedacted\tRedacted\t26001\tMI\t49964\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t902\t\t\t\t\tLD\tC38284\t1\tNo\tCOVID-A\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tRN\tNo\tUNK\tUNK\r\nDATA006_recip_address_street_2_missing\tD\t\t9\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\t\tRedacted\t26001\tMI\t49456\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tLVL\tC38276\t2\tYes\tCOVID-A\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tLPN\tNo\tUNK\tUNK\r\nDATA006_recip_address_city_missing\tD\t\t9\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\t\t26001\tMI\t49456\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tLD\tC38276\t1\tNo\tCOVID-A\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tLPN\tNo\tUNK\tUNK\r\nREQD001_recip_race_1_missing\tD\t\t7\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48504\t\t\t\t\t\t\tUNK\t2020-10-04\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tLT\tC38676\t2\tYes\tCOVID-B\tBuffalo\t999999\t22\t\t\t\t26077\t\t\tOTH\tNo\tUNK\tUNK\r\nREQD001_recip_ethnicity_missing\tD\t\t7\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48504\tUNK\t\t\t\t\t\t\t2020-09-06\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tRA\tC38299\t1\tNo\tCOVID-B\tBuffalo\t999999\t17\t\t\t\t26077\t\t\tMD\tNo\tUNK\tUNK\r\nREQD001_admin_date_missing\tD\t\t8\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t49964\tUNK\t\t\t\t\t\tUNK\t\t902\t\t\t\t\tRA\tC38676\t2\tYes\tCOVID-A\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tOTH\tNo\tUNK\tUNK\r\nREQD001_cvx_missing\tD\t\t8\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t49964\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t\t\t\t\t\tLD\tC38284\t1\tNo\tCOVID-A\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tRN\tNo\tUNK\tUNK\r\nREQD001_dose_num_missing\tD\t\t9\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t26001\tMI\t49456\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tLD\tC38276\t\tNo\tCOVID-A\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tLPN\tNo\tUNK\tUNK\r\nREQD001_vax_series_complete_missing\tD\t\t9\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t26001\tMI\t49456\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tLD\tC38276\t1\t\tCOVID-A\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tLPN\tNo\tUNK\tUNK\r\nREQD001_admin_type_missing\tD\t\t9\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t26001\tMI\t49456\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tLD\tC38276\t1\tNo\tCOVID-A\tLuna\t999999\t\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tLPN\tNo\tUNK\tUNK\r\nREQD001_responsible_org_missing\tD\t\t9\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t26001\tMI\t49456\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tLD\tC38276\t1\tNo\t\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tLPN\tNo\tUNK\tUNK\r\nREQD001_admin_name_missing\tD\t\t9\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t26001\tMI\t49456\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tLD\tC38276\t1\tNo\tCOVID-A\t\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tLPN\tNo\tUNK\tUNK\r\nREQD001_vax_refusal_missing\tD\t\t9\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t26001\tMI\t49456\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tLD\tC38276\t1\tNo\tCOVID-A\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tLPN\t\tUNK\tUNK\r\nREQD001_cmorbid_status_missing\tD\t\t9\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t26001\tMI\t49456\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tLD\tC38276\t1\tNo\tCOVID-A\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tLPN\tNo\t\tUNK\r\nREQD001_serology_missing\tD\t\t9\tRedacted\tRedacted\tRedacted\t2015-08-26\tM\tRedacted\tRedacted\tRedacted\t26001\tMI\t49456\tUNK\t\t\t\t\t\tUNK\t2020-09-06\t901\t99999-9999-01\tPFR\tP9999-05\t2020-11-01\tLD\tC38276\t1\tNo\tCOVID-A\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\tLPN\tNo\tUNK\r\n"
+				},
+				"url": {
+					"raw": "https://covdch-dev.ohms.oracle.com/v0/upload/cvrs/batch",
+					"protocol": "https",
+					"host": [
+						"covdch-dev",
+						"ohms",
+						"oracle",
+						"com"
+					],
+					"path": [
+						"v0",
+						"upload",
+						"cvrs",
+						"batch"
+					]
+				},
+				"description": "Send sample (bad) data"
+			},
+			"response": []
+		},
+		{
+			"name": "Send Good Data",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"user-agent": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/plain",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "vax_event_id\text_type\tpprl_id\trecip_id\trecip_first_name\trecip_middle_name\trecip_last_name\trecip_dob\trecip_sex\trecip_address_street\trecip_address_street_2\trecip_address_city\trecip_address_county\trecip_address_state\trecip_address_zip\trecip_race_1\trecip_race_2\trecip_race_3\trecip_race_4\trecip_race_5\trecip_race_6\trecip_ethnicity\tadmin_date\tcvx\tndc\tmvx\tlot_number\tvax_expiration\tvax_admin_site\tvax_route\tdose_num\tvax_series_complete\tresponsible_org\tadmin_name\tvtrcks_prov_pin\tadmin_type\tadmin_address_street\tadmin_address_street_2\tadmin_address_city\tadmin_address_county\tadmin_address_state\tadmin_address_zip\tvax_prov_suffix\tvax_refusal\tcmorbid_status\tserology\r\ngood1_sample1\tD\t\t1\tRedacted\tRedacted\tRedacted\t2015-08-26\tF\tRedacted\tRedacted\tRedacted\t26001\tMI\t48877\tUNK\t\t\t\t\t\tUNK\t2020-10-04\t902\t\t\t\t\t\t\t\t\tCOVID-A\tLuna\t999999\t1\t80 Ottaowa Ave NW\t\tGrand Rapids\t26081\tMI\t49504\t\tYes\tUNK\tUNK\r\n"
+				},
+				"url": {
+					"raw": "https://covdch-dev.ohms.oracle.com/v0/upload/cvrs/batch",
+					"protocol": "https",
+					"host": [
+						"covdch-dev",
+						"ohms",
+						"oracle",
+						"com"
+					],
+					"path": [
+						"v0",
+						"upload",
+						"cvrs",
+						"batch"
+					]
+				},
+				"description": "Send good data"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

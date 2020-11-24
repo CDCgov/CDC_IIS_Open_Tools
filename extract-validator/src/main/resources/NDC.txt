@@ -2,8 +2,15 @@
 99999-9999-01   COVID19Y    Sample COVID Vaccine Manufacturer
 80777-273-99    Moderna COVID-19 Vaccine Unit of Sale	Moderna US, Inc.
 80777-273-10	Moderna COVID-19 Vaccine Unit of Use	Moderna US, Inc.
+80777-0273-99   Moderna COVID-19 Vaccine Unit of Sale	Moderna US, Inc.
+80777-0273-10	Moderna COVID-19 Vaccine Unit of Use	Moderna US, Inc.
+59267-1000-3	Pfizer COVID-19 Vaccine 	Pfizer-BiooNtech
 59267-1000-2	Pfizer COVID-19 Vaccine Unit of Sale	Pfizer-BiooNtech
 59267-1000-1	Pfizer COVID-19 Vaccine Unit of Use	Pfizer-BiooNtech
+59267-1000-03	Pfizer COVID-19 Vaccine 	Pfizer-BiooNtech
+59267-1000-02	Pfizer COVID-19 Vaccine Unit of Sale	Pfizer-BiooNtech
+59267-1000-01	Pfizer COVID-19 Vaccine Unit of Use	Pfizer-BiooNtech
+
 #### Codes below this line are not used for CVRS Extract ###
 00005-0100-02	Trumenba	00005-0100-01	162	meningococcal B, recombinant	PFR
 00005-0100-05	Trumenba	00005-0100-01	162	meningococcal B, recombinant	PFR

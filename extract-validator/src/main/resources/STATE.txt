@@ -9,7 +9,7 @@ CT	Connecticut	09	06
 DE	Delaware	10	197-199
 DC	District of Columbia	11	200-205
 FL	Florida	12	32-34
-FM  Federated States of Micronesia	64
+FM	Federated States of Micronesia	64
 GA	Georgia	13	30-31,398-399
 GU	Guam	66	969
 HI	Hawaii	15	967-968
