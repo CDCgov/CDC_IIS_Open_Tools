@@ -115,6 +115,7 @@ public class APIController {
                 true,   // Do use JSON for the output report
                 false,  // Don't use defaults for conversion (not really applicable)
                 false,  // Don't apply any fixes
+                false,  // Don't report statistics
                 null,   // Where to put converted HL7 outputs (not applicable)
                 null,   // Where to put converted CVRS outputs (not applicable)
                 files   // The file to  convert
