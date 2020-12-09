@@ -327,6 +327,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 help();
                 return 1;
             }
+            boolean reportStats = false;
             int maxErrors = DEFAULT_MAX_ERRORS;
             int totalErrors = 0;
             Set<String> suppressErrors = new TreeSet<>();
@@ -458,8 +459,12 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                     }
                     continue;
                 }
+                if (hasArgument(arg, "-t", "Report field statistics")) {
+                    reportStats = true;
+                    continue;
+                }
 
-                if (hasArgument(arg,"-h", "Get this help")) {
+                if (hasArgument(arg, "-h", "Get this help")) {
                     help();
                     continue;
                 }
@@ -479,7 +484,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                     useDefaults = true;
                 }
                 totalErrors += validateFiles(reportFolder, maxErrors, suppressErrors, version, writeAll, useJson,
-                    useDefaults, fixIt, hl7Folder, cvrsFolder, files);
+                    useDefaults, fixIt, reportStats, hl7Folder, cvrsFolder, files);
             }
 
             return totalErrors;
@@ -498,6 +503,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @param writeAll  Whether or not to write all or only valid extracts during conversion
      * @param useJson   Whether or not to use JSON for Reporting
      * @param useDefaults   Whether or not to use HL7 Message Defaults for missing segments
+     * @param reportStats
      * @param hl7Folder Where to put converted HL7 Messages
      * @param cvrsFolder Where to put converted CVRS Tab Delimited Output
      * @param files The files to process
@@ -513,20 +519,20 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         boolean useJson,
         boolean useDefaults,
         boolean fixIt,
+        boolean reportStats,
         String hl7Folder,
         String cvrsFolder,
         String[] files
     ) throws IOException {
         int errors = 0;
         boolean needsHeader = true;
+        BeanValidator beanValidator =
+            suppressErrors.equals(ERROR_CODES) ?
+                new NullValidator(suppressErrors, version) :
+                new BeanValidator(suppressErrors, version, fixIt);
+
         for (String file: files) {
-            try (Validator v = new Validator(
-                Utility.getReader(file),
-                suppressErrors.equals(ERROR_CODES) ?
-                    new NullValidator(suppressErrors, version) :
-                    new BeanValidator(suppressErrors, version, fixIt),
-                useDefaults
-            );) {
+            try (Validator v = new Validator(Utility.getReader(file), beanValidator, useDefaults);) {
                 v.setReport(getOutputStream(file, reportFolder, useJson ? "rpt.json" : "rpt"));
                 PrintStream cvrs = getOutputStream(file, cvrsFolder, "txt");
                 if (!System.out.equals(cvrs)) {
@@ -542,19 +548,34 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 if (useJson) {
                     v.reporter = v.jsonReporter;
                 }
+
+
+                boolean needsOutput = false;
                 // If we aren't seeing status updates on the console
                 if (!System.out.equals(v.getReport())) {
                     // and writing one won't mess up existing reporting
                     if (!System.out.equals(v.getCvrs()) && !System.out.equals(v.getHl7())) {
                         // Then tell the user what we are doing right now
-                        System.out.printf("Validating %s%n", file);
+                        needsOutput = true;
+                        System.out.printf("Validating %s", file);
                     }
                 }
-                errors += v.validateFile().size();
+                List<CVRSEntry> l = v.validateFile();
+                errors += l.size();
+
+                if (needsOutput) {
+                    System.out.printf(" %d records, %d errors%n", v.getCount(), l.size());
+                }
             } catch (IOException ioex) {
                 System.err.printf("Error processing %s: %s%n", file, ioex.getMessage());
                 ioex.printStackTrace();
                 errors += 1;
+            }
+        }
+        if (reportStats) {
+            System.out.printf("%-28s%-8s%n", "Field Name", "Frequency");
+            for (Map.Entry<String, Integer> e: beanValidator.getFieldCounts().entrySet()) {
+                System.out.printf("%-28s%8d%n", e.getKey(), e.getValue());
             }
         }
         return errors;

@@ -78,6 +78,8 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
     private Map<String, Pair<Integer, Integer>> event_id = new HashMap<>();
     private int counter;
 
+    private int fieldCounter[];
+
     private boolean fixIt;
 
     /**
@@ -110,6 +112,7 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         setSuppressed(suppressed == null ? Collections.emptySet() : suppressed);
         setVersion(version);
         this.fixIt = fixIt;
+        fieldCounter = new int[CVRSExtract.getHeaders(null).length + 2];
     }
 
     /**
@@ -266,17 +269,46 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         }
     }
 
+    /**
+     * Return a map indicating the names of the fields and the number of
+     * times each one has a value.
+     *
+     * @return A map of field names to field counts.
+     */
+    public Map<String, Integer> getFieldCounts() {
+        int fieldNo = -1;
+        TreeMap<String, Integer> map = new TreeMap<>();
+        for (Field f: CVRSExtract.class.getDeclaredFields()) {
+            if ((f.getModifiers() & (Modifier.TRANSIENT|Modifier.STATIC)) != 0) {
+                // Skip Static and transient fields.
+                continue;
+            }
+            fieldNo++;
+            map.put(f.getName(), fieldCounter[fieldNo]);
+            switch (f.getName()) {
+            case "recip_address_zip":
+                map.put(f.getName() + "00", fieldCounter[fieldCounter.length - 2]);
+                break;
+            case "admin_address_zip":
+                map.put(f.getName() + "00", fieldCounter[fieldCounter.length - 1]);
+                break;
+            }
+        }
+        return map;
+    }
+
     private void checkRequirements(CVRSExtract bean, List<CVRSEntry> errors) {
         String values[] = bean.getValues();
         EventType eventType = getEventType(bean);
         ExtractType extractType = getExtractType(bean);
+        int fieldNo = -1;
 
         for (Field f: CVRSExtract.class.getDeclaredFields()) {
             if ((f.getModifiers() & (Modifier.TRANSIENT|Modifier.STATIC)) != 0) {
                 // Skip Static and transient fields.
                 continue;
             }
-
+            fieldNo++;
             f.setAccessible(true);
             String value;
 
@@ -287,6 +319,19 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
             }
             // Get the value.
             value = getField(bean, f);
+            if (!StringUtils.isEmpty(value)) {
+                fieldCounter[fieldNo]++;
+                if (f.getName().contains("_zip") && StringUtils.substring(value, 3).startsWith("00")) {
+                    switch (f.getName()) {
+                    case "recip_address_zip":
+                        fieldCounter[fieldCounter.length - 2] ++;
+                        break;
+                    case "admin_address_zip":
+                        fieldCounter[fieldCounter.length - 1] ++;
+                        break;
+                    }
+                }
+            }
 
             if (StringUtils.isEmpty(value)) {
                 String code = hasRequiredEvent(f, RequirementType.REQUIRED, getVersion(), eventType);

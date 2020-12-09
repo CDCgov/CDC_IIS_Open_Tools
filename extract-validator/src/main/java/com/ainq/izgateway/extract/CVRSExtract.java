@@ -372,6 +372,7 @@ public class CVRSExtract implements CVRS {
     private String serology;
 
     private static String[] HEADERS = null;
+    private static String HEADER_VERSION = null;
 
     public CVRSExtract() {
 
@@ -396,7 +397,7 @@ public class CVRSExtract implements CVRS {
     }
 
     public static String[] getHeaders(String version) {
-        if (HEADERS == null) {
+        if (HEADERS == null || !StringUtils.defaultString(version).equals(StringUtils.defaultString(HEADER_VERSION))) {
             List<String> headers = new ArrayList<>();
             for (Field f: CVRSExtract.class.getDeclaredFields()) {
                 if ((f.getModifiers() & (Modifier.TRANSIENT|Modifier.STATIC)) == 0) {
@@ -409,6 +410,7 @@ public class CVRSExtract implements CVRS {
                 }
             }
             HEADERS = headers.toArray(new String[headers.size()]);
+            HEADER_VERSION = version;
         }
         return HEADERS;
     }
