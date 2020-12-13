@@ -1,7 +1,7 @@
 package com.ainq.izgateway.extract;
 /*
  * Copyright 2020 Audiacious Inquiry, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,8 +16,6 @@ import java.io.Reader;
 import java.util.Iterator;
 
 import com.ainq.izgateway.extract.validation.BeanValidator;
-import com.opencsv.exceptions.CsvException;
-
 import ca.uhn.hl7v2.model.Message;
 
 public class HL7MessageConverter implements Iterable<CVRSExtract> {
@@ -55,14 +53,9 @@ public class HL7MessageConverter implements Iterable<CVRSExtract> {
         }
         @Override
         public CVRSExtract next() {
-            try {
-                count++;
-                Message msg = base.next();
-                return Converter.fromHL7(msg, null, validator, useDefaults, count);
-            } catch (CsvException e) {
-                // This shouldn't happen.
-                throw new RuntimeException("Unexpected Exception", e);
-            }
+            count++;
+            Message msg = base.next();
+            return Converter.fromHL7(msg, null, validator, useDefaults, count);
         }
     }
 
