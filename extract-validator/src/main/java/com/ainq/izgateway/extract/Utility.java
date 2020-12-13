@@ -1,15 +1,27 @@
 package com.ainq.izgateway.extract;
-
+/*
+ * Copyright 2020 Audiacious Inquiry, Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.nio.charset.StandardCharsets;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -166,7 +178,15 @@ public class Utility {
     public static Reader getReader(String arg) throws IOException {
         return getBufferedReader(
             "-".equals(arg) ? new InputStreamReader(System.in)
-                            : new FileReader(arg, StandardCharsets.UTF_8));
+                            : getFileReader(arg));
+    }
+
+    public static InputStreamReader getFileReader(String arg) throws FileNotFoundException, UnsupportedEncodingException {
+       return new InputStreamReader(new FileInputStream(arg), "UTF-8");
+    }
+
+    public static PrintStream getPrintStream(File f2) throws FileNotFoundException, UnsupportedEncodingException {
+        return new PrintStream(f2, "UTF-8");
     }
 
 }

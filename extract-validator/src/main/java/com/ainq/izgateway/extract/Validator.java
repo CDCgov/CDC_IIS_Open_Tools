@@ -1,10 +1,24 @@
 package com.ainq.izgateway.extract;
-
+/*
+ * Copyright 2020 Audiacious Inquiry, Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
@@ -32,6 +46,7 @@ import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOCase;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
@@ -292,6 +307,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
 
     /** Static variable so that it always impacts redaction */
     private static boolean redact = false;
+    /** Set to true to report statistics to standard output */
+    private static boolean reportStats = false;
+
+    /** Set to true to report redaction statistics to standard output */
+    private static boolean reportRedactions = false;
+
+    /** Set to true to write all records regardless of validation results. */
+    private static boolean writeAll = false;
 
     /**
      * Helper method to generate a validation exception with a formatted message.
@@ -331,8 +354,8 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             int totalErrors = 0;
             Set<String> suppressErrors = new TreeSet<>();
             String version = DEFAULT_VERSION;
-            // Set to true to write all records regardless of validation results.
-            boolean writeAll = false, useDefaults = false;
+
+            boolean useDefaults = false;
             String hl7Folder = null,
                    cvrsFolder = null;
             boolean useJson = false;
@@ -426,7 +449,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                     continue;
                 }
 
-                if (hasArgument(arg,"-r[folder]", "Write the repoort to <file>.rpt at the specified folder (defaults to standard output)") ) {
+                if (hasArgument(arg,"-r[folder]", "Write the report to <file>.rpt at the specified folder (defaults to standard output)") ) {
                     reportFolder = arg.length() == 2 ? "-" : arg.substring(2);
                     continue;
                 }
@@ -458,8 +481,19 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                     }
                     continue;
                 }
+                if (hasArgument(arg, "-t", "Report field statistics")) {
+                    reportStats = true;
+                    reportRedactions = false;
+                    continue;
+                }
 
-                if (hasArgument(arg,"-h", "Get this help")) {
+                if (hasArgument(arg, "-T", "Report redaction statistics")) {
+                    reportRedactions = true;
+                    reportStats = false;
+                    continue;
+                }
+
+                if (hasArgument(arg, "-h", "Get this help")) {
                     help();
                     continue;
                 }
@@ -467,7 +501,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 String files[] = { arg };
                 if (arg.contains("*") || arg.contains("?")) {
                     File f = new File(arg);
-                    Collection<File> list = FileUtils.listFiles(f.getParentFile(),  new WildcardFileFilter(f.getName()), null);
+                    Collection<File> list = FileUtils.listFiles(f.getParentFile(),  new WildcardFileFilter(f.getName(), IOCase.SYSTEM), null);
                     files = new String[list.size()];
                     int i = 0;
                     for (File found: list) {
@@ -478,8 +512,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
                 if (redact && hl7Folder != null) {
                     useDefaults = true;
                 }
-                totalErrors += validateFiles(reportFolder, maxErrors, suppressErrors, version, writeAll, useJson,
-                    useDefaults, fixIt, hl7Folder, cvrsFolder, files);
+                totalErrors += validateFiles(reportFolder, maxErrors, suppressErrors, version, useJson, useDefaults, fixIt, hl7Folder, cvrsFolder, files);
             }
 
             return totalErrors;
@@ -498,6 +531,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @param writeAll  Whether or not to write all or only valid extracts during conversion
      * @param useJson   Whether or not to use JSON for Reporting
      * @param useDefaults   Whether or not to use HL7 Message Defaults for missing segments
+     * @param fixIt If true,
      * @param hl7Folder Where to put converted HL7 Messages
      * @param cvrsFolder Where to put converted CVRS Tab Delimited Output
      * @param files The files to process
@@ -509,7 +543,6 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         int maxErrors,
         Set<String> suppressErrors,
         String version,
-        boolean writeAll,
         boolean useJson,
         boolean useDefaults,
         boolean fixIt,
@@ -518,46 +551,104 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         String[] files
     ) throws IOException {
         int errors = 0;
-        boolean needsHeader = true;
-        for (String file: files) {
-            try (Validator v = new Validator(
-                Utility.getReader(file),
-                suppressErrors.equals(ERROR_CODES) ?
-                    new NullValidator(suppressErrors, version) :
-                    new BeanValidator(suppressErrors, version, fixIt),
-                useDefaults
-            );) {
-                v.setReport(getOutputStream(file, reportFolder, useJson ? "rpt.json" : "rpt"));
-                PrintStream cvrs = getOutputStream(file, cvrsFolder, "txt");
-                if (!System.out.equals(cvrs)) {
-                    needsHeader = true;
-                }
-                v.needsHeader = needsHeader;
-                v.setCvrs(cvrs);
-                v.setHL7(getOutputStream(file, hl7Folder, "hl7"));
-                v.setMaxErrors(maxErrors);
-                v.setName(file);
-                v.setFixIt(fixIt);
-                v.setIgnoringErrors(writeAll);
-                if (useJson) {
-                    v.reporter = v.jsonReporter;
-                }
-                // If we aren't seeing status updates on the console
-                if (!System.out.equals(v.getReport())) {
-                    // and writing one won't mess up existing reporting
-                    if (!System.out.equals(v.getCvrs()) && !System.out.equals(v.getHl7())) {
-                        // Then tell the user what we are doing right now
-                        System.out.printf("Validating %s%n", file);
+        boolean needsHeader = true, needsRedactHeader = true;
+        BeanValidator beanValidator =
+            suppressErrors.equals(ERROR_CODES) ?
+                new NullValidator(suppressErrors, version) :
+                new BeanValidator(suppressErrors, version, fixIt);
+        try (PrintWriter redactionReport = reportRedactions ? new PrintWriter(new FileWriter("redactionReport.rpt", StandardCharsets.UTF_8)) : null) {
+            for (String file: files) {
+                try (Validator v = new Validator(Utility.getReader(file), beanValidator, useDefaults);) {
+                    v.setReport(getOutputStream(file, reportFolder, useJson ? "rpt.json" : "rpt"));
+                    PrintStream cvrs = getOutputStream(file, cvrsFolder, "txt");
+                    if (!System.out.equals(cvrs)) {
+                        needsHeader = true;
                     }
+                    v.needsHeader = needsHeader;
+                    v.setCvrs(cvrs);
+                    v.setHL7(getOutputStream(file, hl7Folder, "hl7"));
+                    v.setMaxErrors(maxErrors);
+                    v.setName(file);
+                    v.setFixIt(fixIt);
+                    v.setIgnoringErrors(writeAll);
+                    if (useJson) {
+                        v.reporter = v.jsonReporter;
+                    }
+
+                    boolean needsOutput = false;
+                    // If we aren't seeing status updates on the console
+                    if (!System.out.equals(v.getReport())) {
+                        // and writing one won't mess up existing reporting
+                        if (!System.out.equals(v.getCvrs()) && !System.out.equals(v.getHl7())) {
+                            // Then tell the user what we are doing right now
+                            needsOutput = true;
+                            System.out.printf("Validating %s", file);
+                        }
+                    }
+                    List<CVRSEntry> l = v.validateFile();
+                    errors += l.size();
+
+                    if (needsOutput) {
+                        System.out.printf(" %d records, %d errors%n", v.getCount(), l.size());
+                    }
+
+                    if (reportRedactions) {
+                        needsRedactHeader = reportRedactions(needsRedactHeader, beanValidator, redactionReport, file);
+                    }
+                } catch (IOException ioex) {
+                    System.err.printf("Error processing %s: %s%n", file, ioex.getMessage());
+                    ioex.printStackTrace();
+                    errors += 1;
                 }
-                errors += v.validateFile().size();
-            } catch (IOException ioex) {
-                System.err.printf("Error processing %s: %s%n", file, ioex.getMessage());
-                ioex.printStackTrace();
-                errors += 1;
+            }
+        }
+        if (reportStats) {
+            System.out.printf("%-28s%-8s%n", "Field Name", "Frequency");
+            for (Map.Entry<String, Integer> e: beanValidator.getFieldCounts().entrySet()) {
+                System.out.printf("%-28s%8d%n", e.getKey(), e.getValue());
             }
         }
         return errors;
+    }
+
+    /** Report redaction data */
+    private static boolean reportRedactions(boolean needsRedactHeader, BeanValidator beanValidator,
+        PrintWriter redactionReport, String file) {
+        Map<String, String> map = getRedactionReport(beanValidator.getFieldCounts());
+        Set<Map.Entry<String, String>> s = map.entrySet();
+        if (needsRedactHeader) {
+            redactionReport.print("File");
+            for (Map.Entry<String, String> e: s) {
+                redactionReport.printf("\t%s", e.getKey());
+            }
+            redactionReport.println();
+            needsRedactHeader = false;
+        }
+        redactionReport.print(StringUtils.substringBefore(StringUtils.substringAfterLast(file, "\\"), "."));
+        for (Map.Entry<String, String> e: s) {
+            redactionReport.printf("\t%s", e.getValue());
+        }
+        redactionReport.println();
+        beanValidator.clearFieldCounts();
+        return needsRedactHeader;
+    }
+
+    /**
+     * Convert a map of field count data into a redaction report
+     * @param fieldCounts   The field count data
+     * @return  A map of redaction report data
+     */
+    private static Map<String, String> getRedactionReport(Map<String, Integer> fieldCounts) {
+        TreeMap<String, String> t = new TreeMap<>();
+        // for each field,
+        //    if X_00 or X_00000, and F == vax_event_id, then redacting to _00 or _00000
+        //    if X_unk == vax_event_id, then does NOT have this data
+        //    if X_yes != 0, then has some of this data
+        for (Map.Entry<String, Integer> e: fieldCounts.entrySet()) {
+            t.put(e.getKey(), e.getValue().toString());
+        }
+
+        return t;
     }
 
     /** Helper method to get a formatted message
@@ -604,7 +695,7 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
             ext = "new." + ext;
             f2 = Utility.getNewFile(arg, new File(folder), ext);
         }
-        return new PrintStream(f2, StandardCharsets.UTF_8);
+        return Utility.getPrintStream(f2);
     }
 
     /**

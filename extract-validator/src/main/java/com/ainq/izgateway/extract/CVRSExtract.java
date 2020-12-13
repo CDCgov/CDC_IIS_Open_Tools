@@ -1,5 +1,17 @@
 package com.ainq.izgateway.extract;
-
+/*
+ * Copyright 2020 Audiacious Inquiry, Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
 import com.ainq.izgateway.extract.annotations.FieldValidator;
 import com.ainq.izgateway.extract.annotations.Requirement;
 import com.ainq.izgateway.extract.annotations.RequirementType;
@@ -372,6 +384,7 @@ public class CVRSExtract implements CVRS {
     private String serology;
 
     private static String[] HEADERS = null;
+    private static String HEADER_VERSION = null;
 
     public CVRSExtract() {
 
@@ -396,7 +409,7 @@ public class CVRSExtract implements CVRS {
     }
 
     public static String[] getHeaders(String version) {
-        if (HEADERS == null) {
+        if (HEADERS == null || !StringUtils.defaultString(version).equals(StringUtils.defaultString(HEADER_VERSION))) {
             List<String> headers = new ArrayList<>();
             for (Field f: CVRSExtract.class.getDeclaredFields()) {
                 if ((f.getModifiers() & (Modifier.TRANSIENT|Modifier.STATIC)) == 0) {
@@ -409,6 +422,7 @@ public class CVRSExtract implements CVRS {
                 }
             }
             HEADERS = headers.toArray(new String[headers.size()]);
+            HEADER_VERSION = version;
         }
         return HEADERS;
     }

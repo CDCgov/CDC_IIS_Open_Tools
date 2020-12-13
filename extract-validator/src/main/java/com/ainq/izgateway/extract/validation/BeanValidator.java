@@ -1,5 +1,17 @@
 package com.ainq.izgateway.extract.validation;
-
+/*
+ * Copyright 2020 Audiacious Inquiry, Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -78,6 +90,8 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
     private Map<String, Pair<Integer, Integer>> event_id = new HashMap<>();
     private int counter;
 
+    private Map<String, Integer> fieldCounter;
+
     private boolean fixIt;
 
     /**
@@ -110,8 +124,33 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         setSuppressed(suppressed == null ? Collections.emptySet() : suppressed);
         setVersion(version);
         this.fixIt = fixIt;
+        clearFieldCounts();
     }
 
+    public void clearFieldCounts() {
+        fieldCounter = new TreeMap<String, Integer>();
+        for (Field f: CVRSExtract.class.getDeclaredFields()) {
+            if ((f.getModifiers() & (Modifier.TRANSIENT|Modifier.STATIC)) != 0) {
+                // Skip Static and transient fields.
+                continue;
+            }
+            ensureHasValue(f.getName());
+            // Have to ensure certain values are present to
+            if (f.getName().contains("_zip")) {
+                ensureHasValue(f.getName() + "_00");
+                ensureHasValue(f.getName() + "_00000");
+            }
+            if (f.getName().equalsIgnoreCase("recip_dob")) {
+                ensureHasValue(f.getName() + "_01-01");
+            }
+            if (StringUtils.equalsAnyIgnoreCase(f.getName(), "vax_refusal", "cmorbid_status", "serology")) {
+                ensureHasValue(f.getName() + "_yes");
+            }
+            if (isCodedField(f)) {
+                ensureHasValue(f.getName() + "_unk");
+            }
+        }
+    }
     /**
      * Reset the state of the event_id table for duplicate checking.
      * Allows a BeanValidator to be reused.
@@ -266,6 +305,17 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
         }
     }
 
+    /**
+     * Return a map indicating the names of the fields and the number of
+     * times each one has a value.
+     *
+     * @return A map of field names to field counts.
+     */
+    public Map<String, Integer> getFieldCounts() {
+        TreeMap<String, Integer> map = new TreeMap<>(fieldCounter);
+        return map;
+    }
+
     private void checkRequirements(CVRSExtract bean, List<CVRSEntry> errors) {
         String values[] = bean.getValues();
         EventType eventType = getEventType(bean);
@@ -276,7 +326,6 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                 // Skip Static and transient fields.
                 continue;
             }
-
             f.setAccessible(true);
             String value;
 
@@ -287,6 +336,7 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
             }
             // Get the value.
             value = getField(bean, f);
+            updateCounters(f, value);
 
             if (StringUtils.isEmpty(value)) {
                 String code = hasRequiredEvent(f, RequirementType.REQUIRED, getVersion(), eventType);
@@ -307,6 +357,61 @@ public class BeanValidator extends SuppressibleValidator implements BeanVerifier
                 validateAndFix(bean, f, sv, value, errors, values);
             }
         }
+    }
+
+    private void updateCounters(Field f, String value) {
+
+        if (!StringUtils.isEmpty(value)) {
+            incrementCounter(f.getName());
+
+            if (f.getName().contains("_zip") && StringUtils.substring(value, 3).startsWith("00")) {
+                incrementCounter(f.getName() + "_00");
+                if (value.equals("00000")) {
+                    incrementCounter(f.getName() + "_00000");
+                }
+            }
+
+            if (f.getName().equalsIgnoreCase("recip_dob") && StringUtils.defaultString(value).endsWith("-01-01")) {
+                incrementCounter(f.getName() + "_01-01");
+            }
+
+            if (f.getName().equalsIgnoreCase("vax_refusal") && StringUtils.defaultString(value).equalsIgnoreCase("yes")) {
+                incrementCounter(f.getName() + "_yes");
+            }
+
+            if (f.getName().equalsIgnoreCase("cmorbid_status") && StringUtils.defaultString(value).equalsIgnoreCase("yes")) {
+                incrementCounter(f.getName() + "_yes");
+            }
+
+            if (f.getName().equalsIgnoreCase("serology") && StringUtils.defaultString(value).equalsIgnoreCase("yes")) {
+                incrementCounter(f.getName() + "_yes");
+            }
+
+            if (isCodedField(f) && (value.equalsIgnoreCase("UNK") || (value.equalsIgnoreCase("U") && f.getName().equalsIgnoreCase("recip_sex")))) {
+                incrementCounter(f.getName() + "_unk");
+            }
+        }
+    }
+
+    private void incrementCounter(String name) {
+        Integer v = fieldCounter.get(name);
+        if (v == null) {
+            v = Integer.valueOf(0);
+        }
+        fieldCounter.put(name, v + 1);
+    }
+
+    private void ensureHasValue(String name) {
+        Integer v = fieldCounter.get(name);
+        if (v == null) {
+            fieldCounter.put(name, Integer.valueOf(0));
+        }
+    }
+
+    private boolean isCodedField(Field f) {
+        FieldValidator fv = f.getAnnotation(FieldValidator.class);
+        Class<? extends StringValidator> sv = fv == null ? null : fv.validator();
+        return sv == null ? false : ValueSetValidator.class.isAssignableFrom(sv);
     }
 
     private void checkRequirement(String newValue, CVRSExtract bean, List<CVRSEntry> errors, String[] values, Field f, String value, String code) {
