@@ -1,7 +1,7 @@
 package com.ainq.izgateway.extract;
 /*
  * Copyright 2020 Audiacious Inquiry, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -528,7 +528,6 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
      * @param maxErrors     Maximum number of errors
      * @param suppressErrors    List of errors to suppress
      * @param version   Version of CVRS to validate against
-     * @param writeAll  Whether or not to write all or only valid extracts during conversion
      * @param useJson   Whether or not to use JSON for Reporting
      * @param useDefaults   Whether or not to use HL7 Message Defaults for missing segments
      * @param fixIt If true,
@@ -611,7 +610,14 @@ public class Validator implements Iterator<CVRSExtract>, Closeable {
         return errors;
     }
 
-    /** Report redaction data */
+    /** Report redaction data
+     *
+     * @param needsRedactHeader True if the redaction header hasn't yet been generated.
+     * @param beanValidator The BeanValidator in use
+     * @param redactionReport   The place to report the content.
+     * @param file  The file being reported on.
+     * @return  false after the redaction header has been written
+     */
     private static boolean reportRedactions(boolean needsRedactHeader, BeanValidator beanValidator,
         PrintWriter redactionReport, String file) {
         Map<String, String> map = getRedactionReport(beanValidator.getFieldCounts());
