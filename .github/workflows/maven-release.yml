@@ -24,34 +24,34 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Maven Install
-        run: mvn -B install:install-file -Dfile=extract-validation/lib/validation-report-1.0.0.jar -DgroupId=com.github.hl7-tools -DartifactId=validation-report -Dversion=1.0.0 -Dpackaging=jar
+        run: mvn -B install:install-file -Dfile=extract-validator/lib/validation-report-1.0.0.jar -DgroupId=com.github.hl7-tools -DartifactId=validation-report -Dversion=1.0.0 -Dpackaging=jar
 
       - name: Maven Clean, Test and Package
         run: mvn -B clean test package site
 
-      - name: Upload extract-validation jar
+      - name: Upload extract-validator jar
         uses: actions/upload-artifact@v2
         with:
-          name: extract-validation
-          path: extract-validation/target/extract-validation.jar
+          name: extract-validator
+          path: extract-validator/target/extract-validator.jar
 
-      - name: Upload extract-validation sources
+      - name: Upload extract-validator sources
         uses: actions/upload-artifact@v2
         with:
-          name: extract-validation-sources
-          path: extract-validation/target/extract-validation-sources.jar
+          name: extract-validator-sources
+          path: extract-validator/target/extract-validator-sources.jar
 
-      - name: Upload extract-validation javadoc
+      - name: Upload extract-validator javadoc
         uses: actions/upload-artifact@v2
         with:
-          name: extract-validation-javadoc
-          path: extract-validation/target/extract-validation-javadoc.jar
+          name: extract-validator-javadoc
+          path: extract-validator/target/extract-validator-javadoc.jar
 
-      - name: Upload extract-validation library
+      - name: Upload extract-validator library
         uses: actions/upload-artifact@v2
         with:
           name: lib
-          path: extract-validation/target/lib/
+          path: extract-validator/target/lib/
 
 
       - name: Upload clearinghouse-mock jar
