@@ -55,7 +55,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>cvrs-extract</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
