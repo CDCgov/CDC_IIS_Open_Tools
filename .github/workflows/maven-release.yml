@@ -50,7 +50,7 @@ jobs:
       - name: Upload extract-validator library
         uses: actions/upload-artifact@v2
         with:
-          name: lib
+          name: extract-validator-lib
           path: extract-validator/target/lib/
 
 
@@ -72,7 +72,7 @@ jobs:
       - name: Upload clearinghouse-mock library
         uses: actions/upload-artifact@v2
         with:
-          name: lib
+          name: clearinghouse-mock-lib
           path: clearinghouse-mock/target/lib/
 
       - name: Upload clearinghouse-sender jar
@@ -93,7 +93,7 @@ jobs:
       - name: Upload clearinghouse-sender library
         uses: actions/upload-artifact@v2
         with:
-          name: lib
+          name: clearinghouse-sender-lib
           path: clearinghouse-sender/target/lib/
 
       - name: Upload documentation
