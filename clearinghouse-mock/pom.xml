@@ -58,4 +58,14 @@
 			<version>1.2.3</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<finalName>clearinghouse-mock</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
 </project>
