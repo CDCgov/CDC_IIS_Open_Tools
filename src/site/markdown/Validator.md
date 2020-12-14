@@ -81,6 +81,12 @@ for report files in text format or .rpt.json in JSON format.
 -S[error code,...]|ALL
 : Stop suppressing validation for the specified errors (e.g., -sDATA001,DATA002)
 
+-t
+: Report field statistics for all files processed (disables redaction statistics if
+set).
+
+-T
+: Report redaction statistics for individual files (disables field statistics if set).
 
 ### Version Control
 
