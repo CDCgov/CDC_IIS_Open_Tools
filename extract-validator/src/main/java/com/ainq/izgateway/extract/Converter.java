@@ -227,7 +227,14 @@ public class Converter {
         if (StringUtils.isEmpty(extract.getResponsible_org())) {
             extract.setResponsible_org(extract.getAdmin_name());
         }
-
+        if (extract.getVax_refusal().equalsIgnoreCase("YES")) {
+            if (StringUtils.isEmpty(extract.getRecip_middle_name())) {
+                extract.setRecip_middle_name(" ");
+            }
+            if (StringUtils.isEmpty(extract.getRecip_address_street_2())) {
+                extract.setRecip_address_street_2(" ");
+            }
+        }
     }
 
     /**

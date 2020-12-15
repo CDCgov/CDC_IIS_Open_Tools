@@ -10,18 +10,18 @@ NOTE: Many components are still to be done.  These are marked (TBD).
 The specifications from which this project was originally developed include the following,
 included in this site:
 
-* [CDC Specifications for the CDC COVID-19 Vaccine Reporting Specification v2 (Excel)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_2.0.1/doc/CDC_COVID-19_Vaccination_Reporting_Specification_v2_CLEARED_20201029.xlsx)
-* [CDC CVRS_What's New in Version 2 (Word)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_2.0.1/doc/CDC_CVRS_What's_New_in_Version_2_CLEARED_20201028.docx)
-* [CDC CVRS Instructions v2 (Word)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_2.0.1/doc/CDC_CVRS_Instructions_v2_CLEARED_20201028.docx)
+* [CDC Specifications for the CDC COVID-19 Vaccine Reporting Specification v2 (Excel)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_2.0.2/doc/CDC_COVID-19_Vaccination_Reporting_Specification_v2_CLEARED_20201029.xlsx)
+* [CDC CVRS_What's New in Version 2 (Word)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_2.0.2/doc/CDC_CVRS_What's_New_in_Version_2_CLEARED_20201028.docx)
+* [CDC CVRS Instructions v2 (Word)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_2.0.2/doc/CDC_CVRS_Instructions_v2_CLEARED_20201028.docx)
 
 ## [Scripts](Upload.html)
-The [scripts](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/scripts) folder contains scripts that can be used to support file uploads.
+The [scripts](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/scripts) folder contains scripts that can be used to support file uploads.
 These scripts rely on [CURL](https://curl.haxx.se/) (pronounced either as C-U-R-L or
 "curl" as in the wave curls), a widely available command line tool for interacting
 with WEB APIs.
 
 ## Mirth Channel (TBD)
-There is a sample [Mirth channel](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/mirth) that includes a listener that you can use for local
+There is a sample [Mirth channel](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/mirth) that includes a listener that you can use for local
 testing, and a sender that will send files dropped into a folder to the specified destination.
 
 ## Java Code
@@ -51,25 +51,25 @@ end point (TBD).
 ## Sample Messages and Flat Files
 These are sample messages and flat files containing various forms of the CVRS Data for
 testing.
-[Testing Files](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/test/resources)
+[Testing Files](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/test/resources)
 
 ## Value Set Tables
 Value Set tables used for content validation. These are simple space delimited files
 containing the code in the first field, and additional helpful data in remaining fields.
 
-  * [Value Set Files](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources)
-  * [FIPS County Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources/COUNTY.txt)
-  * [Facility Type Codes (used during enrollment)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources/DCHTYPE2.txt)
-  * [CVX Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources/CVX.txt)
-  * [MVX Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources/MVX.txt)
-  * [NDC Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources/NDC.txt)
-  * [DOSE Codes (used by DCH for recording Dose Number)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources/DOSE.txt)
-  * [ETHNICITY Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources/ETHNICITY.txt)
-  * [RACE Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources/RACE.txt)
-  * [PROVIDER SUFFIX Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources/PROVIDER_SUFFIX.txt)
-  * [ROUTE Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources/ROUTE.txt)
-  * [SITE Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources/SITE.txt)
-  * [SEX Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.1/src/main/resources/SEX.txt)
+  * [Value Set Files](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources)
+  * [FIPS County Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources/COUNTY.txt)
+  * [Facility Type Codes (used during enrollment)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources/DCHTYPE2.txt)
+  * [CVX Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources/CVX.txt)
+  * [MVX Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources/MVX.txt)
+  * [NDC Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources/NDC.txt)
+  * [DOSE Codes (used by DCH for recording Dose Number)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources/DOSE.txt)
+  * [ETHNICITY Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources/ETHNICITY.txt)
+  * [RACE Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources/RACE.txt)
+  * [PROVIDER SUFFIX Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources/PROVIDER_SUFFIX.txt)
+  * [ROUTE Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources/ROUTE.txt)
+  * [SITE Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources/SITE.txt)
+  * [SEX Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_2.0.2/src/main/resources/SEX.txt)
 
 ## HL7 Profiles for HL7 V2 Messages (TBD)
 HL7 Profiles for V2 Messages containing CVRS Content
