@@ -4,7 +4,7 @@
 	<groupId>com.ainq.izgateway</groupId>
 	<artifactId>cvrs-extract</artifactId>
 	<packaging>pom</packaging>
-	<version>1.1.0-SNAPSHOT</version>
+	<version>2.0.1-SNAPSHOT</version>
 	<name>CVRS Extract Tools</name>
 	<description>This project contains various tools to support exchange of the CVRS Extract for the CDC COVID-19 Data Clearinghouse.</description>
 
@@ -55,7 +55,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>cvrs-extract</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>

@@ -1,3 +1,8 @@
+# Release Notes for 2.0.0
+Refactored the release into a multi-module project to better support web-based use of validation
+tools.
+Corrected issues for default handling for refusals when converting HL7 messages.
+
 # Release Notes for 1.1.0
 In this release, the deliverables have been repackaged to support use of the
 validation/conversion tools separately from the web services client and mock
