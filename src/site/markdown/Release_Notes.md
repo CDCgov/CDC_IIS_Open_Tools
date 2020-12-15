@@ -1,3 +1,6 @@
+# Release Notes for 2.0.2
+Fixed an issue to default admin_name and responsible_org value appropriately based on content.
+
 # Release Notes for 2.0.1
 Fixed an issue to default ext_type value appropriately based on content.
 

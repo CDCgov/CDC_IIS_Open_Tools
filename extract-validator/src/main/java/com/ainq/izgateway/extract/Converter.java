@@ -220,6 +220,14 @@ public class Converter {
         });
 
         extract.setExt_type(extract.isRedacted() ? "D" : "I");
+
+        if (StringUtils.isEmpty(extract.getAdmin_name())) {
+            extract.setAdmin_name(extract.getResponsible_org());
+        }
+        if (StringUtils.isEmpty(extract.getResponsible_org())) {
+            extract.setResponsible_org(extract.getAdmin_name());
+        }
+
     }
 
     /**
