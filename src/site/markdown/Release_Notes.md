@@ -1,3 +1,6 @@
+# Release Notes for 2.0.1
+Fixed an issue to default ext_type value appropriately based on content.
+
 # Release Notes for 2.0.0
 Refactored the release into a multi-module project to better support web-based use of validation
 tools.
