@@ -218,6 +218,8 @@ public class Converter {
                 // At this point, we are certain this won't happen.
             }
         });
+
+        extract.setExt_type(extract.isRedacted() ? "D" : "I");
     }
 
     /**
