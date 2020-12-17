@@ -1,4 +1,6 @@
 package com.ainq.izgateway.extract;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
@@ -28,7 +30,18 @@ public class TestConverter {
         HL7MessageParser p = new HL7MessageParser(new StringReader(message));
         Message m = p.nextMessage();
         CVRSExtract ainqExtract = Converter.fromHL7(m, new ArrayList<>(), null, line);
-        validator.verifyBean(ainqExtract);
+        try {
+            validator.verifyBean(ainqExtract);
+        } catch (CVRSValidationException e) {
+            if (id.endsWith("_error")) {
+                return;
+            } else {
+                throw e;
+            }
+        }
+        if (id.endsWith("_error")) {
+            assertTrue(false, "CVRS Validation Exception expected");
+        }
     }
 
     public static Stream<Object[]> getHL7MessageDefaultTestSuite() throws IOException {

@@ -1,3 +1,6 @@
+# Release Notes for 2.0.3
+Reverting change to default admin_name and responsible_org value appropriately based on content.
+
 # Release Notes for 2.0.2
 Fixed an issue to default admin_name and responsible_org value appropriately based on content,
 and to replace an empty recip_middle_name or recip_street_address_2 with a single space for identified

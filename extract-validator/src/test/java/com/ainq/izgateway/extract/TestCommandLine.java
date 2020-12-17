@@ -1,7 +1,7 @@
 package com.ainq.izgateway.extract;
 /*
  * Copyright 2020 Audiacious Inquiry, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -39,7 +39,7 @@ public class TestCommandLine {
         "src/test/resources/testgood.hl7,0,src/test/resources/testgood.hl7.rpt,",
         "src/test/resources/testerror.txt,176,src/test/resources/testerror.txt.rpt,",
         "src/test/resources/testerror.hl7,176,src/test/resources/testerror.hl7.rpt,",
-        "src/test/resources/testdefault.hl7,0,src/test/resources/testdefault.hl7.rpt,-d",
+        "src/test/resources/testdefault.hl7,2,src/test/resources/testdefault.hl7.rpt,-d",
         "src/test/resources/testMissingHeaders.txt,1,src/test/resources/testMissingHeaders.txt.rpt,",
         "src/test/resources/testerror.txt,176,src/test/resources/testerror.txt.rpt.json,-j",
         "src/test/resources/notacvrs.txt,21,src/test/resources/notacvrs.txt.rpt,",
