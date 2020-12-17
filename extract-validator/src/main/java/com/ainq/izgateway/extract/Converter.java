@@ -114,7 +114,11 @@ public class Converter {
                 if (v2Data.obx3() != null && v2Data.obx3().length() != 0) {
                     value = setupObx3(message, v2Data, val);
                 } else {
-                    value = adjustValuesToExtract(terser.get("/." + v2Data.value()), val, v2Data.map());
+                    String content = terser.get("/." + v2Data.value());
+                    if (StringUtils.isEmpty(content) && v2Data.alternate() != null && v2Data.alternate().length() != 0) {
+                        content = terser.get("/." + v2Data.alternate());
+                    }
+                    value = adjustValuesToExtract(content, val, v2Data.map());
                 }
             } catch (HL7Exception e) {
                 throw new RuntimeException("Unexpected HL7Exception", e);

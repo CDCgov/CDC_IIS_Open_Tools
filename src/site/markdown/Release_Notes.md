@@ -1,3 +1,6 @@
+# Release Notes for 2.0.4
+Updated the converter to take responsible_org from MSH-4-1 if MSH-22-1 is empty.
+
 # Release Notes for 2.0.3
 Reverting change to default admin_name and responsible_org value appropriately based on content.
 

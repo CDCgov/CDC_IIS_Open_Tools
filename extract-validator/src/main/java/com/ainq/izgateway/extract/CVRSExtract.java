@@ -1,7 +1,7 @@
 package com.ainq.izgateway.extract;
 /*
  * Copyright 2020 Audiacious Inquiry, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -269,7 +269,7 @@ public class CVRSExtract implements CVRS {
     @FieldValidator(validator = Matches.class, paramString = "^\\S+.*$")
     @CsvBindByName
     @Requirement(value=RequirementType.REQUIRED, when = { VACCINATION, REFUSAL, MISSED_APPOINTMENT })
-    @V2Field(value = "MSH-22-1")
+    @V2Field(value = "MSH-22-1", alternate = "MSH-4-1")
     private String responsible_org;
 
 	/** The name of the facility that reported the vaccination, refusal, or missed appointment. This is the physical clinic or facility owned by the Responsible Organization. It is possible in a small practice setting that Responsible Organization and Administered at Location are one in the same. */
