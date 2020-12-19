@@ -1,4 +1,5 @@
 package com.ainq.izgateway.extract;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -6,6 +7,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -32,6 +34,10 @@ public class TestConverter {
         CVRSExtract ainqExtract = Converter.fromHL7(m, new ArrayList<>(), null, line);
         try {
             validator.verifyBean(ainqExtract);
+            assertTrue(!StringUtils.isEmpty(ainqExtract.getRecip_address_street_2()), "recip_street_address2 must not be empty.");
+            assertTrue(!StringUtils.isEmpty(ainqExtract.getRecip_middle_name()), "recip_middle_name must not be empty.");
+            assertEquals(id.startsWith("identified_"), "I".equalsIgnoreCase(ainqExtract.getExt_type()));
+            assertEquals(!id.startsWith("identified_"), "D".equalsIgnoreCase(ainqExtract.getExt_type()));
         } catch (CVRSValidationException e) {
             if (id.endsWith("_error")) {
                 return;

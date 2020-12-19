@@ -1240,18 +1240,19 @@ public class CVRSExtract implements CVRS {
      */
     public boolean isRedacted() {
         // See if we can locate a field that hasn't been redacted that should be
-        return locateField(f -> {
+       Field unredacted = locateField(f -> {
             FieldValidator val = f.getAnnotation(FieldValidator.class);
             // If it is validated using the RedactedValidator
             if (val != null && val.validator().isAssignableFrom(RedactedValidator.class)) {
-                // Set the value to Redacted
+                // If the value is not redacted
                 if (!"Redacted".equalsIgnoreCase((String) f.get(this))) {
                     // If this field is not redacted, return true
                     return true;
                 }
             }
-            // Otherwise return falls
+            // Otherwise return false,
             return false;
-        }) == null; // If we found no unredacted fields, this extract is redacted.
+        });
+        return unredacted == null; // If we found no unredacted fields, this extract is redacted.
     }
 }

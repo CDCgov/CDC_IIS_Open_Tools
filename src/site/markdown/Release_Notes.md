@@ -1,3 +1,6 @@
+# Release Notes for 2.0.5
+Fixed logic issue for recip_middle_name and recip_street_address_2 not being defaulted correctly for non-redacted inputs
+
 # Release Notes for 2.0.4
 Updated the converter to take responsible_org from MSH-4-1 if MSH-22-1 is empty.
 

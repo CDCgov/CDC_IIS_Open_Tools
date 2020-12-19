@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.ainq.izgateway</groupId>
 		<artifactId>cvrs-extract</artifactId>
-		<version>2.0.4</version>
+		<version>2.0.5</version>
 	</parent>
 	<artifactId>clearinghouse-mock</artifactId>
 
@@ -12,7 +12,7 @@
 		<dependency>
 			<groupId>com.ainq.izgateway</groupId>
 			<artifactId>extract-validator</artifactId>
-			<version>2.0.4</version>
+			<version>2.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -225,7 +225,7 @@ public class Converter {
 
         extract.setExt_type(extract.isRedacted() ? "D" : "I");
 
-        if (extract.getVax_refusal().equalsIgnoreCase("YES")) {
+        if (extract.getExt_type().equalsIgnoreCase("I")) {
             if (StringUtils.isEmpty(extract.getRecip_middle_name())) {
                 extract.setRecip_middle_name(" ");
             }
