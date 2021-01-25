@@ -233,6 +233,17 @@ public class Converter {
                 extract.setRecip_address_street_2(" ");
             }
         }
+
+        // Fix zip codes
+        extract.setRecip_address_zip(fixZipCode(extract.getRecip_address_zip()));
+        extract.setAdmin_address_zip(fixZipCode(extract.getAdmin_address_zip()));
+    }
+
+    private static String fixZipCode(String zipCode) {
+        if (zipCode != null && zipCode.length() > 5 && !zipCode.contains("-")) {
+            zipCode = zipCode.substring(0, 5) + "-" + zipCode.substring(5);
+        }
+        return zipCode;
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.ainq.izgateway.extract;
 /*
  * Copyright 2020 Audiacious Inquiry, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -122,7 +122,7 @@ public class HL7MessageParser implements Iterable<Message> {
                 continue;
             }
             if (!line.startsWith("MSH")) {
-                System.err.println("Missing Message Header (MHS) Segment at line " + lineCount);
+                System.err.println("Missing Message Header (MSH) Segment at line " + lineCount);
                 continue;
             }
 
