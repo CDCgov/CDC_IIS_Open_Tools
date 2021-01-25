@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -34,6 +35,7 @@ public class TestConverter {
     }
 
     @ParameterizedTest
+    @Disabled("For diagnosing encoding error code flow")
     @MethodSource("getHL7MessageEncodingTestSuite")
     public void testHL7MessageEncoding(Integer line, String id, String message) throws IOException, InterruptedException, HL7Exception, CVRSValidationException {
         checkHL7Message(line, id, message);
