@@ -1,0 +1,66 @@
+# About This Project
+The purpose of this project is to deliver tools that support production and consumption
+of HL7 and flat file formats used to communicate COVID-19 vaccination data between IIS
+and CDC to support tracking of vaccination progress for COVID-19.
+
+Files included in this project are listed below.
+
+## CDC Specifications
+The specifications from which this project was originally developed included in this site:
+
+* [CDC Specifications for the CDC COVID-19 Vaccine Reporting Specification v2 (Excel)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_${project.version}/doc/CDC_COVID-19_Vaccination_Reporting_Specification_v2_CLEARED_20201029.xlsx)
+* [CDC CVRS_What's New in Version 2 (Word)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_${project.version}/doc/CDC_CVRS_What's_New_in_Version_2_CLEARED_20201028.docx)
+* [CDC CVRS Instructions v2 (Word)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_${project.version}/doc/CDC_CVRS_Instructions_v2_CLEARED_20201028.docx)
+
+## [Scripts](Upload.html)
+The [scripts](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/scripts) folder contains scripts that can be used to support file uploads.
+These scripts rely on [CURL](https://curl.haxx.se/) (pronounced either as C-U-R-L or
+"curl" as in the wave curls), a widely available command line tool for interacting
+with WEB APIs.
+
+## Java Code
+Java code and documentation are included that support validation of flat files and HL7 Version 2 Messages.
+
+### [Validator](Validator.html)
+
+The Validator is a command line tool and collection of Java classes that can be used
+to support validation and conversion.
+
+Validator is implemented in the `com.ainq.izgateway.extract.Validator` class and has
+a command line interface described in the [Validator](Validator.html) description page.
+
+The validation tool can also be used to convert between the CVRS Tab-Delimited format and HL7 Version 2 format.
+See [File Conversions](Converting.html) for more details.
+
+### [Sender](Sender.html)
+Sender is a simple file uploader that will send CVRSExtract files to the COVID-19 Clearinghouse Test
+(or other designated) endpoint.  It requires test endpoint credentials in order to function.
+
+### [Mock](Mock.html)
+Mock is a mock server implementing parts of the COVID-19 Clearinghouse API to support automation testing
+within the local system.
+
+
+## Sample Messages and Flat Files
+These are sample messages and flat files containing various forms of the CVRS Data for
+testing.
+[Testing Files](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/test/resources)
+
+## Value Set Tables
+Value Set tables used for content validation. These are simple space delimited files
+containing the code in the first field and additional helpful data in remaining fields.
+
+  * [Value Set Files](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources)
+  * [FIPS County Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/COUNTY.txt)
+  * [Facility Type Codes (used during enrollment)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/DCHTYPE2.txt)
+  * [CVX Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/CVX.txt)
+  * [MVX Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/MVX.txt)
+  * [NDC Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/NDC.txt)
+  * [DOSE Codes (used by DCH for recording Dose Number)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/DOSE.txt)
+  * [ETHNICITY Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/ETHNICITY.txt)
+  * [RACE Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/RACE.txt)
+  * [PROVIDER SUFFIX Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/PROVIDER_SUFFIX.txt)
+  * [ROUTE Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/ROUTE.txt)
+  * [SITE Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/SITE.txt)
+  * [SEX Codes](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/SEX.txt)
+

@@ -5,11 +5,15 @@ to support validation.
 
 Validator is implemented in the `com.ainq.izgateway.extract.Validator` class.
 
-New features are marked in bold
+## Installation
+1. Download extract-validator-${project.version}.jar from the [Releases](https://github.com/CDCGov/CDC_IIS_Open_Tools/releases/extract-validator-${project.version}.jar) page into
+a folder [shown as validator-${project.version} below] on your system.
+2. Download extract-validator-lib-${project.version}.zip the [Releases](https://github.com/CDCGov/CDC_IIS_Open_Tools/releases/extract-validator-lib-${project.version}.zip) page into
+the same folder, and the unzip that file into the validator-${project.version}/lib folder.
 
 ## Usage
 ```
-    $ java -jar extract-validator.jar [options]? [files] ...
+    $ java -jar /validator-${project.version}/extract-validator-${project.version}.jar [options]? [files] ...
 ```
 
 ### Conversion Options
@@ -30,7 +34,7 @@ and otherwise works like -7 above.
 : Convert to both HL7 Message and Tab Delimited format output files.
 
 -n
-: No conversions.
+: Disable conversion for subsequent inputs following this argument.
 
 -i
 : Convert all input records to the output, ignoring errors. Use with -b, -c, or -7 options above.

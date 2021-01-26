@@ -1,3 +1,7 @@
+# Release Notes for 2.1.0
+Prepared content for publication to CDC Open Source Site.
+Fixed formatting for nine digit zip-codes to match CVRS Specification when missing hypen (-) character in input HL7 content.
+
 # Release Notes for 2.0.5
 Fixed logic issue for recip_middle_name and recip_street_address_2 not being defaulted correctly for non-redacted inputs
 
