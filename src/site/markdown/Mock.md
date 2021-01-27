@@ -27,4 +27,4 @@ listening on port 8080.  If Mock is already using port 8080, Sender will fail to
 Until these applications are refactored into their own projects, this problem will prevent Sender and Mock
 from running at the same time unless the port of Mock is changed from the default value.
 
-See https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/issues/17
+See https://github.com/CDCGov/CDC_IIS_Open_Tools/issues/17
