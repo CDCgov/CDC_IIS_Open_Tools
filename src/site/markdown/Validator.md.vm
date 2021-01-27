@@ -12,13 +12,18 @@ a folder [shown as validator-${project.version} below] on your system.
 the same folder, and the unzip that file into the validator-${project.version}/lib folder.
 
 ## Usage
+These tools require use of Java 1.8 or later.  They have been developed and tested with
+[OpenJDK 11](https://jdk.java.net/java-se-ri/11).
 ```
     $ java -jar /validator-${project.version}/extract-validator-${project.version}.jar [options]? [files] ...
 ```
 
 ### Conversion Options
-The following options enable conversion to different file formats. NOTE: There is no
-need to specify the input file format, as this is automatically detected.
+The following options enable conversion to different file formats. For more details
+on converting between the CVRS Tab-Delimited format and HL7 Version 2 format see
+[File Conversions](Converting.html).
+
+NOTE: There is no need to specify the input file format, as this is automatically detected.
 
 -7[folder]
 : Convert to HL7 Message Format to files in the specified output folder. The file
