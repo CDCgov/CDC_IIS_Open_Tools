@@ -5,23 +5,23 @@ and CDC to support tracking of vaccination progress for COVID-19.
 
 Files included in this project are listed below.
 
-## CDC Specifications
+#[[##]]# CDC Specifications
 The specifications from which this project was originally developed included in this site:
 
 * [CDC Specifications for the CDC COVID-19 Vaccine Reporting Specification v2 (Excel)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_${project.version}/doc/CDC_COVID-19_Vaccination_Reporting_Specification_v2_CLEARED_20201029.xlsx)
 * [CDC CVRS_What's New in Version 2 (Word)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_${project.version}/doc/CDC_CVRS_What's_New_in_Version_2_CLEARED_20201028.docx)
 * [CDC CVRS Instructions v2 (Word)](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/blob/release_${project.version}/doc/CDC_CVRS_Instructions_v2_CLEARED_20201028.docx)
 
-## [Scripts](Upload.html)
+#[[##]]# [Scripts](Upload.html)
 The [scripts](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/scripts) folder contains scripts that can be used to support file uploads.
 These scripts rely on [CURL](https://curl.haxx.se/) (pronounced either as C-U-R-L or
 "curl" as in the wave curls), a widely available command line tool for interacting
 with WEB APIs.
 
-## Java Code
+#[[##]]# Java Code
 Java code and documentation are included that support validation of flat files and HL7 Version 2 Messages.
 
-### [Validator](Validator.html)
+#[[###]]# [Validator](Validator.html)
 
 The Validator is a command line tool and collection of Java classes that can be used
 to support validation and conversion.
@@ -32,21 +32,21 @@ a command line interface described in the [Validator](Validator.html) descriptio
 The validation tool can also be used to convert between the CVRS Tab-Delimited format and HL7 Version 2 format.
 See [File Conversions](Converting.html) for more details.
 
-### [Sender](Sender.html)
+#[[###]]# [Sender](Sender.html)
 Sender is a simple file uploader that will send CVRSExtract files to the COVID-19 Clearinghouse Test
 (or other designated) endpoint.  It requires test endpoint credentials in order to function.
 
-### [Mock](Mock.html)
+#[[###]]# [Mock](Mock.html)
 Mock is a mock server implementing parts of the COVID-19 Clearinghouse API to support automation testing
 within the local system.
 
 
-## Sample Messages and Flat Files
+#[[##]]# Sample Messages and Flat Files
 These are sample messages and flat files containing various forms of the CVRS Data for
 testing.
 [Testing Files](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/tree/release_${project.version}/src/test/resources)
 
-## Value Set Tables
+#[[##]]# Value Set Tables
 Value Set tables used for content validation. These are simple space delimited files
 containing the code in the first field and additional helpful data in remaining fields.
 
