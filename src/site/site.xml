@@ -7,7 +7,7 @@
   <publishDate position="left"/>
   <body>
     <links>
-      <item name="CVRS Extract Validator" href="https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools" />
+      <item name="CVRS Extract Validator" href="https://github.com/CDCGov/CDC_IIS_Open_Tools" />
     </links>
     <menu name="Overview">
       <item name="Release Notes" href="Release_Notes.html"/>

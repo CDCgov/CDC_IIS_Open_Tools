@@ -18,7 +18,7 @@
    1. Verify that all links work
    2. Verify that all content points to the right version in GitHub
 9. Download the saved artifacts from the Release
-[action](https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools/actions)
+[action](https://github.com/CDCGov/CDC_IIS_Open_Tools/actions)
 into a tempory folder.
 
 10. Rename the following files where VERSION is the version number for the release being
