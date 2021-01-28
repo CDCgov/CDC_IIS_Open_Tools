@@ -44,7 +44,7 @@ within the local system.
 #[[##]]# Sample Messages and Flat Files
 These are sample messages and flat files containing various forms of the CVRS Data for
 testing.
-[Testing Files](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/test/resources)
+[Testing Files](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/test/resources)
 
 #[[##]]# Value Set Tables
 Value Set tables used for content validation. These are simple space delimited files
@@ -52,15 +52,15 @@ containing the code in the first field and additional helpful data in remaining 
 
   * [Value Set Files](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources)
   * [FIPS County Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/COUNTY.txt)
-  * [Facility Type Codes (used during enrollment)](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/DCHTYPE2.txt)
-  * [CVX Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/CVX.txt)
-  * [MVX Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/MVX.txt)
-  * [NDC Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/NDC.txt)
-  * [DOSE Codes (used by DCH for recording Dose Number)](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/DOSE.txt)
-  * [ETHNICITY Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/ETHNICITY.txt)
-  * [RACE Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/RACE.txt)
-  * [PROVIDER SUFFIX Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/PROVIDER_SUFFIX.txt)
-  * [ROUTE Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/ROUTE.txt)
-  * [SITE Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/SITE.txt)
-  * [SEX Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/SEX.txt)
+  * [Facility Type Codes (used during enrollment)](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/DCHTYPE2.txt)
+  * [CVX Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/CVX.txt)
+  * [MVX Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/MVX.txt)
+  * [NDC Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/NDC.txt)
+  * [DOSE Codes (used by DCH for recording Dose Number)](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/DOSE.txt)
+  * [ETHNICITY Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/ETHNICITY.txt)
+  * [RACE Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/RACE.txt)
+  * [PROVIDER SUFFIX Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/PROVIDER_SUFFIX.txt)
+  * [ROUTE Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/ROUTE.txt)
+  * [SITE Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/SITE.txt)
+  * [SEX Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/SEX.txt)
 
