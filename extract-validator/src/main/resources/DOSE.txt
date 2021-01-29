@@ -1,0 +1,8 @@
+1 (Valid first dose)
+2 (Valid second dose)
+3 (Valid third dose)
+4 (Valid fourth dose)
+5 (Valid Fifth dose)
+6 (Valid sixth dose)
+INV (Invalid dose)
+UNK (Unknown validity)

@@ -1,0 +1,8 @@
+CL (clinic)
+HD (health dept)
+PO (healthcare provider's office)
+PH (pharmacy)
+CP (community provider/vaccinator)
+TR (tribal health center)
+POD (point of dispensing)
+UNK (Unknown)

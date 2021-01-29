@@ -1,0 +1,755 @@
+80777-9999-00   COVID19X    Sample COVID Vaccine Manufacturer
+99999-9999-01   COVID19Y    Sample COVID Vaccine Manufacturer
+80777-273-99    Moderna COVID-19 Vaccine Unit of Sale	Moderna US, Inc.
+80777-273-10	Moderna COVID-19 Vaccine Unit of Use	Moderna US, Inc.
+80777-0273-99   Moderna COVID-19 Vaccine Unit of Sale	Moderna US, Inc.
+80777-0273-10	Moderna COVID-19 Vaccine Unit of Use	Moderna US, Inc.
+59267-1000-3	Pfizer COVID-19 Vaccine 	Pfizer-BiooNtech
+59267-1000-2	Pfizer COVID-19 Vaccine Unit of Sale	Pfizer-BiooNtech
+59267-1000-1	Pfizer COVID-19 Vaccine Unit of Use	Pfizer-BiooNtech
+59267-1000-03	Pfizer COVID-19 Vaccine 	Pfizer-BiooNtech
+59267-1000-02	Pfizer COVID-19 Vaccine Unit of Sale	Pfizer-BiooNtech
+59267-1000-01	Pfizer COVID-19 Vaccine Unit of Use	Pfizer-BiooNtech
+#### Codes below this line are not used for CVRS Extract ###
+#### Unit of Sale
+00005-0100-02	Trumenba	162	meningococcal B, recombinant	PFR
+00005-0100-05	Trumenba	162	meningococcal B, recombinant	PFR
+00005-0100-10	Trumenba	162	meningococcal B, recombinant	PFR
+00005-1970-50	Prevnar	100	pneumococcal conjugate PCV 7	WAL
+00005-1971-02	PREVNAR 13	133	Pneumococcal conjugate PCV 13	PFR
+00005-1971-04	PREVNAR 13	133	Pneumococcal conjugate PCV 13	PFR
+00005-1971-05	PREVNAR 13	133	Pneumococcal conjugate PCV 13	PFR
+00006-4045-00	GARDASIL	62	HPV, quadrivalent	MSD
+00006-4045-41	GARDASIL	62	HPV, quadrivalent	MSD
+00006-4047-20	RotaTeq	116	rotavirus, pentavalent	MSD
+00006-4047-41	RotaTeq	116	rotavirus, pentavalent	MSD
+00006-4093-02	RECOMBIVAX HB	8	Hep B, adolescent or pediatric	MSD
+00006-4093-09	RECOMBIVAX HB	8	Hep B, adolescent or pediatric	MSD
+00006-4094-02	RECOMBIVAX HB	43	Hep B, adult	MSD
+00006-4094-09	RECOMBIVAX HB	43	Hep B, adult	MSD
+00006-4095-02	VAQTA	83	Hep A, ped/adol, 2 dose	MSD
+00006-4095-09	VAQTA	83	Hep A, ped/adol, 2 dose	MSD
+00006-4096-02	VAQTA	52	Hep A, adult	MSD
+00006-4096-09	VAQTA	52	Hep A, adult	MSD
+00006-4109-02	GARDASIL	62	HPV, quadrivalent	MSD
+00006-4109-09	GARDASIL	62	HPV, quadrivalent	MSD
+00006-4119-02	GARDASIL 9	165	HPV9	MSD
+00006-4119-03	GARDASIL 9	165	HPV9	MSD
+00006-4121-02	GARDASIL 9	165	HPV9	MSD
+00006-4133-41	Tetanus and Diphtheria Toxoids Adsorbed	9	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed	MSD
+00006-4171-00	ProQuad	94	MMRV	MSD
+00006-4681-00	M-M-R II	3	MMR	MSD
+00006-4739-00	PNEUMOVAX 23	33	pneumococcal polysaccharide PPV23	MSD
+00006-4826-00	VARIVAX	21	varicella	MSD
+00006-4827-00	VARIVAX	21	varicella	MSD
+00006-4831-41	VAQTA	83	Hep A, ped/adol, 2 dose	MSD
+00006-4837-02	PNEUMOVAX 23	33	pneumococcal polysaccharide PPV23	MSD
+00006-4837-03	PNEUMOVAX 23	33	pneumococcal polysaccharide PPV23	MSD
+00006-4841-00	VAQTA	52	Hep A, adult	MSD
+00006-4841-41	VAQTA	52	Hep A, adult	MSD
+00006-4897-00	PedvaxHIB	49	Hib (PRP-OMP)	MSD
+00006-4898-00	COMVAX	51	Hib-Hep B	MSD
+00006-4943-00	PNEUMOVAX 23	33	pneumococcal polysaccharide PPV23	MSD
+00006-4963-00	ZOSTAVAX	121	zoster live	MSD
+00006-4963-41	ZOSTAVAX	121	zoster live	MSD
+00006-4980-00	RECOMBIVAX HB	8	Hep B, adolescent or pediatric	MSD
+00006-4981-00	RECOMBIVAX HB	8	Hep B, adolescent or pediatric	MSD
+00006-4992-00	RECOMBIVAX HB	44	Hep B, dialysis	MSD
+00006-4995-00	RECOMBIVAX HB	43	Hep B, adult	MSD
+00006-4995-41	RECOMBIVAX HB	43	Hep B, adult	MSD
+00006-4999-00	ProQuad	94	MMRV	MSD
+00052-0603-02	BCG VACCINE	19	BCG	OTC
+13533-0131-01	TDVAX	9	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed	MBL
+14362-0111-04	TDVAX	9	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed	MBL
+17478-0131-01	Tetanus and Diphtheria Toxoids Adsorbed	9	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed	MBL
+19515-0816-52	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+19515-0845-11	FLULAVAL	141	Influenza, seasonal, injectable	IDB
+19515-0850-52	FLULAVAL	140	Influenza, seasonal, injectable, preservative free	IDB
+19515-0889-07	FLULAVAL	141	Influenza, seasonal, injectable	IDB
+19515-0890-07	FLULAVAL	141	Influenza, seasonal, injectable	IDB
+19515-0891-11	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0893-07	FLULAVAL	141	Influenza, seasonal, injectable	IDB
+19515-0894-52	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+19515-0895-11	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0896-11	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0897-11	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0898-11	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0900-11	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0901-52	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+19515-0903-11	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0906-52	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+19515-0908-52	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+19515-0909-52	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+19515-0912-52	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+21695-0413-01	Tetanus and Diphtheria Toxoids Adsorbed	9	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed	MBL
+33332-0010-01	AFLURIA	140	Influenza, seasonal, injectable, preservative free	CSL
+33332-0013-01	AFLURIA	140	Influenza, seasonal, injectable, preservative free	CSL
+33332-0014-01	AFLURIA	140	Influenza, seasonal, injectable, preservative free	CSL
+33332-0015-01	AFLURIA	140	Influenza, seasonal, injectable, preservative free	CSL
+33332-0016-01	AFLURIA	140	Influenza, seasonal, injectable, preservative free	SEQ
+33332-0017-01	AFLURIA	140	Influenza, seasonal, injectable, preservative free	SEQ
+33332-0018-01	AFLURIA	140	Influenza, seasonal, injectable, preservative free	SEQ
+33332-0110-10	AFLURIA	141	Influenza, seasonal, injectable	CSL
+33332-0113-10	AFLURIA	141	Influenza, seasonal, injectable	CSL
+33332-0114-10	AFLURIA	141	Influenza, seasonal, injectable	CSL
+33332-0115-10	AFLURIA	141	Influenza, seasonal, injectable	CSL
+33332-0116-10	AFLURIA	141	Influenza, seasonal, injectable	SEQ
+33332-0117-10	AFLURIA	141	Influenza, seasonal, injectable	SEQ
+33332-0118-10	AFLURIA	141	Influenza, seasonal, injectable	SEQ
+33332-0219-20	Afluria Quadrivalent	161	Influenza, injectable,quadrivalent, preservative free, pediatric	SEQ
+33332-0220-20	Afluria Quadrivalent	161	Influenza, injectable,quadrivalent, preservative free, pediatric	SEQ
+33332-0316-01	AFLURIA QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SEQ
+33332-0317-01	AFLURIA QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SEQ
+33332-0318-01	AFLURIA QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SEQ
+33332-0319-01	Afluria Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	SEQ
+33332-0320-01	Afluria Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	SEQ
+33332-0416-10	AFLURIA QUADRIVALENT	158	influenza, injectable, quadrivalent	SEQ
+33332-0417-10	AFLURIA QUADRIVALENT	158	influenza, injectable, quadrivalent	SEQ
+33332-0418-10	AFLURIA QUADRIVALENT	158	influenza, injectable, quadrivalent	SEQ
+33332-0419-10	Afluria Quadrivalent	158	influenza, injectable, quadrivalent	SEQ
+33332-0420-10	Afluria Quadrivalent	158	influenza, injectable, quadrivalent	SEQ
+33332-0519-01	Influenza A	126	Novel influenza-H1N1-09, preservative-free	CSL
+33332-0519-25	Influenza A	126	Novel influenza-H1N1-09, preservative-free	CSL
+33332-0629-10	Influenza A	127	Novel influenza-H1N1-09	CSL
+42515-0001-01	IXIARO	134	Japanese Encephalitis IM	VAL
+42515-0001-01	IXIARO	134	Japanese Encephalitis IM	INT
+42515-0001-01	IXIARO	134	Japanese Encephalitis IM	VAL
+42515-0001-01	IXIARO	134	Japanese Encephalitis IM	INT
+42515-0002-01	IXIARO	134	Japanese Encephalitis IM	VAL
+42874-0012-10	Flublok	155	influenza, recombinant, injectable, preservative free	PSC
+42874-0013-10	Flublok	155	influenza, recombinant, injectable, preservative free	PSC
+42874-0014-10	Flublok	155	influenza, recombinant, injectable, preservative free	PSC
+42874-0015-10	Flublok	155	influenza, recombinant, injectable, preservative free	PSC
+42874-0016-10	Flublok	155	influenza, recombinant, injectable, preservative free	PSC
+42874-0017-10	Flublok	155	influenza, recombinant, injectable, preservative free	PSC
+42874-0117-10	Flublok Quadrivalent	185	influenza, recombinant, quadrivalent,injectable, preservative free	PSC
+43528-0002-05	HEPLISAV-B	189	HepB-CpG	DVX
+43528-0003-05	HEPLISAV-B	189	HepB-CpG	DVX
+46028-0114-01	Bexsero	163	meningococcal B, OMV	NOV
+46028-0114-02	Bexsero	163	meningococcal B, OMV	NOV
+46028-0208-01	Menveo	136	Meningococcal MCV4O	NOV
+46028-0208-01	Menveo	136	Meningococcal MCV4O	NOV
+49281-0010-10	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0010-25	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0010-50	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0011-10	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0011-50	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0012-10	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0012-50	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0013-10	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0013-50	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0014-50	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0111-25	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0112-25	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0113-25	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0120-65	FLUZONE High-Dose Quadrivalent Northern Hemisphere	197	influenza, high-dose, quadrivalent	PMC
+49281-0181-25	FLUZONE QUADRIVALENT SOUTHERN HEMISPHERE	200	influenza, Southern Hemisphere, pediatric, preservative free	PMC
+49281-0215-10	TENIVAC	113	Td (adult), 5 Lf tetanus toxoid, preservative free, adsorbed	PMC
+49281-0215-15	TENIVAC	113	Td (adult), 5 Lf tetanus toxoid, preservative free, adsorbed	PMC
+49281-0225-10	DIPHTHERIA AND TETANUS TOXOIDS ADSORBED	28	DT (pediatric)	PMC
+49281-0250-51	IMOVAX RABIES	175	Rabies - IM Diploid cell culture	PMC
+49281-0252-51	IMOVAX RABIES	175	Rabies - IM Diploid cell culture	PMC
+49281-0278-10	DIPHTHERIA AND TETANUS TOXOIDS ADSORBED	28	DT (pediatric)	PMC
+49281-0286-01	DAPTACEL	106	DTaP, 5 pertussis antigens	PMC
+49281-0286-05	DAPTACEL	106	DTaP, 5 pertussis antigens	PMC
+49281-0286-10	DAPTACEL	106	DTaP, 5 pertussis antigens	PMC
+49281-0291-10	DECAVAC	113	Td (adult), 5 Lf tetanus toxoid, preservative free, adsorbed	PMC
+49281-0291-83	DECAVAC	113	Td (adult), 5 Lf tetanus toxoid, preservative free, adsorbed	PMC
+49281-0298-10	TRIPEDIA	20	DTaP	PMC
+49281-0320-50	FLUZONE QUADRIVALENT SOUTHERN HEMISPHERE	201	influenza, Southern Hemisphere, preservative free	PMC
+49281-0336-15	FLUZONE QUADRIVALENT SOUTHERN HEMISPHERE	202	influenza, Southern Hemisphere, quadrivalent, with preservative	PMC
+49281-0386-15	FLUZONE	141	Influenza, seasonal, injectable	PMC
+49281-0387-65	FLUZONE	135	Influenza, high dose seasonal	PMC
+49281-0388-15	FLUZONE	141	Influenza, seasonal, injectable	PMC
+49281-0389-65	FLUZONE HIGH DOSE	135	Influenza, high dose seasonal	PMC
+49281-0390-15	FLUZONE	141	Influenza, seasonal, injectable	PMC
+49281-0391-65	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0392-15	FLUZONE	141	Influenza, seasonal, injectable	PMC
+49281-0393-65	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0394-15	FLUZONE	141	Influenza, seasonal, injectable	PMC
+49281-0395-65	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0396-15	FLUZONE	141	Influenza, seasonal, injectable	PMC
+49281-0397-65	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0399-65	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0400-05	Adacel	115	Tdap	PMC
+49281-0400-10	Adacel	115	Tdap	PMC
+49281-0400-15	Adacel	115	Tdap	PMC
+49281-0400-20	Adacel	115	Tdap	PMC
+49281-0401-65	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0403-65	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0405-65	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0413-10	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0413-50	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0414-10	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0414-50	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0415-10	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0416-10	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0416-50	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0417-10	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0417-50	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0418-10	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0418-50	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0419-10	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0419-50	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0420-10	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0420-50	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0489-01	MENOMUNE - A/C/Y/W-135 COMBINED	32	meningococcal MPSV4	PMC
+49281-0489-91	MENOMUNE - A/C/Y/W-135 COMBINED	32	meningococcal MPSV4	PMC
+49281-0510-05	PENTACEL	120	DTaP-Hib-IPV	PMC
+49281-0510-05	PENTACEL	120	DTaP-Hib-IPV	PMC
+49281-0510-05	PENTACEL	120	DTaP-Hib-IPV	PMC
+49281-0511-05	PENTACEL	120	DTaP-Hib-IPV	PMC
+49281-0511-05	PENTACEL	120	DTaP-Hib-IPV	PMC
+49281-0513-25	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0514-25	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0516-25	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0517-25	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0518-25	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0519-25	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0520-25	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0545-03	ActHIB	48	Hib (PRP-T)	PMC
+49281-0545-05	ActHIB	48	Hib (PRP-T)	PMC
+49281-0562-10	QUADRACEL	130	DTaP-IPV	PMC
+49281-0589-05	Menactra	114	meningococcal MCV4P	PMC
+49281-0590-05	MenQuadfi	203	meningococcal polysaccharide (groups A, C, Y, W-135) TT conjugate	PMC
+49281-0605-01	DENGVAXIA	56	dengue fever	PMC
+49281-0621-15	FLUZONE QUADRIVALENT	158	influenza, injectable, quadrivalent	PMC
+49281-0625-15	FLUZONE QUADRIVALENT	158	influenza, injectable, quadrivalent	PMC
+49281-0627-15	FLUZONE QUADRIVALENT	158	influenza, injectable, quadrivalent	PMC
+49281-0629-15	FLUZONE QUADRIVALENT	158	influenza, injectable, quadrivalent	PMC
+49281-0631-15	FLUZONE QUADRIVALENT	158	influenza, injectable, quadrivalent	PMC
+49281-0633-15	FLUZONE QUADRIVALENT	158	influenza, injectable, quadrivalent	PMC
+49281-0640-15	INFLUENZA A (H1N1) 2009 MONOVALENT VACCINE	127	Novel influenza-H1N1-09	PMC
+49281-0650-10	INFLUENZA A (H1N1) 2009 MONOVALENT VACCINE	126	Novel influenza-H1N1-09, preservative-free	PMC
+49281-0650-25	INFLUENZA A (H1N1) 2009 MONOVALENT VACCINE	126	Novel influenza-H1N1-09, preservative-free	PMC
+49281-0650-50	INFLUENZA A (H1N1) 2009 MONOVALENT VACCINE	126	Novel influenza-H1N1-09, preservative-free	PMC
+49281-0650-70	INFLUENZA A (H1N1) 2009 MONOVALENT VACCINE	126	Novel influenza-H1N1-09, preservative-free	PMC
+49281-0650-90	INFLUENZA A (H1N1) 2009 MONOVALENT VACCINE	126	Novel influenza-H1N1-09, preservative-free	PMC
+49281-0703-55	FLUZONE INTRADERMAL	144	influenza, seasonal, intradermal, preservative free	PMC
+49281-0705-55	FLUZONE	144	influenza, seasonal, intradermal, preservative free	PMC
+49281-0707-55	FLUZONE	144	influenza, seasonal, intradermal, preservative free	PMC
+49281-0708-40	FLUZONE INTRADERMAL QUADRIVALENT	166	influenza, intradermal, quadrivalent, preservative free	PMC
+49281-0709-55	FLUZONE Intradermal	144	influenza, seasonal, intradermal, preservative free	PMC
+49281-0710-40	FLUZONE INTRADERMAL QUADRIVALENT	166	influenza, intradermal, quadrivalent, preservative free	PMC
+49281-0712-40	FLUZONE INTRADERMAL QUADRIVALENT	166	influenza, intradermal, quadrivalent, preservative free	PMC
+49281-0718-10	Flublok Quadrivalent	185	influenza, recombinant, quadrivalent,injectable, preservative free	PMC
+49281-0719-10	Flublok Quadrivalent	185	influenza, recombinant, quadrivalent,injectable, preservative free	PMC
+49281-0720-10	Flublok Quadrivalent Northern Hemisphere	185	influenza, recombinant, quadrivalent,injectable, preservative free	PMC
+49281-0790-20	Typhim Vi	101	typhoid, ViCPs	PMC
+49281-0790-51	Typhim Vi	101	typhoid, ViCPs	PMC
+49281-0800-83	TETANUS TOXOID ADSORBED	35	tetanus toxoid, adsorbed	PMC
+49281-0820-10	TETANUS TOXOID ADSORBED	35	tetanus toxoid, adsorbed	PMC
+49281-0860-10	IPOL	10	IPV	PMC
+49281-0860-10	IPOL	10	IPV	PMC
+49281-0860-55	IPOL	10	IPV	PMC
+49281-0913-01	STAMARIL	183	Yellow fever vaccine - alt	PMC
+49281-0915-01	YF-VAX	37	yellow fever	PMC
+49281-0915-05	YF-VAX	37	yellow fever	PMC
+50090-1693-09	IPOL	10	IPV	PMC
+50090-2883-00	INFANRIX	20	DTaP	SKB
+50090-3096-00	RabAvert	176	Rabies - IM fibroblast culture	SKB
+50090-3469-00	HEPLISAV-B	189	HepB-CpG	DVX
+51285-0138-50	Adenovirus Type 4 and Type 7 Vaccine, Live	143	Adenovirus types 4 and 7	BRR
+51285-0138-50	Adenovirus Type 4 and Type 7 Vaccine, Live	143	Adenovirus types 4 and 7	TVA
+51285-0138-50	Adenovirus Type 4 and Type 7 Vaccine, Live	143	Adenovirus types 4 and 7	BRR
+51285-0138-50	Adenovirus Type 4 and Type 7 Vaccine, Live	143	Adenovirus types 4 and 7	TVA
+54868-0734-00	ENGERIX-B	43	Hep B, adult	SKB
+54868-0980-00	M-M-R II	3	MMR	MSD
+54868-2219-00	RECOMBIVAX HB	43	Hep B, adult	MSD
+54868-2219-01	RECOMBIVAX HB	43	Hep B, adult	MSD
+54868-3339-01	PNEUMOVAX 23	33	pneumococcal polysaccharide PPV23	MSD
+54868-4320-00	PNEUMOVAX 23	33	pneumococcal polysaccharide PPV23	MSD
+54868-6177-00	FLUZONE	141	Influenza, seasonal, injectable	PMC
+54868-6180-00	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+55045-3841-01	HAVRIX	52	Hep A, adult	SKB
+58160-0801-11	Menhibrix	148	Meningococcal C/Y-HIB PRP	SKB
+58160-0806-05	HIBERIX	48	Hib (PRP-T)	SKB
+58160-0808-15	Influenza A (H5N1) Monovalent Vaccine, Adjuvanted	160	Influenza A monovalent (H5N1), ADJUVANTED-2013	SKB
+58160-0808-15	Influenza A (H5N1) Monovalent Vaccine, Adjuvanted	160	Influenza A monovalent (H5N1), ADJUVANTED-2013	SKB
+58160-0809-05	MENHIBRIX	148	Meningococcal C/Y-HIB PRP	SKB
+58160-0810-11	INFANRIX	20	DTaP	SKB
+58160-0810-52	INFANRIX	20	DTaP	SKB
+58160-0811-51	PEDIARIX	110	DTaP-Hep B-IPV	SKB
+58160-0811-52	PEDIARIX	110	DTaP-Hep B-IPV	SKB
+58160-0812-11	KINRIX	130	DTaP-IPV	SKB
+58160-0812-52	KINRIX	130	DTaP-IPV	SKB
+58160-0815-11	TWINRIX	104	Hep A-Hep B	SKB
+58160-0815-34	TWINRIX	104	Hep A-Hep B	SKB
+58160-0815-46	TWINRIX	104	Hep A-Hep B	SKB
+58160-0815-48	TWINRIX	104	Hep A-Hep B	SKB
+58160-0815-52	TWINRIX	104	Hep A-Hep B	SKB
+58160-0816-05	Hiberix	48	Hib (PRP-T)	SKB
+58160-0818-11	Hiberix	48	Hib (PRP-T)	SKB
+58160-0819-12	Shingrix	187	zoster recombinant	SKB
+58160-0820-11	ENGERIX-B	8	Hep B, adolescent or pediatric	SKB
+58160-0820-52	ENGERIX-B	8	Hep B, adolescent or pediatric	SKB
+58160-0821-11	ENGERIX-B	43	Hep B, adult	SKB
+58160-0821-34	ENGERIX-B	43	Hep B, adult	SKB
+58160-0821-52	ENGERIX-B	43	Hep B, adult	SKB
+58160-0823-11	Shingrix	187	zoster recombinant	SKB
+58160-0825-11	HAVRIX	83	Hep A, ped/adol, 2 dose	SKB
+58160-0825-52	HAVRIX	83	Hep A, ped/adol, 2 dose	SKB
+58160-0826-11	HAVRIX	52	Hep A, adult	SKB
+58160-0826-34	HAVRIX	52	Hep A, adult	SKB
+58160-0826-52	HAVRIX	52	Hep A, adult	SKB
+58160-0830-34	CERVARIX	118	HPV, bivalent	SKB
+58160-0830-52	CERVARIX	118	HPV, bivalent	SKB
+58160-0842-11	BOOSTRIX	115	Tdap	SKB
+58160-0842-34	BOOSTRIX	115	Tdap	SKB
+58160-0842-51	BOOSTRIX	115	Tdap	SKB
+58160-0842-52	BOOSTRIX	115	Tdap	SKB
+58160-0854-52	ROTARIX	119	rotavirus, monovalent	SKB
+58160-0879-52	FLUARIX	140	Influenza, seasonal, injectable, preservative free	SKB
+58160-0880-52	FLUARIX	140	Influenza, seasonal, injectable, preservative free	SKB
+58160-0881-52	FLUARIX	140	Influenza, seasonal, injectable, preservative free	SKB
+58160-0883-52	FLUARIX	140	Influenza, seasonal, injectable, preservative free	SKB
+58160-0885-52	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0896-52	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0898-52	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0900-52	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0901-52	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0903-52	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0905-52	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0907-52	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0955-09	Menveo	136	Meningococcal MCV4O	SKB
+58160-0955-09	Menveo	136	Meningococcal MCV4O	SKB
+58160-0964-12	RabAvert	176	Rabies - IM fibroblast culture	SKB
+58160-0964-12	RabAvert	176	Rabies - IM fibroblast culture	SKB
+58160-0976-06	Bexsero	163	meningococcal B, OMV	SKB
+58160-0976-20	Bexsero	163	meningococcal B, OMV	SKB
+62195-0051-10	Ixiaro	134	Japanese Encephalitis IM	VAL
+62577-0613-01	Flucelvax	153	Influenza, injectable, MDCK, preservative free	NOV
+62577-0614-01	Flucelvax	153	Influenza, injectable, MDCK, preservative free	NOV
+63361-0243-10	VAXELIS	146	DTaP,IPV,Hib,HepB	PMC
+63361-0245-10	VAXELIS	146	DTaP,IPV,Hib,HepB	PMC
+63851-0501-01	RabAvert	176	Rabies - IM fibroblast culture	NOV
+63851-0501-02	RabAvert	176	Rabies - IM fibroblast culture	NOV
+63851-0612-01	Flucelvax	153	Influenza, injectable, MDCK, preservative free	NOV
+63851-0613-01	FLUCELVAX	153	Influenza, injectable, MDCK, preservative free	NOV
+64678-0211-01	BioThrax	24	anthrax	MIP
+66019-0107-01	FLUMIST	111	influenza, live, intranasal	MED
+66019-0108-10	FLUMIST	111	influenza, live, intranasal	MED
+66019-0109-10	FLUMIST	111	influenza, live, intranasal	MED
+66019-0110-10	FluMist	111	influenza, live, intranasal	MED
+66019-0200-10	Influenza A H1N1 Intranasal	125	Novel Influenza-H1N1-09, nasal	MED
+66019-0300-10	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0301-10	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0302-10	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0303-10	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0304-10	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0305-10	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0306-10	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0307-10	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66521-0000-01	FLUAD	168	influenza, trivalent, adjuvanted	NOV
+66521-0112-02	Fluvirin	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0112-10	Fluvirin	141	Influenza, seasonal, injectable	NOV
+66521-0113-02	FLUVIRIN	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0113-10	FLUVIRIN	141	Influenza, seasonal, injectable	NOV
+66521-0114-02	FLUVIRIN	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0114-10	FLUVIRIN	141	Influenza, seasonal, injectable	NOV
+66521-0115-02	FLUVIRIN	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0115-10	FLUVIRIN	141	Influenza, seasonal, injectable	NOV
+66521-0116-02	Fluvirin	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0116-10	Fluvirin	141	Influenza, seasonal, injectable	NOV
+66521-0117-02	Fluvirin	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0117-10	Fluvirin	141	Influenza, seasonal, injectable	NOV
+66521-0118-02	Fluvirin	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0118-10	Fluvirin	141	Influenza, seasonal, injectable	NOV
+66521-0200-02	Influenza A (H1N1) 2009 Monovalent Vaccine	127	Novel influenza-H1N1-09	NOV
+66521-0200-10	Influenza A (H1N1) 2009 Monovalent Vaccine	126	Novel influenza-H1N1-09, preservative-free	NOV
+69401-0000-01	Vivotif	25	typhoid, oral	PAX
+69401-0000-02	Vivotif	25	typhoid, oral	PAX
+70460-0001-01	Vaxchora	174	cholera, live attenuated	PAX
+70460-0004-01	Vaxchora	174	cholera, live attenuated	PAX
+70461-0001-01	FLUAD	168	influenza, trivalent, adjuvanted	SEQ
+70461-0002-01	FLUAD	168	influenza, trivalent, adjuvanted	SEQ
+70461-0018-03	FLUAD	168	influenza, trivalent, adjuvanted	SEQ
+70461-0019-03	FLUAD	168	influenza, trivalent, adjuvanted	SEQ
+70461-0020-03	FLUAD	168	influenza, trivalent, adjuvanted	SEQ
+70461-0119-02	Fluvirin	140	Influenza, seasonal, injectable, preservative free	SEQ
+70461-0119-10	Fluvirin	141	Influenza, seasonal, injectable	SEQ
+70461-0120-02	Fluvirin	140	Influenza, seasonal, injectable, preservative free	SEQ
+70461-0120-03	FLUAD QUADRIVALENT	205	Influenza vaccine, quadrivalent, adjuvanted	SEQ
+70461-0120-10	Fluvirin	141	Influenza, seasonal, injectable	SEQ
+70461-0200-01	FLUCELVAX QUADRIVALENT	171	Influenza, injectable, MDCK, preservative free, quadrivalent	SEQ
+70461-0201-01	FLUCELVAX QUADRIVALENT (PREFILLED SYRINGE)	171	Influenza, injectable, MDCK, preservative free, quadrivalent	SEQ
+70461-0301-10	FLUCELVAX QUADRIVALENT (MULTI-DOSE VIAL)	186	Influenza, injectable, MDCK, quadrivalent, preservative	SEQ
+70461-0318-03	FLUCELVAX QUADRIVALENT (PREFILLED SYRINGE)	171	Influenza, injectable, MDCK, preservative free, quadrivalent	SEQ
+70461-0319-03	FLUCELVAX QUADRIVALENT	171	Influenza, injectable, MDCK, preservative free, quadrivalent	SEQ
+70461-0320-03	FLUCELVAX QUADRIVALENT	171	Influenza, injectable, MDCK, preservative free, quadrivalent	SEQ
+70461-0418-10	FLUCELVAX QUADRIVALENT (MULTI-DOSE VIAL)	186	Influenza, injectable, MDCK, quadrivalent, preservative	SEQ
+70461-0419-10	FLUCELVAX QUADRIVALENT	186	Influenza, injectable, MDCK, quadrivalent, preservative	SEQ
+70461-0420-10	FLUCELVAX QUADRIVALENT	186	Influenza, injectable, MDCK, quadrivalent, preservative	SEQ
+76420-0482-01	Medical Provider Single Use EZ Flu Shot 2013-2014	150	influenza, injectable, quadrivalent, preservative free	PMC
+76420-0483-01	Medical Provider Single Use EZ Flu Shot 2013-2014	150	influenza, injectable, quadrivalent, preservative free	PMC
+#####	Unit of Use
+00005-0100-01	Trumenba	162	meningococcal B, recombinant	PFR
+00005-0100-01	Trumenba	162	meningococcal B, recombinant	PFR
+00005-0100-01	Trumenba	162	meningococcal B, recombinant	PFR
+00005-1970-49	Prevnar	100	pneumococcal conjugate PCV 7	WAL
+00005-1971-01	PREVNAR 13	133	Pneumococcal conjugate PCV 13	PFR
+00005-1971-01	PREVNAR 13	133	Pneumococcal conjugate PCV 13	PFR
+00005-1971-01	PREVNAR 13	133	Pneumococcal conjugate PCV 13	PFR
+00006-4045-01	GARDASIL	62	HPV, quadrivalent	MSD
+00006-4045-01	GARDASIL	62	HPV, quadrivalent	MSD
+00006-4047-01	RotaTeq	116	rotavirus, pentavalent	MSD
+00006-4047-01	RotaTeq	116	rotavirus, pentavalent	MSD
+00006-4093-01	RECOMBIVAX HB	8	Hep B, adolescent or pediatric	MSD
+00006-4093-01	RECOMBIVAX HB	8	Hep B, adolescent or pediatric	MSD
+00006-4094-01	RECOMBIVAX HB	43	Hep B, adult	MSD
+00006-4094-01	RECOMBIVAX HB	43	Hep B, adult	MSD
+00006-4095-01	VAQTA	83	Hep A, ped/adol, 2 dose	MSD
+00006-4095-01	VAQTA	83	Hep A, ped/adol, 2 dose	MSD
+00006-4096-01	VAQTA	52	Hep A, adult	MSD
+00006-4096-01	VAQTA	52	Hep A, adult	MSD
+00006-4109-01	GARDASIL	62	HPV, quadrivalent	MSD
+00006-4109-01	GARDASIL	62	HPV, quadrivalent	MSD
+00006-4119-01	GARDASIL 9	165	HPV9	MSD
+00006-4119-01	GARDASIL 9	165	HPV9	MSD
+00006-4121-01	GARDASIL 9	165	HPV9	MSD
+00006-4133-01	Tetanus and Diphtheria Toxoids Adsorbed	9	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed	MSD
+00006-4171-01	ProQuad	94	MMRV	MSD
+00006-4681-01	M-M-R II	3	MMR	MSD
+00006-4739-01	PNEUMOVAX 23	33	pneumococcal polysaccharide PPV23	MSD
+00006-4826-01	VARIVAX	21	varicella	MSD
+00006-4827-01	VARIVAX	21	varicella	MSD
+00006-4831-01	VAQTA	83	Hep A, ped/adol, 2 dose	MSD
+00006-4837-01	PNEUMOVAX 23	33	pneumococcal polysaccharide PPV23	MSD
+00006-4837-01	PNEUMOVAX 23	33	pneumococcal polysaccharide PPV23	MSD
+00006-4841-01	VAQTA	52	Hep A, adult	MSD
+00006-4841-01	VAQTA	52	Hep A, adult	MSD
+00006-4897-01	PedvaxHIB	49	Hib (PRP-OMP)	MSD
+00006-4898-01	COMVAX	51	Hib-Hep B	MSD
+00006-4943-01	PNEUMOVAX 23	33	pneumococcal polysaccharide PPV23	MSD
+00006-4963-01	ZOSTAVAX	121	zoster live	MSD
+00006-4963-01	ZOSTAVAX	121	zoster live	MSD
+00006-4980-00	RECOMBIVAX HB	8	Hep B, adolescent or pediatric	MSD
+00006-4981-01	RECOMBIVAX HB	8	Hep B, adolescent or pediatric	MSD
+00006-4992-01	RECOMBIVAX HB	44	Hep B, dialysis	MSD
+00006-4995-01	RECOMBIVAX HB	43	Hep B, adult	MSD
+00006-4995-01	RECOMBIVAX HB	43	Hep B, adult	MSD
+00006-4999-01	ProQuad	94	MMRV	MSD
+00052-0603-01	BCG VACCINE	19	BCG	OTC
+13533-0131-00	TDVAX	9	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed	MBL
+14362-0111-03	TDVAX	9	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed	MBL
+17478-0131-00	Tetanus and Diphtheria Toxoids Adsorbed	9	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed	MBL
+19515-0816-41	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+19515-0845-01	FLULAVAL	141	Influenza, seasonal, injectable	IDB
+19515-0850-41	FLULAVAL	140	Influenza, seasonal, injectable, preservative free	IDB
+19515-0889-02	FLULAVAL	141	Influenza, seasonal, injectable	IDB
+19515-0890-02	FLULAVAL	141	Influenza, seasonal, injectable	IDB
+19515-0891-01	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0893-02	FLULAVAL	141	Influenza, seasonal, injectable	IDB
+19515-0894-41	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+19515-0895-01	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0896-01	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0897-01	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0898-01	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0900-01	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0901-41	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+19515-0903-01	Flulaval Quadrivalent	158	influenza, injectable, quadrivalent	IDB
+19515-0906-41	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+19515-0908-41	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+19515-0909-41	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+19515-0912-41	Flulaval Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	IDB
+21695-0413-01	Tetanus and Diphtheria Toxoids Adsorbed	9	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed	MBL
+33332-0010-01	AFLURIA	140	Influenza, seasonal, injectable, preservative free	CSL
+33332-0013-02	AFLURIA	140	Influenza, seasonal, injectable, preservative free	CSL
+33332-0014-02	AFLURIA	140	Influenza, seasonal, injectable, preservative free	CSL
+33332-0015-02	AFLURIA	140	Influenza, seasonal, injectable, preservative free	CSL
+33332-0016-02	AFLURIA	140	Influenza, seasonal, injectable, preservative free	SEQ
+33332-0017-02	AFLURIA	140	Influenza, seasonal, injectable, preservative free	SEQ
+33332-0018-02	AFLURIA	140	Influenza, seasonal, injectable, preservative free	SEQ
+33332-0110-10	AFLURIA	141	Influenza, seasonal, injectable	CSL
+33332-0113-11	AFLURIA	141	Influenza, seasonal, injectable	CSL
+33332-0114-11	AFLURIA	141	Influenza, seasonal, injectable	CSL
+33332-0115-11	AFLURIA	141	Influenza, seasonal, injectable	CSL
+33332-0116-11	AFLURIA	141	Influenza, seasonal, injectable	SEQ
+33332-0117-11	AFLURIA	141	Influenza, seasonal, injectable	SEQ
+33332-0118-11	AFLURIA	141	Influenza, seasonal, injectable	SEQ
+33332-0219-21	Afluria Quadrivalent	161	Influenza, injectable,quadrivalent, preservative free, pediatric	SEQ
+33332-0220-21	Afluria Quadrivalent	161	Influenza, injectable,quadrivalent, preservative free, pediatric	SEQ
+33332-0316-02	AFLURIA QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SEQ
+33332-0317-02	AFLURIA QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SEQ
+33332-0318-02	AFLURIA QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SEQ
+33332-0319-02	Afluria Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	SEQ
+33332-0320-02	Afluria Quadrivalent	150	influenza, injectable, quadrivalent, preservative free	SEQ
+33332-0416-11	AFLURIA QUADRIVALENT	158	influenza, injectable, quadrivalent	SEQ
+33332-0417-11	AFLURIA QUADRIVALENT	158	influenza, injectable, quadrivalent	SEQ
+33332-0418-11	AFLURIA QUADRIVALENT	158	influenza, injectable, quadrivalent	SEQ
+33332-0419-11	Afluria Quadrivalent	158	influenza, injectable, quadrivalent	SEQ
+33332-0420-11	Afluria Quadrivalent	158	influenza, injectable, quadrivalent	SEQ
+33332-0519-01	Influenza A	126	Novel influenza-H1N1-09, preservative-free	CSL
+33332-0519-25	Influenza A	126	Novel influenza-H1N1-09, preservative-free	CSL
+33332-0629-10	Influenza A	127	Novel influenza-H1N1-09	CSL
+42515-0001-00	IXIARO	134	Japanese Encephalitis IM	VAL
+42515-0001-00	IXIARO	134	Japanese Encephalitis IM	INT
+42515-0001-01	IXIARO	134	Japanese Encephalitis IM	VAL
+42515-0001-01	IXIARO	134	Japanese Encephalitis IM	INT
+42515-0002-01	IXIARO	134	Japanese Encephalitis IM	VAL
+42874-0012-01	Flublok	155	influenza, recombinant, injectable, preservative free	PSC
+42874-0013-01	Flublok	155	influenza, recombinant, injectable, preservative free	PSC
+42874-0014-01	Flublok	155	influenza, recombinant, injectable, preservative free	PSC
+42874-0015-01	Flublok	155	influenza, recombinant, injectable, preservative free	PSC
+42874-0016-01	Flublok	155	influenza, recombinant, injectable, preservative free	PSC
+42874-0017-01	Flublok	155	influenza, recombinant, injectable, preservative free	PSC
+42874-0117-01	Flublok Quadrivalent	185	influenza, recombinant, quadrivalent,injectable, preservative free	PSC
+43528-0002-01	HEPLISAV-B	189	HepB-CpG	DVX
+43528-0003-01	HEPLISAV-B	189	HepB-CpG	DVX
+46028-0114-11	Bexsero	163	meningococcal B, OMV	NOV
+46028-0114-11	Bexsero	163	meningococcal B, OMV	NOV
+46028-0219-11	Menveo	136	Meningococcal MCV4O	NOV
+46028-0218-11	Menveo	136	Meningococcal MCV4O	NOV
+49281-0010-10	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0010-25	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0010-50	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0011-10	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0011-50	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0012-10	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0012-50	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0013-58	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0013-88	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0014-88	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0111-25	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0112-25	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0113-00	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+49281-0120-88	FLUZONE High-Dose Quadrivalent Northern Hemisphere	197	influenza, high-dose, quadrivalent	PMC
+49281-0181-00	FLUZONE QUADRIVALENT SOUTHERN HEMISPHERE	200	influenza, Southern Hemisphere, pediatric, preservative free	PMC
+49281-0215-58	TENIVAC	113	Td (adult), 5 Lf tetanus toxoid, preservative free, adsorbed	PMC
+49281-0215-88	TENIVAC	113	Td (adult), 5 Lf tetanus toxoid, preservative free, adsorbed	PMC
+49281-0225-58	DIPHTHERIA AND TETANUS TOXOIDS ADSORBED	28	DT (pediatric)	PMC
+49281-0248-58	IMOVAX RABIES	175	Rabies - IM Diploid cell culture	PMC
+49281-0246-58	IMOVAX RABIES	175	Rabies - IM Diploid cell culture	PMC
+49281-0278-10	DIPHTHERIA AND TETANUS TOXOIDS ADSORBED	28	DT (pediatric)	PMC
+49281-0286-58	DAPTACEL	106	DTaP, 5 pertussis antigens	PMC
+49281-0286-58	DAPTACEL	106	DTaP, 5 pertussis antigens	PMC
+49281-0286-58	DAPTACEL	106	DTaP, 5 pertussis antigens	PMC
+49281-0291-10	DECAVAC	113	Td (adult), 5 Lf tetanus toxoid, preservative free, adsorbed	PMC
+49281-0291-83	DECAVAC	113	Td (adult), 5 Lf tetanus toxoid, preservative free, adsorbed	PMC
+49281-0298-10	TRIPEDIA	20	DTaP	PMC
+49281-0320-88	FLUZONE QUADRIVALENT SOUTHERN HEMISPHERE	201	influenza, Southern Hemisphere, preservative free	PMC
+49281-0336-78	FLUZONE QUADRIVALENT SOUTHERN HEMISPHERE	202	influenza, Southern Hemisphere, quadrivalent, with preservative	PMC
+49281-0386-15	FLUZONE	141	Influenza, seasonal, injectable	PMC
+49281-0387-65	FLUZONE	135	Influenza, high dose seasonal	PMC
+49281-0388-15	FLUZONE	141	Influenza, seasonal, injectable	PMC
+49281-0389-65	FLUZONE HIGH DOSE	135	Influenza, high dose seasonal	PMC
+49281-0390-15	FLUZONE	141	Influenza, seasonal, injectable	PMC
+49281-0391-65	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0392-78	FLUZONE	141	Influenza, seasonal, injectable	PMC
+49281-0393-88	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0394-78	FLUZONE	141	Influenza, seasonal, injectable	PMC
+49281-0395-88	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0396-78	FLUZONE	141	Influenza, seasonal, injectable	PMC
+49281-0397-88	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0399-88	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0400-58	Adacel	115	Tdap	PMC
+49281-0400-58	Adacel	115	Tdap	PMC
+49281-0400-88	Adacel	115	Tdap	PMC
+49281-0400-89	Adacel	115	Tdap	PMC
+49281-0401-88	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0403-88	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0405-88	FLUZONE High-Dose	135	Influenza, high dose seasonal	PMC
+49281-0413-58	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0413-88	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0414-58	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0414-88	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0415-58	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0416-58	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0416-88	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0417-58	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0417-88	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0418-58	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0418-88	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0419-58	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0419-88	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0420-58	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0420-88	FLUZONE QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	PMC
+49281-0487-58	MENOMUNE - A/C/Y/W-135 COMBINED	32	meningococcal MPSV4	PMC
+49281-0488-78	MENOMUNE - A/C/Y/W-135 COMBINED	32	meningococcal MPSV4	PMC
+49281-0560-05	PENTACEL	120	DTaP-Hib-IPV	PMC
+49281-0545-15	PENTACEL	120	DTaP-Hib-IPV	PMC
+49281-0548-58	PENTACEL	120	DTaP-Hib-IPV	PMC
+49281-0561-01	PENTACEL	120	DTaP-Hib-IPV	PMC
+49281-0544-58	PENTACEL	120	DTaP-Hib-IPV	PMC
+49281-0513-00	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0514-00	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0516-00	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0517-00	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0518-00	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0519-00	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0520-00	FLUZONE QUADRIVALENT	161	Influenza, injectable,quadrivalent, preservative free, pediatric	PMC
+49281-0547-58	ActHIB	48	Hib (PRP-T)	PMC
+49281-0547-58	ActHIB	48	Hib (PRP-T)	PMC
+49281-0562-58	QUADRACEL	130	DTaP-IPV	PMC
+49281-0589-58	Menactra	114	meningococcal MCV4P	PMC
+49281-0590-58	MenQuadfi	203	meningococcal polysaccharide (groups A, C, Y, W-135) TT conjugate	PMC
+49281-0606-58	DENGVAXIA	56	dengue fever	PMC
+49281-0621-78	FLUZONE QUADRIVALENT	158	influenza, injectable, quadrivalent	PMC
+49281-0625-78	FLUZONE QUADRIVALENT	158	influenza, injectable, quadrivalent	PMC
+49281-0627-78	FLUZONE QUADRIVALENT	158	influenza, injectable, quadrivalent	PMC
+49281-0629-78	FLUZONE QUADRIVALENT	158	influenza, injectable, quadrivalent	PMC
+49281-0631-78	FLUZONE QUADRIVALENT	158	influenza, injectable, quadrivalent	PMC
+49281-0633-78	FLUZONE QUADRIVALENT	158	influenza, injectable, quadrivalent	PMC
+49281-0640-15	INFLUENZA A (H1N1) 2009 MONOVALENT VACCINE	127	Novel influenza-H1N1-09	PMC
+49281-0650-10	INFLUENZA A (H1N1) 2009 MONOVALENT VACCINE	126	Novel influenza-H1N1-09, preservative-free	PMC
+49281-0650-25	INFLUENZA A (H1N1) 2009 MONOVALENT VACCINE	126	Novel influenza-H1N1-09, preservative-free	PMC
+49281-0650-50	INFLUENZA A (H1N1) 2009 MONOVALENT VACCINE	126	Novel influenza-H1N1-09, preservative-free	PMC
+49281-0650-70	INFLUENZA A (H1N1) 2009 MONOVALENT VACCINE	126	Novel influenza-H1N1-09, preservative-free	PMC
+49281-0650-90	INFLUENZA A (H1N1) 2009 MONOVALENT VACCINE	126	Novel influenza-H1N1-09, preservative-free	PMC
+49281-0703-55	FLUZONE INTRADERMAL	144	influenza, seasonal, intradermal, preservative free	PMC
+49281-0705-55	FLUZONE	144	influenza, seasonal, intradermal, preservative free	PMC
+49281-0707-48	FLUZONE	144	influenza, seasonal, intradermal, preservative free	PMC
+49281-0708-48	FLUZONE INTRADERMAL QUADRIVALENT	166	influenza, intradermal, quadrivalent, preservative free	PMC
+49281-0709-48	FLUZONE Intradermal	144	influenza, seasonal, intradermal, preservative free	PMC
+49281-0710-48	FLUZONE INTRADERMAL QUADRIVALENT	166	influenza, intradermal, quadrivalent, preservative free	PMC
+49281-0712-48	FLUZONE INTRADERMAL QUADRIVALENT	166	influenza, intradermal, quadrivalent, preservative free	PMC
+49281-0718-88	Flublok Quadrivalent	185	influenza, recombinant, quadrivalent,injectable, preservative free	PMC
+49281-0719-88	Flublok Quadrivalent	185	influenza, recombinant, quadrivalent,injectable, preservative free	PMC
+49281-0720-88	Flublok Quadrivalent Northern Hemisphere	185	influenza, recombinant, quadrivalent,injectable, preservative free	PMC
+49281-0790-38	Typhim Vi	101	typhoid, ViCPs	PMC
+49281-0790-88	Typhim Vi	101	typhoid, ViCPs	PMC
+49281-0800-83	TETANUS TOXOID ADSORBED	35	tetanus toxoid, adsorbed	PMC
+49281-0820-10	TETANUS TOXOID ADSORBED	35	tetanus toxoid, adsorbed	PMC
+49281-0860-78	IPOL	10	IPV	PMC
+49281-0860-88	IPOL	10	IPV	PMC
+49281-0860-78	IPOL	10	IPV	PMC
+49281-0913-01	STAMARIL	183	Yellow fever vaccine - alt	PMC
+49281-0915-58	YF-VAX	37	yellow fever	PMC
+49281-0915-68	YF-VAX	37	yellow fever	PMC
+50090-1693-00	IPOL	10	IPV	PMC
+50090-2883-09	INFANRIX	20	DTaP	SKB
+58160-0966-01	RabAvert	176	Rabies - IM fibroblast culture	SKB
+50090-3469-09	HEPLISAV-B	189	HepB-CpG	DVX
+51285-0175-02	Adenovirus Type 4 and Type 7 Vaccine, Live	143	Adenovirus types 4 and 7	BRR
+51285-0175-02	Adenovirus Type 4 and Type 7 Vaccine, Live	143	Adenovirus types 4 and 7	TVA
+51285-0174-02	Adenovirus Type 4 and Type 7 Vaccine, Live	143	Adenovirus types 4 and 7	BRR
+51285-0174-02	Adenovirus Type 4 and Type 7 Vaccine, Live	143	Adenovirus types 4 and 7	TVA
+54868-0734-00	ENGERIX-B	43	Hep B, adult	SKB
+54868-0980-00	M-M-R II	3	MMR	MSD
+54868-2219-00	RECOMBIVAX HB	43	Hep B, adult	MSD
+54868-2219-01	RECOMBIVAX HB	43	Hep B, adult	MSD
+54868-3339-09	PNEUMOVAX 23	33	pneumococcal polysaccharide PPV23	MSD
+54868-4320-09	PNEUMOVAX 23	33	pneumococcal polysaccharide PPV23	MSD
+54868-6177-00	FLUZONE	141	Influenza, seasonal, injectable	PMC
+54868-6180-00	FLUZONE	140	Influenza, seasonal, injectable, preservative free	PMC
+55045-3841-01	HAVRIX	52	Hep A, adult	SKB
+58160-0809-01	Menhibrix	148	Meningococcal C/Y-HIB PRP	SKB
+58160-0806-01	HIBERIX	48	Hib (PRP-T)	SKB
+58160-0802-02	Influenza A (H5N1) Monovalent Vaccine, Adjuvanted	160	Influenza A monovalent (H5N1), ADJUVANTED-2013	SKB
+58160-0804-01	Influenza A (H5N1) Monovalent Vaccine, Adjuvanted	160	Influenza A monovalent (H5N1), ADJUVANTED-2013	SKB
+58160-0809-01	MENHIBRIX	148	Meningococcal C/Y-HIB PRP	SKB
+58160-0810-01	INFANRIX	20	DTaP	SKB
+58160-0810-43	INFANRIX	20	DTaP	SKB
+58160-0811-41	PEDIARIX	110	DTaP-Hep B-IPV	SKB
+58160-0811-43	PEDIARIX	110	DTaP-Hep B-IPV	SKB
+58160-0812-01	KINRIX	130	DTaP-IPV	SKB
+58160-0812-43	KINRIX	130	DTaP-IPV	SKB
+58160-0815-01	TWINRIX	104	Hep A-Hep B	SKB
+58160-0815-05	TWINRIX	104	Hep A-Hep B	SKB
+58160-0815-41	TWINRIX	104	Hep A-Hep B	SKB
+58160-0815-43	TWINRIX	104	Hep A-Hep B	SKB
+58160-0815-43	TWINRIX	104	Hep A-Hep B	SKB
+58160-0816-01	Hiberix	48	Hib (PRP-T)	SKB
+58160-0816-05	Hiberix	48	Hib (PRP-T)	SKB
+58160-0828-01	Shingrix	187	zoster recombinant	SKB
+58160-0820-01	ENGERIX-B	8	Hep B, adolescent or pediatric	SKB
+58160-0820-43	ENGERIX-B	8	Hep B, adolescent or pediatric	SKB
+58160-0821-01	ENGERIX-B	43	Hep B, adult	SKB
+58160-0821-05	ENGERIX-B	43	Hep B, adult	SKB
+58160-0821-43	ENGERIX-B	43	Hep B, adult	SKB
+58160-0828-03	Shingrix	187	zoster recombinant	SKB
+58160-0825-01	HAVRIX	83	Hep A, ped/adol, 2 dose	SKB
+58160-0825-43	HAVRIX	83	Hep A, ped/adol, 2 dose	SKB
+58160-0826-01	HAVRIX	52	Hep A, adult	SKB
+58160-0826-05	HAVRIX	52	Hep A, adult	SKB
+58160-0826-43	HAVRIX	52	Hep A, adult	SKB
+58160-0830-05	CERVARIX	118	HPV, bivalent	SKB
+58160-0830-43	CERVARIX	118	HPV, bivalent	SKB
+58160-0842-01	BOOSTRIX	115	Tdap	SKB
+58160-0842-05	BOOSTRIX	115	Tdap	SKB
+58160-0842-41	BOOSTRIX	115	Tdap	SKB
+58160-0842-43	BOOSTRIX	115	Tdap	SKB
+58160-0851-01	ROTARIX	119	rotavirus, monovalent	SKB
+58160-0879-41	FLUARIX	140	Influenza, seasonal, injectable, preservative free	SKB
+58160-0880-41	FLUARIX	140	Influenza, seasonal, injectable, preservative free	SKB
+58160-0881-41	FLUARIX	140	Influenza, seasonal, injectable, preservative free	SKB
+58160-0883-41	FLUARIX	140	Influenza, seasonal, injectable, preservative free	SKB
+58160-0885-41	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0896-41	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0898-41	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0900-41	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0901-41	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0903-41	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0905-41	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0907-41	FLUARIX QUADRIVALENT	150	influenza, injectable, quadrivalent, preservative free	SKB
+58160-0958-01	Menveo	136	Meningococcal MCV4O	SKB
+58160-0959-01	Menveo	136	Meningococcal MCV4O	SKB
+58160-0966-01	RabAvert	176	Rabies - IM fibroblast culture	SKB
+58160-0966-12	RabAvert	176	Rabies - IM fibroblast culture	SKB
+58160-0976-02	Bexsero	163	meningococcal B, OMV	SKB
+58160-0976-02	Bexsero	163	meningococcal B, OMV	SKB
+62195-0051-01	Ixiaro	134	Japanese Encephalitis IM	VAL
+62577-0613-11	Flucelvax	153	Influenza, injectable, MDCK, preservative free	NOV
+62577-0614-11	Flucelvax	153	Influenza, injectable, MDCK, preservative free	NOV
+63361-0243-58	VAXELIS	146	DTaP,IPV,Hib,HepB	PMC
+63361-0245-58	VAXELIS	146	DTaP,IPV,Hib,HepB	PMC
+63851-0511-11	RabAvert	176	Rabies - IM fibroblast culture	NOV
+63851-0511-11	RabAvert	176	Rabies - IM fibroblast culture	NOV
+63851-0612-11	Flucelvax	153	Influenza, injectable, MDCK, preservative free	NOV
+63851-0613-11	FLUCELVAX	153	Influenza, injectable, MDCK, preservative free	NOV
+64678-0211-05	BioThrax	24	anthrax	MIP
+66019-0107-01	FLUMIST	111	influenza, live, intranasal	MED
+66019-0108-01	FLUMIST	111	influenza, live, intranasal	MED
+66019-0109-01	FLUMIST	111	influenza, live, intranasal	MED
+66019-0110-01	FluMist	111	influenza, live, intranasal	MED
+66019-0200-01	Influenza A H1N1 Intranasal	125	Novel Influenza-H1N1-09, nasal	MED
+66019-0300-01	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0301-01	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0302-01	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0303-01	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0304-01	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0305-01	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0306-01	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66019-0307-01	FluMist Quadrivalent	149	influenza, live, intranasal, quadrivalent	MED
+66521-0000-11	FLUAD	168	influenza, trivalent, adjuvanted	NOV
+66521-0112-02	Fluvirin	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0112-10	Fluvirin	141	Influenza, seasonal, injectable	NOV
+66521-0113-02	FLUVIRIN	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0113-10	FLUVIRIN	141	Influenza, seasonal, injectable	NOV
+66521-0114-02	FLUVIRIN	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0114-10	FLUVIRIN	141	Influenza, seasonal, injectable	NOV
+66521-0115-02	FLUVIRIN	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0115-10	FLUVIRIN	141	Influenza, seasonal, injectable	NOV
+66521-0116-12	Fluvirin	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0116-11	Fluvirin	141	Influenza, seasonal, injectable	NOV
+66521-0117-12	Fluvirin	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0117-11	Fluvirin	141	Influenza, seasonal, injectable	NOV
+66521-0118-12	Fluvirin	140	Influenza, seasonal, injectable, preservative free	NOV
+66521-0118-11	Fluvirin	141	Influenza, seasonal, injectable	NOV
+66521-0200-02	Influenza A (H1N1) 2009 Monovalent Vaccine	127	Novel influenza-H1N1-09	NOV
+66521-0200-10	Influenza A (H1N1) 2009 Monovalent Vaccine	126	Novel influenza-H1N1-09, preservative-free	NOV
+69401-0000-01	Vivotif	25	typhoid, oral	PAX
+69401-0000-01	Vivotif	25	typhoid, oral	PAX
+70460-0002-02	Vaxchora	174	cholera, live attenuated	PAX
+70460-0002-02	Vaxchora	174	cholera, live attenuated	PAX
+70461-0001-11	FLUAD	168	influenza, trivalent, adjuvanted	SEQ
+70461-0002-11	FLUAD	168	influenza, trivalent, adjuvanted	SEQ
+70461-0018-04	FLUAD	168	influenza, trivalent, adjuvanted	SEQ
+70461-0019-04	FLUAD	168	influenza, trivalent, adjuvanted	SEQ
+70461-0020-04	FLUAD	168	influenza, trivalent, adjuvanted	SEQ
+70461-0119-12	Fluvirin	140	Influenza, seasonal, injectable, preservative free	SEQ
+70461-0119-11	Fluvirin	141	Influenza, seasonal, injectable	SEQ
+70461-0120-12	Fluvirin	140	Influenza, seasonal, injectable, preservative free	SEQ
+70461-0120-04	FLUAD QUADRIVALENT	205	Influenza vaccine, quadrivalent, adjuvanted	SEQ
+70461-0120-11	Fluvirin	141	Influenza, seasonal, injectable	SEQ
+70461-0200-11	FLUCELVAX QUADRIVALENT	171	Influenza, injectable, MDCK, preservative free, quadrivalent	SEQ
+70461-0201-11	FLUCELVAX QUADRIVALENT (PREFILLED SYRINGE)	171	Influenza, injectable, MDCK, preservative free, quadrivalent	SEQ
+70461-0301-12	FLUCELVAX QUADRIVALENT (MULTI-DOSE VIAL)	186	Influenza, injectable, MDCK, quadrivalent, preservative	SEQ
+70461-0318-04	FLUCELVAX QUADRIVALENT (PREFILLED SYRINGE)	171	Influenza, injectable, MDCK, preservative free, quadrivalent	SEQ
+70461-0319-04	FLUCELVAX QUADRIVALENT	171	Influenza, injectable, MDCK, preservative free, quadrivalent	SEQ
+70461-0320-04	FLUCELVAX QUADRIVALENT	171	Influenza, injectable, MDCK, preservative free, quadrivalent	SEQ
+70461-0418-11	FLUCELVAX QUADRIVALENT (MULTI-DOSE VIAL)	186	Influenza, injectable, MDCK, quadrivalent, preservative	SEQ
+70461-0419-11	FLUCELVAX QUADRIVALENT	186	Influenza, injectable, MDCK, quadrivalent, preservative	SEQ
+70461-0420-11	FLUCELVAX QUADRIVALENT	186	Influenza, injectable, MDCK, quadrivalent, preservative	SEQ
+76420-0482-01	Medical Provider Single Use EZ Flu Shot 2013-2014	150	influenza, injectable, quadrivalent, preservative free	PMC
+76420-0483-01	Medical Provider Single Use EZ Flu Shot 2013-2014	150	influenza, injectable, quadrivalent, preservative free	PMC

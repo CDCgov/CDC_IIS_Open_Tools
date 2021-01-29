@@ -1,0 +1,2707 @@
+
+{
+    "filename": "src/test/resources/testerror.txt",
+    "detail": [
+        {
+            "vax_event_id": "DATA001_recip_dob",
+            "line": 1,
+            "code": "DATA001",
+            "field": "recip_dob",
+            "level": "ERROR",
+            "message": "recip_dob (2015-26-08) contains an invalid date, should match yyyy-MM-dd|yyyy-MM"
+        },
+        {
+            "vax_event_id": "DATA001_recip_dob",
+            "line": 1,
+            "code": "REQD001",
+            "field": "cvx",
+            "level": "ERROR",
+            "message": "cvx is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA001_recip_dob",
+            "line": 1,
+            "code": "REQD001",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA001_recip_dob",
+            "line": 1,
+            "code": "REQD001",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA001_recip_dob",
+            "line": 1,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "DATA001_recip_dob",
+            "line": 1,
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "level": "ERROR",
+            "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "DATA009_admin_date_1",
+            "line": 2,
+            "code": "DATA009",
+            "field": "admin_date",
+            "level": "ERROR",
+            "message": "admin_date (10/24/2020) contains an incorrectly formatted date, should match yyyy-MM-dd"
+        },
+        {
+            "vax_event_id": "DATA009_admin_date_1",
+            "line": 2,
+            "code": "REQD001",
+            "field": "cvx",
+            "level": "ERROR",
+            "message": "cvx is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA009_admin_date_1",
+            "line": 2,
+            "code": "REQD001",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA009_admin_date_1",
+            "line": 2,
+            "code": "REQD001",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA009_admin_date_1",
+            "line": 2,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "DATA009_admin_date_1",
+            "line": 2,
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "level": "ERROR",
+            "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "DATA009_admin_date_1",
+            "line": 2,
+            "code": "BUSR005",
+            "field": "recip_dob",
+            "level": "ERROR",
+            "message": "recip_dob (2015-08-26) is after admin_date (10/24/2020)"
+        },
+        {
+            "vax_event_id": "DATA001_admin_date_2",
+            "line": 3,
+            "code": "DATA001",
+            "field": "admin_date",
+            "level": "ERROR",
+            "message": "admin_date (2020-10) contains an invalid date, should match yyyy-MM-dd"
+        },
+        {
+            "vax_event_id": "DATA001_admin_date_2",
+            "line": 3,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "DATA001_admin_date_2",
+            "line": 3,
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "level": "ERROR",
+            "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "DATA001_admin_date_2",
+            "line": 3,
+            "code": "BUSR002",
+            "field": "admin_address_county",
+            "level": "ERROR",
+            "message": "admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator"
+        },
+        {
+            "vax_event_id": "DATA006_recip_address_city",
+            "line": 4,
+            "code": "DATA006",
+            "field": "recip_address_city",
+            "level": "ERROR",
+            "message": "recip_address_city (Not redacted) should contain value Redacted"
+        },
+        {
+            "vax_event_id": "DATA006_recip_address_city",
+            "line": 4,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "DATA006_recip_address_city",
+            "line": 4,
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "level": "ERROR",
+            "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "DATA005_ext_type",
+            "line": 5,
+            "code": "DATA005",
+            "field": "ext_type",
+            "level": "ERROR",
+            "message": "ext_type (Q) does not match the regular expression ^(D|P|I)$"
+        },
+        {
+            "vax_event_id": "DATA005_ext_type",
+            "line": 5,
+            "code": "REQD001",
+            "field": "cvx",
+            "level": "ERROR",
+            "message": "cvx is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA005_ext_type",
+            "line": 5,
+            "code": "REQD001",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA005_ext_type",
+            "line": 5,
+            "code": "REQD001",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA005_ext_type",
+            "line": 5,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "DATA005_ext_type",
+            "line": 5,
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "level": "ERROR",
+            "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "DATA004_pprl_id",
+            "line": 6,
+            "code": "DATA004",
+            "field": "pprl_id",
+            "level": "ERROR",
+            "message": "pprl_id (Present) should not be present"
+        },
+        {
+            "vax_event_id": "DATA004_pprl_id",
+            "line": 6,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "DATA004_pprl_id",
+            "line": 6,
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "level": "ERROR",
+            "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "DATA004_pprl_id",
+            "line": 6,
+            "code": "BUSR002",
+            "field": "admin_address_county",
+            "level": "ERROR",
+            "message": "admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator"
+        },
+        {
+            "vax_event_id": "DATA006_recip_first_name_not_redacted",
+            "line": 7,
+            "code": "DATA006",
+            "field": "recip_first_name",
+            "level": "ERROR",
+            "message": "recip_first_name (UnRedacted) should contain value Redacted"
+        },
+        {
+            "vax_event_id": "DATA006_recip_first_name_not_redacted",
+            "line": 7,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "DATA006_recip_first_name_not_redacted",
+            "line": 7,
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "level": "ERROR",
+            "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "DATA006_recip_first_name_not_redacted",
+            "line": 7,
+            "code": "BUSR002",
+            "field": "admin_address_county",
+            "level": "ERROR",
+            "message": "admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator"
+        },
+        {
+            "vax_event_id": "DATA005_recip_address_zip",
+            "line": 8,
+            "code": "DATA005",
+            "field": "recip_address_zip",
+            "level": "ERROR",
+            "message": "recip_address_zip (48504-) does not match the regular expression \\d{5}(-\\d{4})?"
+        },
+        {
+            "vax_event_id": "DATA005_recip_address_zip",
+            "line": 8,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "DATA005_recip_address_zip",
+            "line": 8,
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "level": "ERROR",
+            "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "DATA006_recip_first_name",
+            "line": 9,
+            "code": "DATA006",
+            "field": "recip_first_name",
+            "level": "ERROR",
+            "message": "recip_first_name (NOT Redacted) should contain value Redacted"
+        },
+        {
+            "vax_event_id": "DATA006_recip_first_name",
+            "line": 9,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "DATA006_recip_first_name",
+            "line": 9,
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "level": "ERROR",
+            "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "DATA007_recip_sex",
+            "line": 10,
+            "code": "DATA007",
+            "field": "recip_sex",
+            "level": "ERROR",
+            "message": "recip_sex (UNK) is not in value set SEX[M, F, U]"
+        },
+        {
+            "vax_event_id": "DATA007_recip_sex",
+            "line": 10,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "DATA007_recip_sex",
+            "line": 10,
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "level": "ERROR",
+            "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "DATA007_cvx",
+            "line": 11,
+            "code": "DATA007",
+            "field": "cvx",
+            "level": "ERROR",
+            "message": "cvx (XXX) is not in value set CVX[900, 901 ... 187, 188]"
+        },
+        {
+            "vax_event_id": "DATA007_cvx",
+            "line": 11,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "DATA007_cvx",
+            "line": 11,
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "level": "ERROR",
+            "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "DATA008_mvx_maxLength",
+            "line": 12,
+            "code": "DATA008",
+            "field": "mvx",
+            "level": "ERROR",
+            "message": "mvx (AAAA) exceeds maximum length 3"
+        },
+        {
+            "vax_event_id": "DATA008_mvx_maxLength",
+            "line": 12,
+            "code": "DATA007",
+            "field": "mvx",
+            "level": "ERROR",
+            "message": "mvx (AAAA) is not in value set MVX[AAA, BBB ... WAL, ZLB]"
+        },
+        {
+            "vax_event_id": "BUSR001_recip_address_county",
+            "line": 13,
+            "code": "REQD001",
+            "field": "cvx",
+            "level": "ERROR",
+            "message": "cvx is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "BUSR001_recip_address_county",
+            "line": 13,
+            "code": "REQD001",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "BUSR001_recip_address_county",
+            "line": 13,
+            "code": "REQD001",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "BUSR001_recip_address_county",
+            "line": 13,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "BUSR001_recip_address_county",
+            "line": 13,
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "level": "ERROR",
+            "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "BUSR002_admin_address_county",
+            "line": 14,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "BUSR002_admin_address_county",
+            "line": 14,
+            "code": "BUSR002",
+            "field": "admin_address_county",
+            "level": "ERROR",
+            "message": "admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator"
+        },
+        {
+            "vax_event_id": "BUSR003_recip_address_zip",
+            "line": 15,
+            "code": "DATA005",
+            "field": "recip_address_zip",
+            "level": "ERROR",
+            "message": "recip_address_zip (1529) does not match the regular expression \\d{5}(-\\d{4})?"
+        },
+        {
+            "vax_event_id": "BUSR003_recip_address_zip",
+            "line": 15,
+            "code": "REQD001",
+            "field": "cvx",
+            "level": "ERROR",
+            "message": "cvx is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "BUSR003_recip_address_zip",
+            "line": 15,
+            "code": "REQD001",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "BUSR003_recip_address_zip",
+            "line": 15,
+            "code": "REQD001",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "BUSR003_recip_address_zip",
+            "line": 15,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "BUSR003_recip_address_zip",
+            "line": 15,
+            "code": "DATA005",
+            "field": "admin_address_zip",
+            "level": "ERROR",
+            "message": "admin_address_zip (1529) does not match the regular expression ^(\\d{5}(-\\d{4})?)?$"
+        },
+        {
+            "vax_event_id": "BUSR003_recip_address_zip",
+            "line": 15,
+            "code": "BUSR003",
+            "field": "recip_address_zip",
+            "level": "ERROR",
+            "message": "recip_address_zip (1529) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "BUSR003_recip_address_zip",
+            "line": 15,
+            "code": "BUSR004",
+            "field": "admin_address_zip",
+            "level": "ERROR",
+            "message": "admin_address_zip (1529) does not match admin_address_state (MI) for Vaccine Administrator"
+        },
+        {
+            "vax_event_id": "BUSR004_admin_address_zip",
+            "line": 16,
+            "code": "DATA005",
+            "field": "recip_address_zip",
+            "level": "ERROR",
+            "message": "recip_address_zip (1529) does not match the regular expression \\d{5}(-\\d{4})?"
+        },
+        {
+            "vax_event_id": "BUSR004_admin_address_zip",
+            "line": 16,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "BUSR004_admin_address_zip",
+            "line": 16,
+            "code": "DATA005",
+            "field": "admin_address_zip",
+            "level": "ERROR",
+            "message": "admin_address_zip (1529) does not match the regular expression ^(\\d{5}(-\\d{4})?)?$"
+        },
+        {
+            "vax_event_id": "BUSR004_admin_address_zip",
+            "line": 16,
+            "code": "BUSR003",
+            "field": "recip_address_zip",
+            "level": "ERROR",
+            "message": "recip_address_zip (1529) does not match recip_address_state (MI) for Recipient"
+        },
+        {
+            "vax_event_id": "BUSR004_admin_address_zip",
+            "line": 16,
+            "code": "BUSR004",
+            "field": "admin_address_zip",
+            "level": "ERROR",
+            "message": "admin_address_zip (1529) does not match admin_address_state (MI) for Vaccine Administrator"
+        },
+        {
+            "vax_event_id": "BUSR005_recip_dob_lt_admin_date",
+            "line": 17,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "BUSR005_recip_dob_lt_admin_date",
+            "line": 17,
+            "code": "BUSR005",
+            "field": "recip_dob",
+            "level": "ERROR",
+            "message": "recip_dob (2020-11-01) is after admin_date (2020-10-04)"
+        },
+        {
+            "vax_event_id": "BUSR007_recip_address_zip_implies_state",
+            "line": 18,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "BUSR007_recip_address_zip_implies_state",
+            "line": 18,
+            "code": "BUSR007",
+            "field": "recip_address_zip",
+            "level": "WARN",
+            "message": "If recip_address_zip (48504) is present, recip_address_state () should be present for Recipient"
+        },
+        {
+            "vax_event_id": "BUSR008_admin_address_zip_implies_state",
+            "line": 19,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "BUSR008_admin_address_zip_implies_state",
+            "line": 19,
+            "code": "BUSR008",
+            "field": "admin_address_zip",
+            "level": "WARN",
+            "message": "If admin_address_zip (49053) is present, admin_address_state () should be present for Vaccine Administrator"
+        },
+        {
+            "vax_event_id": "BUSR009_recip_address_zip_implies_county",
+            "line": 20,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "BUSR009_recip_address_zip_implies_county",
+            "line": 20,
+            "code": "BUSR009",
+            "field": "recip_address_zip",
+            "level": "WARN",
+            "message": "If recip_address_zip (49964) is present, recip_address_county () should be present for Recipient"
+        },
+        {
+            "vax_event_id": "BUSR009_recip_address_zip_implies_county",
+            "line": 20,
+            "code": "BUSR010",
+            "field": "admin_address_zip",
+            "level": "WARN",
+            "message": "If admin_address_zip (49053) is present, admin_address_county () should be present for Vaccine Administrator"
+        },
+        {
+            "vax_event_id": "BUSR010_admin_address_zip_implies_county",
+            "line": 21,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "BUSR010_admin_address_zip_implies_county",
+            "line": 21,
+            "code": "BUSR010",
+            "field": "admin_address_zip",
+            "level": "WARN",
+            "message": "If admin_address_zip (49053) is present, admin_address_county () should be present for Vaccine Administrator"
+        },
+        {
+            "vax_event_id": "BUSR011_recip_dob_not_future",
+            "line": 22,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "BUSR011_recip_dob_not_future",
+            "line": 22,
+            "code": "BUSR005",
+            "field": "recip_dob",
+            "level": "ERROR",
+            "message": "recip_dob (2032-11-01) is after admin_date (2022-10-04)"
+        },
+        {
+            "vax_event_id": "BUSR011_recip_dob_not_future",
+            "line": 22,
+            "code": "BUSR011",
+            "field": "recip_dob",
+            "level": "ERROR",
+            "message": "If recip_dob (2032-11-01) is present it should be less than tomorrow (DON'T CARE)"
+        },
+        {
+            "vax_event_id": "BUSR011_recip_dob_not_future",
+            "line": 22,
+            "code": "BUSR012",
+            "field": "admin_date",
+            "level": "ERROR",
+            "message": "If admin_date (2022-10-04) is present it should less than tomorrow (DON'T CARE)"
+        },
+        {
+            "vax_event_id": "BUSR012_admin_date_not_future",
+            "line": 23,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "BUSR012_admin_date_not_future",
+            "line": 23,
+            "code": "BUSR012",
+            "field": "admin_date",
+            "level": "ERROR",
+            "message": "If admin_date (2032-10-04) is present it should less than tomorrow (DON'T CARE)"
+        },
+        {
+            "vax_event_id": "BUSR013_vax_event_id_nodups",
+            "line": 24,
+            "code": "DATA007",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+        },
+        {
+            "vax_event_id": "BUSR013_vax_event_id_nodups",
+            "line": 24,
+            "code": "BUSR012",
+            "field": "admin_date",
+            "level": "ERROR",
+            "message": "If admin_date (2032-10-04) is present it should less than tomorrow (DON'T CARE)"
+        },
+        {
+            "vax_event_id": "DNTS002_ndc",
+            "line": 25,
+            "code": "DNTS002",
+            "field": "ndc",
+            "level": "ERROR",
+            "message": "ndc (80777-9999-00) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_ndc",
+            "line": 25,
+            "code": "DNTS002",
+            "field": "mvx",
+            "level": "ERROR",
+            "message": "mvx (AAA) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_ndc",
+            "line": 25,
+            "code": "DNTS002",
+            "field": "lot_number",
+            "level": "ERROR",
+            "message": "lot_number (M9999-05) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_ndc",
+            "line": 25,
+            "code": "DNTS002",
+            "field": "vax_expiration",
+            "level": "ERROR",
+            "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_ndc",
+            "line": 25,
+            "code": "DNTS002",
+            "field": "vax_admin_site",
+            "level": "ERROR",
+            "message": "vax_admin_site (RVL) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_ndc",
+            "line": 25,
+            "code": "DNTS002",
+            "field": "vax_route",
+            "level": "ERROR",
+            "message": "vax_route (C38276) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_ndc",
+            "line": 25,
+            "code": "DNTS002",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num (1) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_ndc",
+            "line": 25,
+            "code": "DNTS002",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete (No) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_mvx",
+            "line": 26,
+            "code": "DNTS002",
+            "field": "ndc",
+            "level": "ERROR",
+            "message": "ndc (80777-9999-00) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_mvx",
+            "line": 26,
+            "code": "DNTS002",
+            "field": "mvx",
+            "level": "ERROR",
+            "message": "mvx (AAA) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_mvx",
+            "line": 26,
+            "code": "DNTS002",
+            "field": "lot_number",
+            "level": "ERROR",
+            "message": "lot_number (M9999-05) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_mvx",
+            "line": 26,
+            "code": "DNTS002",
+            "field": "vax_expiration",
+            "level": "ERROR",
+            "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_mvx",
+            "line": 26,
+            "code": "DNTS002",
+            "field": "vax_admin_site",
+            "level": "ERROR",
+            "message": "vax_admin_site (RVL) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_mvx",
+            "line": 26,
+            "code": "DNTS002",
+            "field": "vax_route",
+            "level": "ERROR",
+            "message": "vax_route (C38276) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_mvx",
+            "line": 26,
+            "code": "DNTS002",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num (1) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_mvx",
+            "line": 26,
+            "code": "DNTS002",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete (No) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_lot_number",
+            "line": 27,
+            "code": "DNTS002",
+            "field": "ndc",
+            "level": "ERROR",
+            "message": "ndc (80777-9999-00) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_lot_number",
+            "line": 27,
+            "code": "DNTS002",
+            "field": "mvx",
+            "level": "ERROR",
+            "message": "mvx (AAA) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_lot_number",
+            "line": 27,
+            "code": "DNTS002",
+            "field": "lot_number",
+            "level": "ERROR",
+            "message": "lot_number (M9999-05) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_lot_number",
+            "line": 27,
+            "code": "DNTS002",
+            "field": "vax_expiration",
+            "level": "ERROR",
+            "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_lot_number",
+            "line": 27,
+            "code": "DNTS002",
+            "field": "vax_admin_site",
+            "level": "ERROR",
+            "message": "vax_admin_site (RVL) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_lot_number",
+            "line": 27,
+            "code": "DNTS002",
+            "field": "vax_route",
+            "level": "ERROR",
+            "message": "vax_route (C38276) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_lot_number",
+            "line": 27,
+            "code": "DNTS002",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num (1) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_lot_number",
+            "line": 27,
+            "code": "DNTS002",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete (No) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_expiration",
+            "line": 28,
+            "code": "DNTS002",
+            "field": "ndc",
+            "level": "ERROR",
+            "message": "ndc (80777-9999-00) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_expiration",
+            "line": 28,
+            "code": "DNTS002",
+            "field": "mvx",
+            "level": "ERROR",
+            "message": "mvx (AAA) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_expiration",
+            "line": 28,
+            "code": "DNTS002",
+            "field": "lot_number",
+            "level": "ERROR",
+            "message": "lot_number (M9999-05) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_expiration",
+            "line": 28,
+            "code": "DNTS002",
+            "field": "vax_expiration",
+            "level": "ERROR",
+            "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_expiration",
+            "line": 28,
+            "code": "DNTS002",
+            "field": "vax_admin_site",
+            "level": "ERROR",
+            "message": "vax_admin_site (RVL) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_expiration",
+            "line": 28,
+            "code": "DNTS002",
+            "field": "vax_route",
+            "level": "ERROR",
+            "message": "vax_route (C38276) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_expiration",
+            "line": 28,
+            "code": "DNTS002",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num (1) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_expiration",
+            "line": 28,
+            "code": "DNTS002",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete (No) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_admin_site",
+            "line": 29,
+            "code": "DNTS002",
+            "field": "ndc",
+            "level": "ERROR",
+            "message": "ndc (80777-9999-00) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_admin_site",
+            "line": 29,
+            "code": "DNTS002",
+            "field": "mvx",
+            "level": "ERROR",
+            "message": "mvx (AAA) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_admin_site",
+            "line": 29,
+            "code": "DNTS002",
+            "field": "lot_number",
+            "level": "ERROR",
+            "message": "lot_number (M9999-05) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_admin_site",
+            "line": 29,
+            "code": "DNTS002",
+            "field": "vax_expiration",
+            "level": "ERROR",
+            "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_admin_site",
+            "line": 29,
+            "code": "DNTS002",
+            "field": "vax_admin_site",
+            "level": "ERROR",
+            "message": "vax_admin_site (RVL) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_admin_site",
+            "line": 29,
+            "code": "DNTS002",
+            "field": "vax_route",
+            "level": "ERROR",
+            "message": "vax_route (C38276) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_admin_site",
+            "line": 29,
+            "code": "DNTS002",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num (1) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_admin_site",
+            "line": 29,
+            "code": "DNTS002",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete (No) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_route",
+            "line": 30,
+            "code": "DNTS002",
+            "field": "ndc",
+            "level": "ERROR",
+            "message": "ndc (80777-9999-00) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_route",
+            "line": 30,
+            "code": "DNTS002",
+            "field": "mvx",
+            "level": "ERROR",
+            "message": "mvx (AAA) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_route",
+            "line": 30,
+            "code": "DNTS002",
+            "field": "lot_number",
+            "level": "ERROR",
+            "message": "lot_number (M9999-05) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_route",
+            "line": 30,
+            "code": "DNTS002",
+            "field": "vax_expiration",
+            "level": "ERROR",
+            "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_route",
+            "line": 30,
+            "code": "DNTS002",
+            "field": "vax_admin_site",
+            "level": "ERROR",
+            "message": "vax_admin_site (RVL) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_route",
+            "line": 30,
+            "code": "DNTS002",
+            "field": "vax_route",
+            "level": "ERROR",
+            "message": "vax_route (C38276) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_route",
+            "line": 30,
+            "code": "DNTS002",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num (1) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_route",
+            "line": 30,
+            "code": "DNTS002",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete (No) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_dose_num",
+            "line": 31,
+            "code": "DNTS002",
+            "field": "ndc",
+            "level": "ERROR",
+            "message": "ndc (80777-9999-00) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_dose_num",
+            "line": 31,
+            "code": "DNTS002",
+            "field": "mvx",
+            "level": "ERROR",
+            "message": "mvx (AAA) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_dose_num",
+            "line": 31,
+            "code": "DNTS002",
+            "field": "lot_number",
+            "level": "ERROR",
+            "message": "lot_number (M9999-05) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_dose_num",
+            "line": 31,
+            "code": "DNTS002",
+            "field": "vax_expiration",
+            "level": "ERROR",
+            "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_dose_num",
+            "line": 31,
+            "code": "DNTS002",
+            "field": "vax_admin_site",
+            "level": "ERROR",
+            "message": "vax_admin_site (RVL) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_dose_num",
+            "line": 31,
+            "code": "DNTS002",
+            "field": "vax_route",
+            "level": "ERROR",
+            "message": "vax_route (C38276) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_dose_num",
+            "line": 31,
+            "code": "DNTS002",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num (1) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_dose_num",
+            "line": 31,
+            "code": "DNTS002",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete (No) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_series_complete",
+            "line": 32,
+            "code": "DNTS002",
+            "field": "ndc",
+            "level": "ERROR",
+            "message": "ndc (80777-9999-00) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_series_complete",
+            "line": 32,
+            "code": "DNTS002",
+            "field": "mvx",
+            "level": "ERROR",
+            "message": "mvx (AAA) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_series_complete",
+            "line": 32,
+            "code": "DNTS002",
+            "field": "lot_number",
+            "level": "ERROR",
+            "message": "lot_number (M9999-05) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_series_complete",
+            "line": 32,
+            "code": "DNTS002",
+            "field": "vax_expiration",
+            "level": "ERROR",
+            "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_series_complete",
+            "line": 32,
+            "code": "DNTS002",
+            "field": "vax_admin_site",
+            "level": "ERROR",
+            "message": "vax_admin_site (RVL) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_series_complete",
+            "line": 32,
+            "code": "DNTS002",
+            "field": "vax_route",
+            "level": "ERROR",
+            "message": "vax_route (C38276) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_series_complete",
+            "line": 32,
+            "code": "DNTS002",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num (1) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DNTS002_vax_series_complete",
+            "line": 32,
+            "code": "DNTS002",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete (No) should not be present for Refusal events"
+        },
+        {
+            "vax_event_id": "DATA006_recip_first_name_missing",
+            "line": 33,
+            "code": "DATA006",
+            "field": "recip_first_name",
+            "level": "ERROR",
+            "message": "recip_first_name () should contain value Redacted"
+        },
+        {
+            "vax_event_id": "DATA006_recip_first_name_missing",
+            "line": 33,
+            "code": "REQD001",
+            "field": "cvx",
+            "level": "ERROR",
+            "message": "cvx is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA006_recip_first_name_missing",
+            "line": 33,
+            "code": "REQD001",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA006_recip_first_name_missing",
+            "line": 33,
+            "code": "REQD001",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA006_recip_middle_name_missing",
+            "line": 34,
+            "code": "DATA006",
+            "field": "recip_middle_name",
+            "level": "ERROR",
+            "message": "recip_middle_name () should contain value Redacted"
+        },
+        {
+            "vax_event_id": "DATA006_recip_last_name_missing",
+            "line": 35,
+            "code": "DATA006",
+            "field": "recip_last_name",
+            "level": "ERROR",
+            "message": "recip_last_name () should contain value Redacted"
+        },
+        {
+            "vax_event_id": "REQD001_recip_dob_missing",
+            "line": 36,
+            "code": "REQD001",
+            "field": "recip_dob",
+            "level": "ERROR",
+            "message": "recip_dob is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "REQD001_recip_dob_missing",
+            "line": 36,
+            "code": "BUSR005",
+            "field": "recip_dob",
+            "level": "ERROR",
+            "message": "recip_dob () is after admin_date (2020-09-06)"
+        },
+        {
+            "vax_event_id": "REQD001_recip_sex_missing",
+            "line": 37,
+            "code": "REQD001",
+            "field": "recip_sex",
+            "level": "ERROR",
+            "message": "recip_sex is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "DATA006_recip_address_street_missing",
+            "line": 38,
+            "code": "DATA006",
+            "field": "recip_address_street",
+            "level": "ERROR",
+            "message": "recip_address_street () should contain value Redacted"
+        },
+        {
+            "vax_event_id": "DATA006_recip_address_street_2_missing",
+            "line": 39,
+            "code": "DATA006",
+            "field": "recip_address_street_2",
+            "level": "ERROR",
+            "message": "recip_address_street_2 () should contain value Redacted"
+        },
+        {
+            "vax_event_id": "DATA006_recip_address_city_missing",
+            "line": 40,
+            "code": "DATA006",
+            "field": "recip_address_city",
+            "level": "ERROR",
+            "message": "recip_address_city () should contain value Redacted"
+        },
+        {
+            "vax_event_id": "REQD001_recip_race_1_missing",
+            "line": 41,
+            "code": "REQD001",
+            "field": "recip_race_1",
+            "level": "ERROR",
+            "message": "recip_race_1 is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "REQD001_recip_ethnicity_missing",
+            "line": 42,
+            "code": "REQD001",
+            "field": "recip_ethnicity",
+            "level": "ERROR",
+            "message": "recip_ethnicity is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "REQD001_admin_date_missing",
+            "line": 43,
+            "code": "REQD001",
+            "field": "admin_date",
+            "level": "ERROR",
+            "message": "admin_date is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "REQD001_admin_date_missing",
+            "line": 43,
+            "code": "BUSR005",
+            "field": "recip_dob",
+            "level": "ERROR",
+            "message": "recip_dob (2015-08-26) is after admin_date ()"
+        },
+        {
+            "vax_event_id": "REQD001_cvx_missing",
+            "line": 44,
+            "code": "REQD001",
+            "field": "cvx",
+            "level": "ERROR",
+            "message": "cvx is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "REQD001_dose_num_missing",
+            "line": 45,
+            "code": "REQD001",
+            "field": "dose_num",
+            "level": "ERROR",
+            "message": "dose_num is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "REQD001_vax_series_complete_missing",
+            "line": 46,
+            "code": "REQD001",
+            "field": "vax_series_complete",
+            "level": "ERROR",
+            "message": "vax_series_complete is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "REQD001_admin_type_missing",
+            "line": 47,
+            "code": "REQD001",
+            "field": "admin_type",
+            "level": "ERROR",
+            "message": "admin_type is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "REQD001_responsible_org_missing",
+            "line": 48,
+            "code": "REQD001",
+            "field": "responsible_org",
+            "level": "ERROR",
+            "message": "responsible_org is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "REQD001_admin_name_missing",
+            "line": 49,
+            "code": "REQD001",
+            "field": "admin_name",
+            "level": "ERROR",
+            "message": "admin_name is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "REQD001_vax_refusal_missing",
+            "line": 50,
+            "code": "REQD001",
+            "field": "vax_refusal",
+            "level": "ERROR",
+            "message": "vax_refusal is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "REQD001_cmorbid_status_missing",
+            "line": 51,
+            "code": "REQD001",
+            "field": "cmorbid_status",
+            "level": "ERROR",
+            "message": "cmorbid_status is required for Vaccination events"
+        },
+        {
+            "vax_event_id": "REQD001_serology_missing",
+            "line": 52,
+            "code": "REQD001",
+            "field": "serology",
+            "level": "ERROR",
+            "message": "serology is required for Vaccination events"
+        }
+    ],
+    "totalErrors": 176,
+    "failedRecords": 52,
+    "totalRecords": 52,
+    "summary": [
+        {
+            "code": "BUSR001",
+            "field": "recip_address_county",
+            "count": 12,
+            "description": "recip_address_county in recip_address_state FIPS",
+            "examples": [
+                {
+                    "line": 1,
+                    "vax_event_id": "DATA001_recip_dob",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 2,
+                    "vax_event_id": "DATA009_admin_date_1",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 3,
+                    "vax_event_id": "DATA001_admin_date_2",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 4,
+                    "vax_event_id": "DATA006_recip_address_city",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 5,
+                    "vax_event_id": "DATA005_ext_type",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 6,
+                    "vax_event_id": "DATA004_pprl_id",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 7,
+                    "vax_event_id": "DATA006_recip_first_name_not_redacted",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 8,
+                    "vax_event_id": "DATA005_recip_address_zip",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 9,
+                    "vax_event_id": "DATA006_recip_first_name",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 10,
+                    "vax_event_id": "DATA007_recip_sex",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 11,
+                    "vax_event_id": "DATA007_cvx",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 13,
+                    "vax_event_id": "BUSR001_recip_address_county",
+                    "message": "recip_address_county (49053) does not match recip_address_state (MI) for Recipient"
+                }
+            ]
+        },
+        {
+            "code": "BUSR002",
+            "field": "admin_address_county",
+            "count": 4,
+            "description": "admin_address_county in admin_address_state FIPS",
+            "examples": [
+                {
+                    "line": 3,
+                    "vax_event_id": "DATA001_admin_date_2",
+                    "message": "admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator"
+                },
+                {
+                    "line": 6,
+                    "vax_event_id": "DATA004_pprl_id",
+                    "message": "admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator"
+                },
+                {
+                    "line": 7,
+                    "vax_event_id": "DATA006_recip_first_name_not_redacted",
+                    "message": "admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator"
+                },
+                {
+                    "line": 14,
+                    "vax_event_id": "BUSR002_admin_address_county",
+                    "message": "admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator"
+                }
+            ]
+        },
+        {
+            "code": "BUSR003",
+            "field": "recip_address_zip",
+            "count": 2,
+            "description": "recip_address_zip in recip_address_state STATE",
+            "examples": [
+                {
+                    "line": 15,
+                    "vax_event_id": "BUSR003_recip_address_zip",
+                    "message": "recip_address_zip (1529) does not match recip_address_state (MI) for Recipient"
+                },
+                {
+                    "line": 16,
+                    "vax_event_id": "BUSR004_admin_address_zip",
+                    "message": "recip_address_zip (1529) does not match recip_address_state (MI) for Recipient"
+                }
+            ]
+        },
+        {
+            "code": "BUSR004",
+            "field": "admin_address_zip",
+            "count": 2,
+            "description": "admin_address_zip in admin_address_state STATE",
+            "examples": [
+                {
+                    "line": 15,
+                    "vax_event_id": "BUSR003_recip_address_zip",
+                    "message": "admin_address_zip (1529) does not match admin_address_state (MI) for Vaccine Administrator"
+                },
+                {
+                    "line": 16,
+                    "vax_event_id": "BUSR004_admin_address_zip",
+                    "message": "admin_address_zip (1529) does not match admin_address_state (MI) for Vaccine Administrator"
+                }
+            ]
+        },
+        {
+            "code": "BUSR005",
+            "field": "recip_dob",
+            "count": 5,
+            "description": "recip_dob < admin_date",
+            "examples": [
+                {
+                    "line": 2,
+                    "vax_event_id": "DATA009_admin_date_1",
+                    "message": "recip_dob (2015-08-26) is after admin_date (10/24/2020)"
+                },
+                {
+                    "line": 17,
+                    "vax_event_id": "BUSR005_recip_dob_lt_admin_date",
+                    "message": "recip_dob (2020-11-01) is after admin_date (2020-10-04)"
+                },
+                {
+                    "line": 22,
+                    "vax_event_id": "BUSR011_recip_dob_not_future",
+                    "message": "recip_dob (2032-11-01) is after admin_date (2022-10-04)"
+                },
+                {
+                    "line": 36,
+                    "vax_event_id": "REQD001_recip_dob_missing",
+                    "message": "recip_dob () is after admin_date (2020-09-06)"
+                },
+                {
+                    "line": 43,
+                    "vax_event_id": "REQD001_admin_date_missing",
+                    "message": "recip_dob (2015-08-26) is after admin_date ()"
+                }
+            ]
+        },
+        {
+            "code": "BUSR007",
+            "field": "recip_address_zip",
+            "count": 1,
+            "description": "recip_address_zip implies recip_address_state",
+            "examples": [
+                {
+                    "line": 18,
+                    "vax_event_id": "BUSR007_recip_address_zip_implies_state",
+                    "message": "If recip_address_zip (48504) is present, recip_address_state () should be present for Recipient"
+                }
+            ]
+        },
+        {
+            "code": "BUSR008",
+            "field": "admin_address_zip",
+            "count": 1,
+            "description": "admin_address_zip implies admin_address_state",
+            "examples": [
+                {
+                    "line": 19,
+                    "vax_event_id": "BUSR008_admin_address_zip_implies_state",
+                    "message": "If admin_address_zip (49053) is present, admin_address_state () should be present for Vaccine Administrator"
+                }
+            ]
+        },
+        {
+            "code": "BUSR009",
+            "field": "recip_address_zip",
+            "count": 1,
+            "description": "recip_address_zip implies recip_address_county",
+            "examples": [
+                {
+                    "line": 20,
+                    "vax_event_id": "BUSR009_recip_address_zip_implies_county",
+                    "message": "If recip_address_zip (49964) is present, recip_address_county () should be present for Recipient"
+                }
+            ]
+        },
+        {
+            "code": "BUSR010",
+            "field": "admin_address_zip",
+            "count": 2,
+            "description": "admin_address_zip implies admin_address_county",
+            "examples": [
+                {
+                    "line": 20,
+                    "vax_event_id": "BUSR009_recip_address_zip_implies_county",
+                    "message": "If admin_address_zip (49053) is present, admin_address_county () should be present for Vaccine Administrator"
+                },
+                {
+                    "line": 21,
+                    "vax_event_id": "BUSR010_admin_address_zip_implies_county",
+                    "message": "If admin_address_zip (49053) is present, admin_address_county () should be present for Vaccine Administrator"
+                }
+            ]
+        },
+        {
+            "code": "BUSR011",
+            "field": "recip_dob",
+            "count": 1,
+            "description": "recip_dob no_time_travel",
+            "examples": [
+                {
+                    "line": 22,
+                    "vax_event_id": "BUSR011_recip_dob_not_future",
+                    "message": "If recip_dob (2032-11-01) is present it should be less than tomorrow (DON'T CARE)"
+                }
+            ]
+        },
+        {
+            "code": "BUSR012",
+            "field": "admin_date",
+            "count": 3,
+            "description": "admin_date no_time_travel",
+            "examples": [
+                {
+                    "line": 22,
+                    "vax_event_id": "BUSR011_recip_dob_not_future",
+                    "message": "If admin_date (2022-10-04) is present it should less than tomorrow (DON'T CARE)"
+                },
+                {
+                    "line": 23,
+                    "vax_event_id": "BUSR012_admin_date_not_future",
+                    "message": "If admin_date (2032-10-04) is present it should less than tomorrow (DON'T CARE)"
+                },
+                {
+                    "line": 24,
+                    "vax_event_id": "BUSR013_vax_event_id_nodups",
+                    "message": "If admin_date (2032-10-04) is present it should less than tomorrow (DON'T CARE)"
+                }
+            ]
+        },
+        {
+            "code": "DATA001",
+            "field": "admin_date",
+            "count": 1,
+            "description": "Date is not valid",
+            "examples": [
+                {
+                    "line": 3,
+                    "vax_event_id": "DATA001_admin_date_2",
+                    "message": "admin_date (2020-10) contains an invalid date, should match yyyy-MM-dd"
+                }
+            ]
+        },
+        {
+            "code": "DATA001",
+            "field": "recip_dob",
+            "count": 1,
+            "description": "Date is not valid",
+            "examples": [
+                {
+                    "line": 1,
+                    "vax_event_id": "DATA001_recip_dob",
+                    "message": "recip_dob (2015-26-08) contains an invalid date, should match yyyy-MM-dd|yyyy-MM"
+                }
+            ]
+        },
+        {
+            "code": "DATA004",
+            "field": "pprl_id",
+            "count": 1,
+            "description": "Should not be present",
+            "examples": [
+                {
+                    "line": 6,
+                    "vax_event_id": "DATA004_pprl_id",
+                    "message": "pprl_id (Present) should not be present"
+                }
+            ]
+        },
+        {
+            "code": "DATA005",
+            "field": "admin_address_zip",
+            "count": 2,
+            "description": "Does not match expected format",
+            "examples": [
+                {
+                    "line": 15,
+                    "vax_event_id": "BUSR003_recip_address_zip",
+                    "message": "admin_address_zip (1529) does not match the regular expression ^(\\d{5}(-\\d{4})?)?$"
+                },
+                {
+                    "line": 16,
+                    "vax_event_id": "BUSR004_admin_address_zip",
+                    "message": "admin_address_zip (1529) does not match the regular expression ^(\\d{5}(-\\d{4})?)?$"
+                }
+            ]
+        },
+        {
+            "code": "DATA005",
+            "field": "ext_type",
+            "count": 1,
+            "description": "Does not match expected format",
+            "examples": [
+                {
+                    "line": 5,
+                    "vax_event_id": "DATA005_ext_type",
+                    "message": "ext_type (Q) does not match the regular expression ^(D|P|I)$"
+                }
+            ]
+        },
+        {
+            "code": "DATA005",
+            "field": "recip_address_zip",
+            "count": 3,
+            "description": "Does not match expected format",
+            "examples": [
+                {
+                    "line": 8,
+                    "vax_event_id": "DATA005_recip_address_zip",
+                    "message": "recip_address_zip (48504-) does not match the regular expression \\d{5}(-\\d{4})?"
+                },
+                {
+                    "line": 15,
+                    "vax_event_id": "BUSR003_recip_address_zip",
+                    "message": "recip_address_zip (1529) does not match the regular expression \\d{5}(-\\d{4})?"
+                },
+                {
+                    "line": 16,
+                    "vax_event_id": "BUSR004_admin_address_zip",
+                    "message": "recip_address_zip (1529) does not match the regular expression \\d{5}(-\\d{4})?"
+                }
+            ]
+        },
+        {
+            "code": "DATA006",
+            "field": "recip_address_city",
+            "count": 2,
+            "description": "Does not contain expected value: REDACTED",
+            "examples": [
+                {
+                    "line": 4,
+                    "vax_event_id": "DATA006_recip_address_city",
+                    "message": "recip_address_city (Not redacted) should contain value Redacted"
+                },
+                {
+                    "line": 40,
+                    "vax_event_id": "DATA006_recip_address_city_missing",
+                    "message": "recip_address_city () should contain value Redacted"
+                }
+            ]
+        },
+        {
+            "code": "DATA006",
+            "field": "recip_address_street",
+            "count": 1,
+            "description": "Does not contain expected value: REDACTED",
+            "examples": [
+                {
+                    "line": 38,
+                    "vax_event_id": "DATA006_recip_address_street_missing",
+                    "message": "recip_address_street () should contain value Redacted"
+                }
+            ]
+        },
+        {
+            "code": "DATA006",
+            "field": "recip_address_street_2",
+            "count": 1,
+            "description": "Does not contain expected value: REDACTED",
+            "examples": [
+                {
+                    "line": 39,
+                    "vax_event_id": "DATA006_recip_address_street_2_missing",
+                    "message": "recip_address_street_2 () should contain value Redacted"
+                }
+            ]
+        },
+        {
+            "code": "DATA006",
+            "field": "recip_first_name",
+            "count": 3,
+            "description": "Does not contain expected value: REDACTED",
+            "examples": [
+                {
+                    "line": 7,
+                    "vax_event_id": "DATA006_recip_first_name_not_redacted",
+                    "message": "recip_first_name (UnRedacted) should contain value Redacted"
+                },
+                {
+                    "line": 9,
+                    "vax_event_id": "DATA006_recip_first_name",
+                    "message": "recip_first_name (NOT Redacted) should contain value Redacted"
+                },
+                {
+                    "line": 33,
+                    "vax_event_id": "DATA006_recip_first_name_missing",
+                    "message": "recip_first_name () should contain value Redacted"
+                }
+            ]
+        },
+        {
+            "code": "DATA006",
+            "field": "recip_last_name",
+            "count": 1,
+            "description": "Does not contain expected value: REDACTED",
+            "examples": [
+                {
+                    "line": 35,
+                    "vax_event_id": "DATA006_recip_last_name_missing",
+                    "message": "recip_last_name () should contain value Redacted"
+                }
+            ]
+        },
+        {
+            "code": "DATA006",
+            "field": "recip_middle_name",
+            "count": 1,
+            "description": "Does not contain expected value: REDACTED",
+            "examples": [
+                {
+                    "line": 34,
+                    "vax_event_id": "DATA006_recip_middle_name_missing",
+                    "message": "recip_middle_name () should contain value Redacted"
+                }
+            ]
+        },
+        {
+            "code": "DATA007",
+            "field": "admin_type",
+            "count": 23,
+            "description": "Does not contain values from the expected value set",
+            "examples": [
+                {
+                    "line": 1,
+                    "vax_event_id": "DATA001_recip_dob",
+                    "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 2,
+                    "vax_event_id": "DATA009_admin_date_1",
+                    "message": "admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 3,
+                    "vax_event_id": "DATA001_admin_date_2",
+                    "message": "admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 4,
+                    "vax_event_id": "DATA006_recip_address_city",
+                    "message": "admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 5,
+                    "vax_event_id": "DATA005_ext_type",
+                    "message": "admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 6,
+                    "vax_event_id": "DATA004_pprl_id",
+                    "message": "admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 7,
+                    "vax_event_id": "DATA006_recip_first_name_not_redacted",
+                    "message": "admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 8,
+                    "vax_event_id": "DATA005_recip_address_zip",
+                    "message": "admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 9,
+                    "vax_event_id": "DATA006_recip_first_name",
+                    "message": "admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 10,
+                    "vax_event_id": "DATA007_recip_sex",
+                    "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 11,
+                    "vax_event_id": "DATA007_cvx",
+                    "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 13,
+                    "vax_event_id": "BUSR001_recip_address_county",
+                    "message": "admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 14,
+                    "vax_event_id": "BUSR002_admin_address_county",
+                    "message": "admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 15,
+                    "vax_event_id": "BUSR003_recip_address_zip",
+                    "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 16,
+                    "vax_event_id": "BUSR004_admin_address_zip",
+                    "message": "admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 17,
+                    "vax_event_id": "BUSR005_recip_dob_lt_admin_date",
+                    "message": "admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 18,
+                    "vax_event_id": "BUSR007_recip_address_zip_implies_state",
+                    "message": "admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 19,
+                    "vax_event_id": "BUSR008_admin_address_zip_implies_state",
+                    "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 20,
+                    "vax_event_id": "BUSR009_recip_address_zip_implies_county",
+                    "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 21,
+                    "vax_event_id": "BUSR010_admin_address_zip_implies_county",
+                    "message": "admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 22,
+                    "vax_event_id": "BUSR011_recip_dob_not_future",
+                    "message": "admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 23,
+                    "vax_event_id": "BUSR012_admin_date_not_future",
+                    "message": "admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                },
+                {
+                    "line": 24,
+                    "vax_event_id": "BUSR013_vax_event_id_nodups",
+                    "message": "admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]"
+                }
+            ]
+        },
+        {
+            "code": "DATA007",
+            "field": "cvx",
+            "count": 1,
+            "description": "Does not contain values from the expected value set",
+            "examples": [
+                {
+                    "line": 11,
+                    "vax_event_id": "DATA007_cvx",
+                    "message": "cvx (XXX) is not in value set CVX[900, 901 ... 187, 188]"
+                }
+            ]
+        },
+        {
+            "code": "DATA007",
+            "field": "mvx",
+            "count": 1,
+            "description": "Does not contain values from the expected value set",
+            "examples": [
+                {
+                    "line": 12,
+                    "vax_event_id": "DATA008_mvx_maxLength",
+                    "message": "mvx (AAAA) is not in value set MVX[AAA, BBB ... WAL, ZLB]"
+                }
+            ]
+        },
+        {
+            "code": "DATA007",
+            "field": "recip_sex",
+            "count": 1,
+            "description": "Does not contain values from the expected value set",
+            "examples": [
+                {
+                    "line": 10,
+                    "vax_event_id": "DATA007_recip_sex",
+                    "message": "recip_sex (UNK) is not in value set SEX[M, F, U]"
+                }
+            ]
+        },
+        {
+            "code": "DATA008",
+            "field": "mvx",
+            "count": 1,
+            "description": "Field exceeds maximum length",
+            "examples": [
+                {
+                    "line": 12,
+                    "vax_event_id": "DATA008_mvx_maxLength",
+                    "message": "mvx (AAAA) exceeds maximum length 3"
+                }
+            ]
+        },
+        {
+            "code": "DATA009",
+            "field": "admin_date",
+            "count": 1,
+            "description": "Date is not correctly formatted",
+            "examples": [
+                {
+                    "line": 2,
+                    "vax_event_id": "DATA009_admin_date_1",
+                    "message": "admin_date (10/24/2020) contains an incorrectly formatted date, should match yyyy-MM-dd"
+                }
+            ]
+        },
+        {
+            "code": "DNTS002",
+            "field": "dose_num",
+            "count": 8,
+            "description": "A field is present that should not be for Refusal",
+            "examples": [
+                {
+                    "line": 25,
+                    "vax_event_id": "DNTS002_ndc",
+                    "message": "dose_num (1) should not be present for Refusal events"
+                },
+                {
+                    "line": 26,
+                    "vax_event_id": "DNTS002_mvx",
+                    "message": "dose_num (1) should not be present for Refusal events"
+                },
+                {
+                    "line": 27,
+                    "vax_event_id": "DNTS002_lot_number",
+                    "message": "dose_num (1) should not be present for Refusal events"
+                },
+                {
+                    "line": 28,
+                    "vax_event_id": "DNTS002_vax_expiration",
+                    "message": "dose_num (1) should not be present for Refusal events"
+                },
+                {
+                    "line": 29,
+                    "vax_event_id": "DNTS002_vax_admin_site",
+                    "message": "dose_num (1) should not be present for Refusal events"
+                },
+                {
+                    "line": 30,
+                    "vax_event_id": "DNTS002_vax_route",
+                    "message": "dose_num (1) should not be present for Refusal events"
+                },
+                {
+                    "line": 31,
+                    "vax_event_id": "DNTS002_dose_num",
+                    "message": "dose_num (1) should not be present for Refusal events"
+                },
+                {
+                    "line": 32,
+                    "vax_event_id": "DNTS002_vax_series_complete",
+                    "message": "dose_num (1) should not be present for Refusal events"
+                }
+            ]
+        },
+        {
+            "code": "DNTS002",
+            "field": "lot_number",
+            "count": 8,
+            "description": "A field is present that should not be for Refusal",
+            "examples": [
+                {
+                    "line": 25,
+                    "vax_event_id": "DNTS002_ndc",
+                    "message": "lot_number (M9999-05) should not be present for Refusal events"
+                },
+                {
+                    "line": 26,
+                    "vax_event_id": "DNTS002_mvx",
+                    "message": "lot_number (M9999-05) should not be present for Refusal events"
+                },
+                {
+                    "line": 27,
+                    "vax_event_id": "DNTS002_lot_number",
+                    "message": "lot_number (M9999-05) should not be present for Refusal events"
+                },
+                {
+                    "line": 28,
+                    "vax_event_id": "DNTS002_vax_expiration",
+                    "message": "lot_number (M9999-05) should not be present for Refusal events"
+                },
+                {
+                    "line": 29,
+                    "vax_event_id": "DNTS002_vax_admin_site",
+                    "message": "lot_number (M9999-05) should not be present for Refusal events"
+                },
+                {
+                    "line": 30,
+                    "vax_event_id": "DNTS002_vax_route",
+                    "message": "lot_number (M9999-05) should not be present for Refusal events"
+                },
+                {
+                    "line": 31,
+                    "vax_event_id": "DNTS002_dose_num",
+                    "message": "lot_number (M9999-05) should not be present for Refusal events"
+                },
+                {
+                    "line": 32,
+                    "vax_event_id": "DNTS002_vax_series_complete",
+                    "message": "lot_number (M9999-05) should not be present for Refusal events"
+                }
+            ]
+        },
+        {
+            "code": "DNTS002",
+            "field": "mvx",
+            "count": 8,
+            "description": "A field is present that should not be for Refusal",
+            "examples": [
+                {
+                    "line": 25,
+                    "vax_event_id": "DNTS002_ndc",
+                    "message": "mvx (AAA) should not be present for Refusal events"
+                },
+                {
+                    "line": 26,
+                    "vax_event_id": "DNTS002_mvx",
+                    "message": "mvx (AAA) should not be present for Refusal events"
+                },
+                {
+                    "line": 27,
+                    "vax_event_id": "DNTS002_lot_number",
+                    "message": "mvx (AAA) should not be present for Refusal events"
+                },
+                {
+                    "line": 28,
+                    "vax_event_id": "DNTS002_vax_expiration",
+                    "message": "mvx (AAA) should not be present for Refusal events"
+                },
+                {
+                    "line": 29,
+                    "vax_event_id": "DNTS002_vax_admin_site",
+                    "message": "mvx (AAA) should not be present for Refusal events"
+                },
+                {
+                    "line": 30,
+                    "vax_event_id": "DNTS002_vax_route",
+                    "message": "mvx (AAA) should not be present for Refusal events"
+                },
+                {
+                    "line": 31,
+                    "vax_event_id": "DNTS002_dose_num",
+                    "message": "mvx (AAA) should not be present for Refusal events"
+                },
+                {
+                    "line": 32,
+                    "vax_event_id": "DNTS002_vax_series_complete",
+                    "message": "mvx (AAA) should not be present for Refusal events"
+                }
+            ]
+        },
+        {
+            "code": "DNTS002",
+            "field": "ndc",
+            "count": 8,
+            "description": "A field is present that should not be for Refusal",
+            "examples": [
+                {
+                    "line": 25,
+                    "vax_event_id": "DNTS002_ndc",
+                    "message": "ndc (80777-9999-00) should not be present for Refusal events"
+                },
+                {
+                    "line": 26,
+                    "vax_event_id": "DNTS002_mvx",
+                    "message": "ndc (80777-9999-00) should not be present for Refusal events"
+                },
+                {
+                    "line": 27,
+                    "vax_event_id": "DNTS002_lot_number",
+                    "message": "ndc (80777-9999-00) should not be present for Refusal events"
+                },
+                {
+                    "line": 28,
+                    "vax_event_id": "DNTS002_vax_expiration",
+                    "message": "ndc (80777-9999-00) should not be present for Refusal events"
+                },
+                {
+                    "line": 29,
+                    "vax_event_id": "DNTS002_vax_admin_site",
+                    "message": "ndc (80777-9999-00) should not be present for Refusal events"
+                },
+                {
+                    "line": 30,
+                    "vax_event_id": "DNTS002_vax_route",
+                    "message": "ndc (80777-9999-00) should not be present for Refusal events"
+                },
+                {
+                    "line": 31,
+                    "vax_event_id": "DNTS002_dose_num",
+                    "message": "ndc (80777-9999-00) should not be present for Refusal events"
+                },
+                {
+                    "line": 32,
+                    "vax_event_id": "DNTS002_vax_series_complete",
+                    "message": "ndc (80777-9999-00) should not be present for Refusal events"
+                }
+            ]
+        },
+        {
+            "code": "DNTS002",
+            "field": "vax_admin_site",
+            "count": 8,
+            "description": "A field is present that should not be for Refusal",
+            "examples": [
+                {
+                    "line": 25,
+                    "vax_event_id": "DNTS002_ndc",
+                    "message": "vax_admin_site (RVL) should not be present for Refusal events"
+                },
+                {
+                    "line": 26,
+                    "vax_event_id": "DNTS002_mvx",
+                    "message": "vax_admin_site (RVL) should not be present for Refusal events"
+                },
+                {
+                    "line": 27,
+                    "vax_event_id": "DNTS002_lot_number",
+                    "message": "vax_admin_site (RVL) should not be present for Refusal events"
+                },
+                {
+                    "line": 28,
+                    "vax_event_id": "DNTS002_vax_expiration",
+                    "message": "vax_admin_site (RVL) should not be present for Refusal events"
+                },
+                {
+                    "line": 29,
+                    "vax_event_id": "DNTS002_vax_admin_site",
+                    "message": "vax_admin_site (RVL) should not be present for Refusal events"
+                },
+                {
+                    "line": 30,
+                    "vax_event_id": "DNTS002_vax_route",
+                    "message": "vax_admin_site (RVL) should not be present for Refusal events"
+                },
+                {
+                    "line": 31,
+                    "vax_event_id": "DNTS002_dose_num",
+                    "message": "vax_admin_site (RVL) should not be present for Refusal events"
+                },
+                {
+                    "line": 32,
+                    "vax_event_id": "DNTS002_vax_series_complete",
+                    "message": "vax_admin_site (RVL) should not be present for Refusal events"
+                }
+            ]
+        },
+        {
+            "code": "DNTS002",
+            "field": "vax_expiration",
+            "count": 8,
+            "description": "A field is present that should not be for Refusal",
+            "examples": [
+                {
+                    "line": 25,
+                    "vax_event_id": "DNTS002_ndc",
+                    "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+                },
+                {
+                    "line": 26,
+                    "vax_event_id": "DNTS002_mvx",
+                    "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+                },
+                {
+                    "line": 27,
+                    "vax_event_id": "DNTS002_lot_number",
+                    "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+                },
+                {
+                    "line": 28,
+                    "vax_event_id": "DNTS002_vax_expiration",
+                    "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+                },
+                {
+                    "line": 29,
+                    "vax_event_id": "DNTS002_vax_admin_site",
+                    "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+                },
+                {
+                    "line": 30,
+                    "vax_event_id": "DNTS002_vax_route",
+                    "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+                },
+                {
+                    "line": 31,
+                    "vax_event_id": "DNTS002_dose_num",
+                    "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+                },
+                {
+                    "line": 32,
+                    "vax_event_id": "DNTS002_vax_series_complete",
+                    "message": "vax_expiration (2020-11-01) should not be present for Refusal events"
+                }
+            ]
+        },
+        {
+            "code": "DNTS002",
+            "field": "vax_route",
+            "count": 8,
+            "description": "A field is present that should not be for Refusal",
+            "examples": [
+                {
+                    "line": 25,
+                    "vax_event_id": "DNTS002_ndc",
+                    "message": "vax_route (C38276) should not be present for Refusal events"
+                },
+                {
+                    "line": 26,
+                    "vax_event_id": "DNTS002_mvx",
+                    "message": "vax_route (C38276) should not be present for Refusal events"
+                },
+                {
+                    "line": 27,
+                    "vax_event_id": "DNTS002_lot_number",
+                    "message": "vax_route (C38276) should not be present for Refusal events"
+                },
+                {
+                    "line": 28,
+                    "vax_event_id": "DNTS002_vax_expiration",
+                    "message": "vax_route (C38276) should not be present for Refusal events"
+                },
+                {
+                    "line": 29,
+                    "vax_event_id": "DNTS002_vax_admin_site",
+                    "message": "vax_route (C38276) should not be present for Refusal events"
+                },
+                {
+                    "line": 30,
+                    "vax_event_id": "DNTS002_vax_route",
+                    "message": "vax_route (C38276) should not be present for Refusal events"
+                },
+                {
+                    "line": 31,
+                    "vax_event_id": "DNTS002_dose_num",
+                    "message": "vax_route (C38276) should not be present for Refusal events"
+                },
+                {
+                    "line": 32,
+                    "vax_event_id": "DNTS002_vax_series_complete",
+                    "message": "vax_route (C38276) should not be present for Refusal events"
+                }
+            ]
+        },
+        {
+            "code": "DNTS002",
+            "field": "vax_series_complete",
+            "count": 8,
+            "description": "A field is present that should not be for Refusal",
+            "examples": [
+                {
+                    "line": 25,
+                    "vax_event_id": "DNTS002_ndc",
+                    "message": "vax_series_complete (No) should not be present for Refusal events"
+                },
+                {
+                    "line": 26,
+                    "vax_event_id": "DNTS002_mvx",
+                    "message": "vax_series_complete (No) should not be present for Refusal events"
+                },
+                {
+                    "line": 27,
+                    "vax_event_id": "DNTS002_lot_number",
+                    "message": "vax_series_complete (No) should not be present for Refusal events"
+                },
+                {
+                    "line": 28,
+                    "vax_event_id": "DNTS002_vax_expiration",
+                    "message": "vax_series_complete (No) should not be present for Refusal events"
+                },
+                {
+                    "line": 29,
+                    "vax_event_id": "DNTS002_vax_admin_site",
+                    "message": "vax_series_complete (No) should not be present for Refusal events"
+                },
+                {
+                    "line": 30,
+                    "vax_event_id": "DNTS002_vax_route",
+                    "message": "vax_series_complete (No) should not be present for Refusal events"
+                },
+                {
+                    "line": 31,
+                    "vax_event_id": "DNTS002_dose_num",
+                    "message": "vax_series_complete (No) should not be present for Refusal events"
+                },
+                {
+                    "line": 32,
+                    "vax_event_id": "DNTS002_vax_series_complete",
+                    "message": "vax_series_complete (No) should not be present for Refusal events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "admin_date",
+            "count": 1,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 43,
+                    "vax_event_id": "REQD001_admin_date_missing",
+                    "message": "admin_date is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "admin_name",
+            "count": 1,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 49,
+                    "vax_event_id": "REQD001_admin_name_missing",
+                    "message": "admin_name is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "admin_type",
+            "count": 1,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 47,
+                    "vax_event_id": "REQD001_admin_type_missing",
+                    "message": "admin_type is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "cmorbid_status",
+            "count": 1,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 51,
+                    "vax_event_id": "REQD001_cmorbid_status_missing",
+                    "message": "cmorbid_status is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "cvx",
+            "count": 7,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 1,
+                    "vax_event_id": "DATA001_recip_dob",
+                    "message": "cvx is required for Vaccination events"
+                },
+                {
+                    "line": 2,
+                    "vax_event_id": "DATA009_admin_date_1",
+                    "message": "cvx is required for Vaccination events"
+                },
+                {
+                    "line": 5,
+                    "vax_event_id": "DATA005_ext_type",
+                    "message": "cvx is required for Vaccination events"
+                },
+                {
+                    "line": 13,
+                    "vax_event_id": "BUSR001_recip_address_county",
+                    "message": "cvx is required for Vaccination events"
+                },
+                {
+                    "line": 15,
+                    "vax_event_id": "BUSR003_recip_address_zip",
+                    "message": "cvx is required for Vaccination events"
+                },
+                {
+                    "line": 33,
+                    "vax_event_id": "DATA006_recip_first_name_missing",
+                    "message": "cvx is required for Vaccination events"
+                },
+                {
+                    "line": 44,
+                    "vax_event_id": "REQD001_cvx_missing",
+                    "message": "cvx is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "dose_num",
+            "count": 7,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 1,
+                    "vax_event_id": "DATA001_recip_dob",
+                    "message": "dose_num is required for Vaccination events"
+                },
+                {
+                    "line": 2,
+                    "vax_event_id": "DATA009_admin_date_1",
+                    "message": "dose_num is required for Vaccination events"
+                },
+                {
+                    "line": 5,
+                    "vax_event_id": "DATA005_ext_type",
+                    "message": "dose_num is required for Vaccination events"
+                },
+                {
+                    "line": 13,
+                    "vax_event_id": "BUSR001_recip_address_county",
+                    "message": "dose_num is required for Vaccination events"
+                },
+                {
+                    "line": 15,
+                    "vax_event_id": "BUSR003_recip_address_zip",
+                    "message": "dose_num is required for Vaccination events"
+                },
+                {
+                    "line": 33,
+                    "vax_event_id": "DATA006_recip_first_name_missing",
+                    "message": "dose_num is required for Vaccination events"
+                },
+                {
+                    "line": 45,
+                    "vax_event_id": "REQD001_dose_num_missing",
+                    "message": "dose_num is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "recip_dob",
+            "count": 1,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 36,
+                    "vax_event_id": "REQD001_recip_dob_missing",
+                    "message": "recip_dob is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "recip_ethnicity",
+            "count": 1,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 42,
+                    "vax_event_id": "REQD001_recip_ethnicity_missing",
+                    "message": "recip_ethnicity is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "recip_race_1",
+            "count": 1,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 41,
+                    "vax_event_id": "REQD001_recip_race_1_missing",
+                    "message": "recip_race_1 is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "recip_sex",
+            "count": 1,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 37,
+                    "vax_event_id": "REQD001_recip_sex_missing",
+                    "message": "recip_sex is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "responsible_org",
+            "count": 1,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 48,
+                    "vax_event_id": "REQD001_responsible_org_missing",
+                    "message": "responsible_org is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "serology",
+            "count": 1,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 52,
+                    "vax_event_id": "REQD001_serology_missing",
+                    "message": "serology is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "vax_refusal",
+            "count": 1,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 50,
+                    "vax_event_id": "REQD001_vax_refusal_missing",
+                    "message": "vax_refusal is required for Vaccination events"
+                }
+            ]
+        },
+        {
+            "code": "REQD001",
+            "field": "vax_series_complete",
+            "count": 7,
+            "description": "A required field is missing for Vaccination",
+            "examples": [
+                {
+                    "line": 1,
+                    "vax_event_id": "DATA001_recip_dob",
+                    "message": "vax_series_complete is required for Vaccination events"
+                },
+                {
+                    "line": 2,
+                    "vax_event_id": "DATA009_admin_date_1",
+                    "message": "vax_series_complete is required for Vaccination events"
+                },
+                {
+                    "line": 5,
+                    "vax_event_id": "DATA005_ext_type",
+                    "message": "vax_series_complete is required for Vaccination events"
+                },
+                {
+                    "line": 13,
+                    "vax_event_id": "BUSR001_recip_address_county",
+                    "message": "vax_series_complete is required for Vaccination events"
+                },
+                {
+                    "line": 15,
+                    "vax_event_id": "BUSR003_recip_address_zip",
+                    "message": "vax_series_complete is required for Vaccination events"
+                },
+                {
+                    "line": 33,
+                    "vax_event_id": "DATA006_recip_first_name_missing",
+                    "message": "vax_series_complete is required for Vaccination events"
+                },
+                {
+                    "line": 46,
+                    "vax_event_id": "REQD001_vax_series_complete_missing",
+                    "message": "vax_series_complete is required for Vaccination events"
+                }
+            ]
+        }
+    ]
+}

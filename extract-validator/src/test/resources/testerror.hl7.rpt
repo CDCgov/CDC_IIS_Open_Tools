@@ -1,0 +1,228 @@
+Validating src/test/resources/testerror.hl7
+File                             Vax_Event_Id     Line   Level  Field                    Error  Description
+src/test/resources/testerror.hl7 DATA001***ip_dob 1      ERROR  recip_dob                REQD001 recip_dob is required for Vaccination events
+src/test/resources/testerror.hl7 DATA001***ip_dob 1      ERROR  cvx                      REQD001 cvx is required for Vaccination events
+src/test/resources/testerror.hl7 DATA001***ip_dob 1      ERROR  dose_num                 REQD001 dose_num is required for Vaccination events
+src/test/resources/testerror.hl7 DATA001***ip_dob 1      ERROR  vax_series_complete      REQD001 vax_series_complete is required for Vaccination events
+src/test/resources/testerror.hl7 DATA001***ip_dob 1      ERROR  admin_type               DATA007 admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 DATA001***ip_dob 1      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 DATA001***ip_dob 1      ERROR  recip_dob                BUSR005 recip_dob () is after admin_date (2020-10-04)
+src/test/resources/testerror.hl7 DATA009***date_1 2      ERROR  admin_date               REQD001 admin_date is required for Vaccination events
+src/test/resources/testerror.hl7 DATA009***date_1 2      ERROR  cvx                      REQD001 cvx is required for Vaccination events
+src/test/resources/testerror.hl7 DATA009***date_1 2      ERROR  dose_num                 REQD001 dose_num is required for Vaccination events
+src/test/resources/testerror.hl7 DATA009***date_1 2      ERROR  vax_series_complete      REQD001 vax_series_complete is required for Vaccination events
+src/test/resources/testerror.hl7 DATA009***date_1 2      ERROR  admin_type               DATA007 admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 DATA009***date_1 2      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 DATA009***date_1 2      ERROR  recip_dob                BUSR005 recip_dob (2015-08-26) is after admin_date ()
+src/test/resources/testerror.hl7 DATA001***date_2 3      ERROR  admin_date               DATA001 admin_date (2020-10) contains an invalid date, should match yyyy-MM-dd
+src/test/resources/testerror.hl7 DATA001***date_2 3      ERROR  admin_type               DATA007 admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 DATA001***date_2 3      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 DATA001***date_2 3      ERROR  admin_address_county     BUSR002 admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator
+src/test/resources/testerror.hl7 DATA006***s_city 4      ERROR  recip_address_city       DATA006 recip_address_city (Not redacted) should contain value Redacted
+src/test/resources/testerror.hl7 DATA006***s_city 4      ERROR  admin_type               DATA007 admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 DATA006***s_city 4      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 DATA005_ext_type 5      ERROR  ext_type                 DATA005 ext_type (Q) does not match the regular expression ^(D|P|I)$
+src/test/resources/testerror.hl7 DATA005_ext_type 5      ERROR  cvx                      REQD001 cvx is required for Vaccination events
+src/test/resources/testerror.hl7 DATA005_ext_type 5      ERROR  dose_num                 REQD001 dose_num is required for Vaccination events
+src/test/resources/testerror.hl7 DATA005_ext_type 5      ERROR  vax_series_complete      REQD001 vax_series_complete is required for Vaccination events
+src/test/resources/testerror.hl7 DATA005_ext_type 5      ERROR  admin_type               DATA007 admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 DATA005_ext_type 5      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 DATA004_pprl_id  6      ERROR  pprl_id                  DATA004 pprl_id (Present) should not be present
+src/test/resources/testerror.hl7 DATA004_pprl_id  6      ERROR  admin_type               DATA007 admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 DATA004_pprl_id  6      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 DATA004_pprl_id  6      ERROR  admin_address_county     BUSR002 admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator
+src/test/resources/testerror.hl7 DATA006***dacted 7      ERROR  recip_first_name         DATA006 recip_first_name (UnRedacted) should contain value Redacted
+src/test/resources/testerror.hl7 DATA006***dacted 7      ERROR  admin_type               DATA007 admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 DATA006***dacted 7      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 DATA006***dacted 7      ERROR  admin_address_county     BUSR002 admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator
+src/test/resources/testerror.hl7 DATA005***ss_zip 8      ERROR  recip_address_zip        DATA005 recip_address_zip (48504-) does not match the regular expression \d{5}(-\d{4})?
+src/test/resources/testerror.hl7 DATA005***ss_zip 8      ERROR  admin_type               DATA007 admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 DATA005***ss_zip 8      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 DATA006***t_name 9      ERROR  recip_first_name         DATA006 recip_first_name (NOT Redacted) should contain value Redacted
+src/test/resources/testerror.hl7 DATA006***t_name 9      ERROR  admin_type               DATA007 admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 DATA006***t_name 9      ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 DATA007***ip_sex 10     ERROR  recip_sex                DATA007 recip_sex (UNK) is not in value set SEX[M, F, U]
+src/test/resources/testerror.hl7 DATA007***ip_sex 10     ERROR  admin_type               DATA007 admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 DATA007***ip_sex 10     ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 DATA007_cvx      11     ERROR  cvx                      DATA007 cvx (XXX) is not in value set CVX[900, 901 ... 187, 188]
+src/test/resources/testerror.hl7 DATA007_cvx      11     ERROR  admin_type               DATA007 admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 DATA007_cvx      11     ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 DATA008***Length 12     ERROR  mvx                      DATA008 mvx (AAAA) exceeds maximum length 3
+src/test/resources/testerror.hl7 DATA008***Length 12     ERROR  mvx                      DATA007 mvx (AAAA) is not in value set MVX[AAA, BBB ... WAL, ZLB]
+src/test/resources/testerror.hl7 BUSR001***county 13     ERROR  cvx                      REQD001 cvx is required for Vaccination events
+src/test/resources/testerror.hl7 BUSR001***county 13     ERROR  dose_num                 REQD001 dose_num is required for Vaccination events
+src/test/resources/testerror.hl7 BUSR001***county 13     ERROR  vax_series_complete      REQD001 vax_series_complete is required for Vaccination events
+src/test/resources/testerror.hl7 BUSR001***county 13     ERROR  admin_type               DATA007 admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 BUSR001***county 13     ERROR  recip_address_county     BUSR001 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 BUSR002***county 14     ERROR  admin_type               DATA007 admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 BUSR002***county 14     ERROR  admin_address_county     BUSR002 admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator
+src/test/resources/testerror.hl7 BUSR003***ss_zip 15     ERROR  recip_address_zip        DATA005 recip_address_zip (1529) does not match the regular expression \d{5}(-\d{4})?
+src/test/resources/testerror.hl7 BUSR003***ss_zip 15     ERROR  cvx                      REQD001 cvx is required for Vaccination events
+src/test/resources/testerror.hl7 BUSR003***ss_zip 15     ERROR  dose_num                 REQD001 dose_num is required for Vaccination events
+src/test/resources/testerror.hl7 BUSR003***ss_zip 15     ERROR  vax_series_complete      REQD001 vax_series_complete is required for Vaccination events
+src/test/resources/testerror.hl7 BUSR003***ss_zip 15     ERROR  admin_type               DATA007 admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 BUSR003***ss_zip 15     ERROR  admin_address_zip        DATA005 admin_address_zip (1529) does not match the regular expression ^(\d{5}(-\d{4})?)?$
+src/test/resources/testerror.hl7 BUSR003***ss_zip 15     ERROR  recip_address_zip        BUSR003 recip_address_zip (1529) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 BUSR003***ss_zip 15     ERROR  admin_address_zip        BUSR004 admin_address_zip (1529) does not match admin_address_state (MI) for Vaccine Administrator
+src/test/resources/testerror.hl7 BUSR004***ss_zip 16     ERROR  recip_address_zip        DATA005 recip_address_zip (1529) does not match the regular expression \d{5}(-\d{4})?
+src/test/resources/testerror.hl7 BUSR004***ss_zip 16     ERROR  admin_type               DATA007 admin_type (PO) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 BUSR004***ss_zip 16     ERROR  admin_address_zip        DATA005 admin_address_zip (1529) does not match the regular expression ^(\d{5}(-\d{4})?)?$
+src/test/resources/testerror.hl7 BUSR004***ss_zip 16     ERROR  recip_address_zip        BUSR003 recip_address_zip (1529) does not match recip_address_state (MI) for Recipient
+src/test/resources/testerror.hl7 BUSR004***ss_zip 16     ERROR  admin_address_zip        BUSR004 admin_address_zip (1529) does not match admin_address_state (MI) for Vaccine Administrator
+src/test/resources/testerror.hl7 BUSR005***n_date 17     ERROR  admin_type               DATA007 admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 BUSR005***n_date 17     ERROR  recip_dob                BUSR005 recip_dob (2020-11-01) is after admin_date (2020-10-04)
+src/test/resources/testerror.hl7 BUSR007***_state 18     ERROR  admin_type               DATA007 admin_type (PH) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 BUSR007***_state 18     WARN   recip_address_zip        BUSR007 If recip_address_zip (48504) is present, recip_address_state () should be present for Recipient
+src/test/resources/testerror.hl7 BUSR008***_state 19     ERROR  admin_type               DATA007 admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 BUSR008***_state 19     WARN   admin_address_zip        BUSR008 If admin_address_zip (49053) is present, admin_address_state () should be present for Vaccine Administrator
+src/test/resources/testerror.hl7 BUSR009***county 20     ERROR  admin_type               DATA007 admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 BUSR009***county 20     WARN   recip_address_zip        BUSR009 If recip_address_zip (49964) is present, recip_address_county () should be present for Recipient
+src/test/resources/testerror.hl7 BUSR009***county 20     WARN   admin_address_zip        BUSR010 If admin_address_zip (49053) is present, admin_address_county () should be present for Vaccine Administrator
+src/test/resources/testerror.hl7 BUSR010***county 21     ERROR  admin_type               DATA007 admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 BUSR010***county 21     WARN   admin_address_zip        BUSR010 If admin_address_zip (49053) is present, admin_address_county () should be present for Vaccine Administrator
+src/test/resources/testerror.hl7 BUSR011***future 22     ERROR  admin_type               DATA007 admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 BUSR011***future 22     ERROR  recip_dob                BUSR005 recip_dob (2032-11-01) is after admin_date (2022-10-04)
+src/test/resources/testerror.hl7 BUSR011***future 22     ERROR  recip_dob                BUSR011 If recip_dob (2032-11-01) is present it should be less than tomorrow (DON'T CARE)
+src/test/resources/testerror.hl7 BUSR011***future 22     ERROR  admin_date               BUSR012 If admin_date (2022-10-04) is present it should less than tomorrow (DON'T CARE)
+src/test/resources/testerror.hl7 BUSR012***future 23     ERROR  admin_type               DATA007 admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 BUSR012***future 23     ERROR  admin_date               BUSR012 If admin_date (2032-10-04) is present it should less than tomorrow (DON'T CARE)
+src/test/resources/testerror.hl7 BUSR013***nodups 24     ERROR  admin_type               DATA007 admin_type (POD) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+src/test/resources/testerror.hl7 BUSR013***nodups 24     ERROR  admin_date               BUSR012 If admin_date (2032-10-04) is present it should less than tomorrow (DON'T CARE)
+src/test/resources/testerror.hl7 DNTS002_ndc      25     ERROR  ndc                      DNTS002 ndc (80777-9999-00) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_ndc      25     ERROR  mvx                      DNTS002 mvx (AAA) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_ndc      25     ERROR  lot_number               DNTS002 lot_number (M9999-05) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_ndc      25     ERROR  vax_expiration           DNTS002 vax_expiration (2020-11-01) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_ndc      25     ERROR  vax_admin_site           DNTS002 vax_admin_site (RVL) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_ndc      25     ERROR  vax_route                DNTS002 vax_route (C38276) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_ndc      25     ERROR  dose_num                 DNTS002 dose_num (1) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_ndc      25     ERROR  vax_series_complete      DNTS002 vax_series_complete (No) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_mvx      26     ERROR  ndc                      DNTS002 ndc (80777-9999-00) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_mvx      26     ERROR  mvx                      DNTS002 mvx (AAA) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_mvx      26     ERROR  lot_number               DNTS002 lot_number (M9999-05) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_mvx      26     ERROR  vax_expiration           DNTS002 vax_expiration (2020-11-01) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_mvx      26     ERROR  vax_admin_site           DNTS002 vax_admin_site (RVL) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_mvx      26     ERROR  vax_route                DNTS002 vax_route (C38276) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_mvx      26     ERROR  dose_num                 DNTS002 dose_num (1) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_mvx      26     ERROR  vax_series_complete      DNTS002 vax_series_complete (No) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***number 27     ERROR  ndc                      DNTS002 ndc (80777-9999-00) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***number 27     ERROR  mvx                      DNTS002 mvx (AAA) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***number 27     ERROR  lot_number               DNTS002 lot_number (M9999-05) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***number 27     ERROR  vax_expiration           DNTS002 vax_expiration (2020-11-01) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***number 27     ERROR  vax_admin_site           DNTS002 vax_admin_site (RVL) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***number 27     ERROR  vax_route                DNTS002 vax_route (C38276) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***number 27     ERROR  dose_num                 DNTS002 dose_num (1) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***number 27     ERROR  vax_series_complete      DNTS002 vax_series_complete (No) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***ration 28     ERROR  ndc                      DNTS002 ndc (80777-9999-00) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***ration 28     ERROR  mvx                      DNTS002 mvx (AAA) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***ration 28     ERROR  lot_number               DNTS002 lot_number (M9999-05) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***ration 28     ERROR  vax_expiration           DNTS002 vax_expiration (2020-11-01) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***ration 28     ERROR  vax_admin_site           DNTS002 vax_admin_site (RVL) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***ration 28     ERROR  vax_route                DNTS002 vax_route (C38276) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***ration 28     ERROR  dose_num                 DNTS002 dose_num (1) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***ration 28     ERROR  vax_series_complete      DNTS002 vax_series_complete (No) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***n_site 29     ERROR  ndc                      DNTS002 ndc (80777-9999-00) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***n_site 29     ERROR  mvx                      DNTS002 mvx (AAA) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***n_site 29     ERROR  lot_number               DNTS002 lot_number (M9999-05) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***n_site 29     ERROR  vax_expiration           DNTS002 vax_expiration (2020-11-01) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***n_site 29     ERROR  vax_admin_site           DNTS002 vax_admin_site (RVL) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***n_site 29     ERROR  vax_route                DNTS002 vax_route (C38276) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***n_site 29     ERROR  dose_num                 DNTS002 dose_num (1) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***n_site 29     ERROR  vax_series_complete      DNTS002 vax_series_complete (No) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***_route 30     ERROR  ndc                      DNTS002 ndc (80777-9999-00) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***_route 30     ERROR  mvx                      DNTS002 mvx (AAA) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***_route 30     ERROR  lot_number               DNTS002 lot_number (M9999-05) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***_route 30     ERROR  vax_expiration           DNTS002 vax_expiration (2020-11-01) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***_route 30     ERROR  vax_admin_site           DNTS002 vax_admin_site (RVL) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***_route 30     ERROR  vax_route                DNTS002 vax_route (C38276) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***_route 30     ERROR  dose_num                 DNTS002 dose_num (1) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***_route 30     ERROR  vax_series_complete      DNTS002 vax_series_complete (No) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_dose_num 31     ERROR  ndc                      DNTS002 ndc (80777-9999-00) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_dose_num 31     ERROR  mvx                      DNTS002 mvx (AAA) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_dose_num 31     ERROR  lot_number               DNTS002 lot_number (M9999-05) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_dose_num 31     ERROR  vax_expiration           DNTS002 vax_expiration (2020-11-01) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_dose_num 31     ERROR  vax_admin_site           DNTS002 vax_admin_site (RVL) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_dose_num 31     ERROR  vax_route                DNTS002 vax_route (C38276) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_dose_num 31     ERROR  dose_num                 DNTS002 dose_num (1) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002_dose_num 31     ERROR  vax_series_complete      DNTS002 vax_series_complete (No) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***mplete 32     ERROR  ndc                      DNTS002 ndc (80777-9999-00) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***mplete 32     ERROR  mvx                      DNTS002 mvx (AAA) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***mplete 32     ERROR  lot_number               DNTS002 lot_number (M9999-05) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***mplete 32     ERROR  vax_expiration           DNTS002 vax_expiration (2020-11-01) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***mplete 32     ERROR  vax_admin_site           DNTS002 vax_admin_site (RVL) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***mplete 32     ERROR  vax_route                DNTS002 vax_route (C38276) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***mplete 32     ERROR  dose_num                 DNTS002 dose_num (1) should not be present for Refusal events
+src/test/resources/testerror.hl7 DNTS002***mplete 32     ERROR  vax_series_complete      DNTS002 vax_series_complete (No) should not be present for Refusal events
+src/test/resources/testerror.hl7 DATA006***issing 33     ERROR  recip_first_name         DATA006 recip_first_name () should contain value Redacted
+src/test/resources/testerror.hl7 DATA006***issing 33     ERROR  cvx                      REQD001 cvx is required for Vaccination events
+src/test/resources/testerror.hl7 DATA006***issing 33     ERROR  dose_num                 REQD001 dose_num is required for Vaccination events
+src/test/resources/testerror.hl7 DATA006***issing 33     ERROR  vax_series_complete      REQD001 vax_series_complete is required for Vaccination events
+src/test/resources/testerror.hl7 DATA006***issing 34     ERROR  recip_middle_name        DATA006 recip_middle_name () should contain value Redacted
+src/test/resources/testerror.hl7 DATA006***issing 35     ERROR  recip_last_name          DATA006 recip_last_name () should contain value Redacted
+src/test/resources/testerror.hl7 REQD001***issing 36     ERROR  recip_dob                REQD001 recip_dob is required for Vaccination events
+src/test/resources/testerror.hl7 REQD001***issing 36     ERROR  recip_dob                BUSR005 recip_dob () is after admin_date (2020-09-06)
+src/test/resources/testerror.hl7 REQD001***issing 37     ERROR  recip_sex                REQD001 recip_sex is required for Vaccination events
+src/test/resources/testerror.hl7 DATA006***issing 38     ERROR  recip_address_street     DATA006 recip_address_street () should contain value Redacted
+src/test/resources/testerror.hl7 DATA006***issing 39     ERROR  recip_address_street_2   DATA006 recip_address_street_2 () should contain value Redacted
+src/test/resources/testerror.hl7 DATA006***issing 40     ERROR  recip_address_city       DATA006 recip_address_city () should contain value Redacted
+src/test/resources/testerror.hl7 REQD001***issing 41     ERROR  recip_race_1             REQD001 recip_race_1 is required for Vaccination events
+src/test/resources/testerror.hl7 REQD001***issing 42     ERROR  recip_ethnicity          REQD001 recip_ethnicity is required for Vaccination events
+src/test/resources/testerror.hl7 REQD001***issing 43     ERROR  admin_date               REQD001 admin_date is required for Vaccination events
+src/test/resources/testerror.hl7 REQD001***issing 43     ERROR  recip_dob                BUSR005 recip_dob (2015-08-26) is after admin_date ()
+src/test/resources/testerror.hl7 REQD001***issing 44     ERROR  cvx                      REQD001 cvx is required for Vaccination events
+src/test/resources/testerror.hl7 REQD001***issing 45     ERROR  dose_num                 REQD001 dose_num is required for Vaccination events
+src/test/resources/testerror.hl7 REQD001***issing 46     ERROR  vax_series_complete      REQD001 vax_series_complete is required for Vaccination events
+src/test/resources/testerror.hl7 REQD001***issing 47     ERROR  admin_type               REQD001 admin_type is required for Vaccination events
+src/test/resources/testerror.hl7 REQD001***issing 48     ERROR  responsible_org          REQD001 responsible_org is required for Vaccination events
+src/test/resources/testerror.hl7 REQD001***issing 49     ERROR  admin_name               REQD001 admin_name is required for Vaccination events
+src/test/resources/testerror.hl7 REQD001***issing 51     ERROR  cmorbid_status           REQD001 cmorbid_status is required for Vaccination events
+src/test/resources/testerror.hl7 REQD001***issing 52     ERROR  serology                 REQD001 serology is required for Vaccination events
+src/test/resources/testerror.hl7 has 176 errors in 51 of 52 records.
+Code    Field                   Count   Description                                         Example
+BUSR001 recip_address_county       12   recip_address_county in recip_address_state FIPS         1 recip_address_county (49053) does not match recip_address_state (MI) for Recipient
+BUSR002 admin_address_county        4   admin_address_county in admin_address_state FIPS         3 admin_address_county (49053) does not match admin_address_state (MI) for Vaccine Administrator
+BUSR003 recip_address_zip           2   recip_address_zip in recip_address_state STATE          15 recip_address_zip (1529) does not match recip_address_state (MI) for Recipient
+BUSR004 admin_address_zip           2   admin_address_zip in admin_address_state STATE          15 admin_address_zip (1529) does not match admin_address_state (MI) for Vaccine Administrator
+BUSR005 recip_dob                   6   recip_dob < admin_date                                   1 recip_dob () is after admin_date (2020-10-04)
+BUSR007 recip_address_zip           1   recip_address_zip implies recip_address_state           18 If recip_address_zip (48504) is present, recip_address_state () should be present for Recipient
+BUSR008 admin_address_zip           1   admin_address_zip implies admin_address_state           19 If admin_address_zip (49053) is present, admin_address_state () should be present for Vaccine Administrator
+BUSR009 recip_address_zip           1   recip_address_zip implies recip_address_county          20 If recip_address_zip (49964) is present, recip_address_county () should be present for Recipient
+BUSR010 admin_address_zip           2   admin_address_zip implies admin_address_county          20 If admin_address_zip (49053) is present, admin_address_county () should be present for Vaccine Administrator
+BUSR011 recip_dob                   1   recip_dob no_time_travel                                22 If recip_dob (2032-11-01) is present it should be less than tomorrow (DON'T CARE)
+BUSR012 admin_date                  3   admin_date no_time_travel                               22 If admin_date (2022-10-04) is present it should less than tomorrow (DON'T CARE)
+DATA001 admin_date                  1   Date is not valid                                        3 admin_date (2020-10) contains an invalid date, should match yyyy-MM-dd
+DATA004 pprl_id                     1   Should not be present                                    6 pprl_id (Present) should not be present
+DATA005 admin_address_zip           2   Does not match expected format                          15 admin_address_zip (1529) does not match the regular expression ^(\d{5}(-\d{4})?)?$
+DATA005 ext_type                    1   Does not match expected format                           5 ext_type (Q) does not match the regular expression ^(D|P|I)$
+DATA005 recip_address_zip           3   Does not match expected format                           8 recip_address_zip (48504-) does not match the regular expression \d{5}(-\d{4})?
+DATA006 recip_address_city          2   Does not contain expected value: REDACTED                4 recip_address_city (Not redacted) should contain value Redacted
+DATA006 recip_address_street        1   Does not contain expected value: REDACTED               38 recip_address_street () should contain value Redacted
+DATA006 recip_address_street_2      1   Does not contain expected value: REDACTED               39 recip_address_street_2 () should contain value Redacted
+DATA006 recip_first_name            3   Does not contain expected value: REDACTED                7 recip_first_name (UnRedacted) should contain value Redacted
+DATA006 recip_last_name             1   Does not contain expected value: REDACTED               35 recip_last_name () should contain value Redacted
+DATA006 recip_middle_name           1   Does not contain expected value: REDACTED               34 recip_middle_name () should contain value Redacted
+DATA007 admin_type                 23   Does not contain values from the expected value set      1 admin_type (CL) is not in value set DCHTYPE2[1, 2 ... 28, UNK]
+DATA007 cvx                         1   Does not contain values from the expected value set     11 cvx (XXX) is not in value set CVX[900, 901 ... 187, 188]
+DATA007 mvx                         1   Does not contain values from the expected value set     12 mvx (AAAA) is not in value set MVX[AAA, BBB ... WAL, ZLB]
+DATA007 recip_sex                   1   Does not contain values from the expected value set     10 recip_sex (UNK) is not in value set SEX[M, F, U]
+DATA008 mvx                         1   Field exceeds maximum length                            12 mvx (AAAA) exceeds maximum length 3
+DNTS002 dose_num                    8   A field is present that should not be for Refusal       25 dose_num (1) should not be present for Refusal events
+DNTS002 lot_number                  8   A field is present that should not be for Refusal       25 lot_number (M9999-05) should not be present for Refusal events
+DNTS002 mvx                         8   A field is present that should not be for Refusal       25 mvx (AAA) should not be present for Refusal events
+DNTS002 ndc                         8   A field is present that should not be for Refusal       25 ndc (80777-9999-00) should not be present for Refusal events
+DNTS002 vax_admin_site              8   A field is present that should not be for Refusal       25 vax_admin_site (RVL) should not be present for Refusal events
+DNTS002 vax_expiration              8   A field is present that should not be for Refusal       25 vax_expiration (2020-11-01) should not be present for Refusal events
+DNTS002 vax_route                   8   A field is present that should not be for Refusal       25 vax_route (C38276) should not be present for Refusal events
+DNTS002 vax_series_complete         8   A field is present that should not be for Refusal       25 vax_series_complete (No) should not be present for Refusal events
+REQD001 admin_date                  2   A required field is missing for Vaccination              2 admin_date is required for Vaccination events
+REQD001 admin_name                  1   A required field is missing for Vaccination             49 admin_name is required for Vaccination events
+REQD001 admin_type                  1   A required field is missing for Vaccination             47 admin_type is required for Vaccination events
+REQD001 cmorbid_status              1   A required field is missing for Vaccination             51 cmorbid_status is required for Vaccination events
+REQD001 cvx                         7   A required field is missing for Vaccination              1 cvx is required for Vaccination events
+REQD001 dose_num                    7   A required field is missing for Vaccination              1 dose_num is required for Vaccination events
+REQD001 recip_dob                   2   A required field is missing for Vaccination              1 recip_dob is required for Vaccination events
+REQD001 recip_ethnicity             1   A required field is missing for Vaccination             42 recip_ethnicity is required for Vaccination events
+REQD001 recip_race_1                1   A required field is missing for Vaccination             41 recip_race_1 is required for Vaccination events
+REQD001 recip_sex                   1   A required field is missing for Vaccination             37 recip_sex is required for Vaccination events
+REQD001 responsible_org             1   A required field is missing for Vaccination             48 responsible_org is required for Vaccination events
+REQD001 serology                    1   A required field is missing for Vaccination             52 serology is required for Vaccination events
+REQD001 vax_series_complete         7   A required field is missing for Vaccination              1 vax_series_complete is required for Vaccination events

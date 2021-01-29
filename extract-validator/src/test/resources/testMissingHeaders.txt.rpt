@@ -1,0 +1,6 @@
+Validating src/test/resources/testMissingHeaders.txt
+File                             Vax_Event_Id     Line   Level  Field                    Error  Description
+src/test/resour***ingHeaders.txt 136066786        -1     ERROR  Header                   FMT_004 File is missing headers [recip_race_2, recip_race_3, recip_race_4, recip_race_5, recip_race_6]
+src/test/resources/testMissingHeaders.txt has 1 errors in 1 of 1 records.
+Code    Field                   Count   Description                                         Example
+FMT_004 Header                      1   There is an error in the file format.                   -1 File is missing headers [recip_race_2, recip_race_3, recip_race_4, recip_race_5, recip_race_6]

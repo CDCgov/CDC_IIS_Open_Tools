@@ -1,0 +1,7 @@
+RN (Registered nurse)
+MD (Medical doctor)
+NP (Nurse practitioner)
+PA (Physician assisstant)
+LPN (Licensed practical nurse)
+OTH (Other)
+UNK (Unkown)

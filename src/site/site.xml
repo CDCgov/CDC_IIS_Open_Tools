@@ -1,0 +1,25 @@
+<project name="CVRS Extract Validator">
+  <bannerLeft>
+    <src>images/Ai_Horizontal_FullColor.jpg</src>
+    <name>CVRS Extract Validator</name>
+  </bannerLeft>
+  <version position="right"/>
+  <publishDate position="left"/>
+  <body>
+    <links>
+      <item name="CVRS Extract Validator" href="https://github.com/CDCGov/CDC_IIS_Open_Tools" />
+    </links>
+    <menu name="Overview">
+      <item name="Release Notes" href="Release_Notes.html"/>
+	  <item name="About This Project" href="index.html" />
+      <item name="Command Line Tools" href="Command_Line_Tools.html" >
+	      <item name="Validator" href="Validator.html"/>
+	      <item name="Sender" href="Sender.html"/>
+	      <item name="Mock" href="Mock.html"/>
+	      <item name="Upload" href="Upload.html"/>
+      </item>
+    </menu>
+    <menu ref="parent" />
+    <menu ref="reports" />
+  </body>
+</project>

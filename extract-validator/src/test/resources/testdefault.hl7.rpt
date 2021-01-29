@@ -1,0 +1,8 @@
+Validating src/test/resources/testdefault.hl7
+File                             Vax_Event_Id     Line   Level  Field                    Error  Description
+src/test/resour***estdefault.hl7 missing***_error 13     ERROR  admin_name               REQD001 admin_name is required for Vaccination events
+src/test/resour***estdefault.hl7 missing***_error 14     ERROR  responsible_org          REQD001 responsible_org is required for Vaccination events
+src/test/resources/testdefault.hl7 has 2 errors in 2 of 51 records.
+Code    Field                   Count   Description                                         Example
+REQD001 admin_name                  1   A required field is missing for Vaccination             13 admin_name is required for Vaccination events
+REQD001 responsible_org             1   A required field is missing for Vaccination             14 responsible_org is required for Vaccination events

@@ -1,0 +1,11 @@
+Validating src/test/resources/testerror.txt
+File                             Vax_Event_Id     Line   Level  Field                    Error  Description
+src/test/resources/testerror.txt DATA001***ip_dob 1      ERROR  recip_dob                HL7_001 Message does not round trip at recip_dob, '2015-26-08' != ''
+src/test/resources/testerror.txt DATA009***date_1 2      ERROR  admin_date               HL7_001 Message does not round trip at admin_date, '10/24/2020' != ''
+src/test/resources/testerror.txt REQD001***issing 50     ERROR  vax_refusal              HL7_001 Message does not round trip at vax_refusal, '' != 'NO'
+src/test/resources/testerror.txt has 3 errors in 3 of 52 records.
+52 of 52 HL7 records written.
+Code    Field                   Count   Description                                         Example
+HL7_001 admin_date                  1   Message does not round trip (possibly due to input errors).     2 Message does not round trip at admin_date, '10/24/2020' != ''
+HL7_001 recip_dob                   1   Message does not round trip (possibly due to input errors).     1 Message does not round trip at recip_dob, '2015-26-08' != ''
+HL7_001 vax_refusal                 1   Message does not round trip (possibly due to input errors).    50 Message does not round trip at vax_refusal, '' != 'NO'

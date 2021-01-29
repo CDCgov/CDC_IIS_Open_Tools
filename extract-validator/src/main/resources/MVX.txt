@@ -1,0 +1,83 @@
+AAA (COVID-19 Manufacturer A)
+BBB (COVID-19 Manufacturer B)
+MOD Moderna US, Inc.
+### Codes below this line are not used for CVRS Extract ###
+AB	Abbott Laboratories
+ACA	Acambis, Inc
+AD	Adams Laboratories, Inc.
+AKR	Akorn, Inc
+ALP	Alpha Therapeutic Corporation
+AR	Armour
+AVB	Aventis Behring L.L.C.
+AVI	Aviron
+BA	Baxter Healthcare Corporation-inactive
+BAH	Baxter Healthcare Corporation
+BAY	Bayer Corporation
+BN	Bavarian Nordic A/S
+BP	Berna Products
+BPC	Berna Products Corporation
+BRR	Barr Laboratories
+BTP	Biotest Pharmaceuticals Corporation
+CEN	Centeon L.L.C.
+CHI	Chiron Corporation
+CMP	Celltech Medeva Pharmaceuticals
+CNJ	Cangene Corporation
+CON	Connaught
+CRU	Crucell
+CSL	bioCSL
+DSI	Dispensing Solutions
+DVC	DynPort Vaccine Company, LLC
+DVX	Dynavax, Inc.
+DYN	Dynaport
+EVN	Evans Medical Limited
+GEO	GeoVax Labs, Inc.
+GRE	Greer Laboratories, Inc.
+GRF	Grifols
+IAG	Immuno International AG
+IDB	ID Biomedical
+IM	Merieux
+INT	Intercell Biomedical
+IUS	Immuno-U.S., Inc.
+JNJ	Johnson and Johnson
+JPN	The Research Foundation for Microbial Diseases of Osaka University (BIKEN)
+KED	Kedrion Biopharma
+KGC	Korea Green Cross Corporation
+LED	Lederle
+MA	Massachusetts Public Health Biologic Laboratories
+MBL	Massachusetts Biologic Laboratories
+MCM	MCM Vaccine Company
+MED	MedImmune, Inc. (AstraZeneca)
+MIL	Miles
+MIP	Emergent BioSolutions
+MSD	Merck and Co., Inc.
+NAB	NABI
+NAV	North American Vaccine, Inc.
+NOV	Novartis Pharmaceutical Corporation
+NVX	Novavax, Inc.
+NYB	New York Blood Center
+ORT	Ortho-clinical Diagnostics
+OTC	Organon Teknika Corporation
+OTH	Other manufacturer
+PAX	PaxVax
+PD	Parkedale Pharmaceuticals
+PFR	Pfizer, Inc
+PMC	Sanofi Pasteur
+PRX	Praxis Biologics
+PSC	Protein Sciences
+PWJ	PowderJect Pharmaceuticals
+REB	Rebel Distributors
+SCL	Sclavo, Inc.
+SEQ	Seqirus
+SI	Swiss Serum and Vaccine Inst.
+SKB	GlaxoSmithKline
+SOL	Solvay Pharmaceuticals
+TAL	Talecris Biotherapeutics
+TVA	TEVA Pharmaceuticals USA
+UNK	Unknown manufacturer
+USA	United States Army Medical Research and Material Command
+VAL	Valneva
+VET	Vetter Pharma Fertigung GmbH & Co. KG
+VXG	VaxGen
+WA	Wyeth-Ayerst
+WAL	Wyeth
+ZLB	ZLB Behring

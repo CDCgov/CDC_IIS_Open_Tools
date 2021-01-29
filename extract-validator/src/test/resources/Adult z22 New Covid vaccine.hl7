@@ -1,0 +1,12 @@
+MSH|^~\&|Test EHR Application|X68||NIST Test Iz Reg|20190701082240-0500|I|VXU^V04^VXU_V04|NIST-IZ-001.00|P|2.5.1|||ER|AL|||||Z22^CDCPHINVS|IIPEHRFAC^^^^^IIP-AA-IZ-1^XX^^^100-1|IIPIISFAC^^^^^IIP-AA-IZ-1^XX^^^100-2
+PID|1||123456^^^MYEHR^MR~987633^^^MYIIS^SR||Winchester^Dorothy^Amelia^^^^L|Bruno^Ella^Teresa^^^^M|19840615|F||2106-3^White^CDCREC~2054-5^Black or African American^CDCREC|5 Fifth Street^^Allentown^PA^18103^USA^L^^42003^Allegheny^PHVS_County_FIPS_6-4||^PRN^CP^^1^215^5551213||eng^English^ISO639|||||||2135-2^Hispanic or Latino^CDCREC
+ORC|RE||197030^NVC|||||||^Cody^Allison||^Trevor^Lois^^^^^^^L^^^^^^^^^^^MD|||||NVC^Newvax Clinic^HL70362||||||||||||||
+RXA|0|1|20201211|20201211|24^COVID-19-Substitute^CVX^00006-1101-99^COVID-SUB^NDC|0.5|mL^^UCUM||00^^NIP001|^Cody^Allison^^^^^^^^^^^^^^^^^^RN|^^^123456&2.16.840.1.113883.6.59&ISO^^12^^^^2 Second Street^^Allentown^PA^18103^^42003||||8L7B3418|20211231|PMC^Sanofi Pasteur^MVX|||CP|A
+RXR|C28161^Intramuscular^NCIT^IM^Intramuscular^HL70162|RD^Right Deltoid^HL70163||||
+OBX|1|CE|69764-9^Document Type^LN|1|253088698300002811180321^COVID-19-Substitute VIS^cdcgs1vis||||||F|||20201031
+OBX|2|TS|29769-7^VIS Presentation Date^LN|1|20201031||||||F|||20201031
+OBX|3|CE|64994-7^vaccine fund pgm elig cat^LN|1|V01^Not VFC elig ^HL70064||||||F|||20201031
+OBX|4|CE|30963-3^Vaccine funding source^LN|1|VXC1^Federal funds^CDCPHINVS||||||F|||20201031
+OBX|5|NM|30973-2^Dose number in series^LN|1|1|NA^^HL70353|||||F|||20201031
+OBX|6|CE|59783-1^Status in immunization series^LN|1|N^No^CDCPHINVS||||||F|||20201031
+OBX|7|CE|59785-6^Special Indication for vaccination^LN|1|N^No^CDCPHINVS||||||F|||20201031

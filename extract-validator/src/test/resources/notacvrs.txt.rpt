@@ -1,0 +1,46 @@
+Validating src/test/resources/notacvrs.txt
+File                             Vax_Event_Id     Line   Level  Field                    Error  Description
+src/test/resources/notacvrs.txt  null             -1     ERROR  Header                   FMT_001 File is not tab delimited. First Row: This is not a
+src/test/resources/notacvrs.txt  null             -1     ERROR  Header                   FMT_002 Input contains invalid headers: [this is not a]
+src/test/resources/notacvrs.txt  null             -1     ERROR  Header                   FMT_003 File is not a CVRS
+src/test/resources/notacvrs.txt  null             1      ERROR  vax_event_id             REQD001 vax_event_id is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  ext_type                 DATA005 ext_type (null) does not match the regular expression ^(D|P|I)$
+src/test/resources/notacvrs.txt  null             1      ERROR  recip_id                 REQD001 recip_id is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  recip_dob                REQD001 recip_dob is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  recip_sex                REQD001 recip_sex is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  recip_race_1             REQD001 recip_race_1 is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  recip_ethnicity          REQD001 recip_ethnicity is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  admin_date               REQD001 admin_date is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  cvx                      REQD001 cvx is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  dose_num                 REQD001 dose_num is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  vax_series_complete      REQD001 vax_series_complete is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  responsible_org          REQD001 responsible_org is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  admin_name               REQD001 admin_name is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  admin_type               REQD001 admin_type is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  vax_refusal              REQD001 vax_refusal is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  cmorbid_status           REQD001 cmorbid_status is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  serology                 REQD001 serology is required for Vaccination events
+src/test/resources/notacvrs.txt  null             1      ERROR  recip_dob                BUSR005 recip_dob (null) is after admin_date (null)
+src/test/resources/notacvrs.txt has 21 errors in 1 of 1 records.
+Code    Field                   Count   Description                                         Example
+BUSR005 recip_dob                   1   recip_dob < admin_date                                   1 recip_dob (null) is after admin_date (null)
+DATA005 ext_type                    1   Does not match expected format                           1 ext_type (null) does not match the regular expression ^(D|P|I)$
+FMT_001 Header                      1   There is an error in the file format.                   -1 File is not tab delimited. First Row: This is not a
+FMT_002 Header                      1   There is an error in the file format.                   -1 Input contains invalid headers: [this is not a]
+FMT_003 Header                      1   There is an error in the file format.                   -1 File is not a CVRS
+REQD001 admin_date                  1   A required field is missing for Vaccination              1 admin_date is required for Vaccination events
+REQD001 admin_name                  1   A required field is missing for Vaccination              1 admin_name is required for Vaccination events
+REQD001 admin_type                  1   A required field is missing for Vaccination              1 admin_type is required for Vaccination events
+REQD001 cmorbid_status              1   A required field is missing for Vaccination              1 cmorbid_status is required for Vaccination events
+REQD001 cvx                         1   A required field is missing for Vaccination              1 cvx is required for Vaccination events
+REQD001 dose_num                    1   A required field is missing for Vaccination              1 dose_num is required for Vaccination events
+REQD001 recip_dob                   1   A required field is missing for Vaccination              1 recip_dob is required for Vaccination events
+REQD001 recip_ethnicity             1   A required field is missing for Vaccination              1 recip_ethnicity is required for Vaccination events
+REQD001 recip_id                    1   A required field is missing for Vaccination              1 recip_id is required for Vaccination events
+REQD001 recip_race_1                1   A required field is missing for Vaccination              1 recip_race_1 is required for Vaccination events
+REQD001 recip_sex                   1   A required field is missing for Vaccination              1 recip_sex is required for Vaccination events
+REQD001 responsible_org             1   A required field is missing for Vaccination              1 responsible_org is required for Vaccination events
+REQD001 serology                    1   A required field is missing for Vaccination              1 serology is required for Vaccination events
+REQD001 vax_event_id                1   A required field is missing for Vaccination              1 vax_event_id is required for Vaccination events
+REQD001 vax_refusal                 1   A required field is missing for Vaccination              1 vax_refusal is required for Vaccination events
+REQD001 vax_series_complete         1   A required field is missing for Vaccination              1 vax_series_complete is required for Vaccination events

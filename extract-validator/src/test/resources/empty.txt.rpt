@@ -1,0 +1,4 @@
+Validating src/test/resources/empty.txt
+src/test/resources/empty.txt has 1 errors in 1 of 0 records.
+Code    Field                   Count   Description                                         Example
+FMT_003 Header                      1   There is an error in the file format.                   -1 File is not a CVRS

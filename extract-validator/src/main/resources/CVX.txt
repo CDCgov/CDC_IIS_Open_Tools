@@ -1,0 +1,210 @@
+900 (COVID-19 Vaccine A)
+901 (COVID-19 Vaccine B)
+902 (COVID-19 Vaccine C)
+207	SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 100mcg/0.5mL dose
+208	SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 30mcg/0.5mL dose
+213 SARS-COV-2 (COVID-19) vaccine, UNSPECIFIED
+### Other codes below this line not used for CVRS Extract ###
+143	Adenovirus types 4 and 7
+54	adenovirus, type 4
+55	adenovirus, type 7
+82	adenovirus, unspecified formulation
+24	anthrax
+181	anthrax immune globulin
+801	AS03 Adjuvant
+19	BCG
+27	botulinum antitoxin
+173	cholera, BivWC
+174	cholera, live attenuated
+26	cholera, unspecified formulation
+172	cholera, WC-rBS
+29	CMVIG
+56	dengue fever
+12	diphtheria antitoxin
+28	DT (pediatric)
+195	DT, IPV adsorbed
+20	DTaP
+106	DTaP, 5 pertussis antigens
+107	DTaP, unspecified formulation
+146	DTaP,IPV,Hib,HepB
+110	DTaP-Hep B-IPV
+50	DTaP-Hib
+120	DTaP-Hib-IPV
+130	DTaP-IPV
+132	DTaP-IPV-HIB-HEP B, historical
+170	DTAP/IPV/HIB - non-US
+01	DTP
+198	DTP-hepB-Hib Pentavalent Non-US
+22	DTP-Hib
+102	DTP-Hib-Hep B
+57	hantavirus
+30	HBIG
+52	Hep A, adult
+154	Hep A, IG
+169	Hep A, live attenuated
+83	Hep A, ped/adol, 2 dose
+84	Hep A, ped/adol, 3 dose
+31	Hep A, pediatric, unspecified formulation
+85	Hep A, unspecified formulation
+104	Hep A-Hep B
+193	Hep A-Hep B, pediatric/adolescent
+08	Hep B, adolescent or pediatric
+42	Hep B, adolescent/high risk infant
+43	Hep B, adult
+44	Hep B, dialysis
+45	Hep B, unspecified formulation
+58	Hep C
+59	Hep E
+189	HepB-CpG
+60	herpes simplex 2
+47	Hib (HbOC)
+46	Hib (PRP-D)
+49	Hib (PRP-OMP)
+48	Hib (PRP-T)
+17	Hib, unspecified formulation
+51	Hib-Hep B
+61	HIV
+118	HPV, bivalent
+62	HPV, quadrivalent
+137	HPV, unspecified formulation
+165	HPV9
+86	IG
+14	IG, unspecified formulation
+87	IGIV
+160	Influenza A monovalent (H5N1), ADJUVANTED-2013
+151	influenza nasal, unspecified formulation
+205	Influenza vaccine, quadrivalent, adjuvanted
+123	influenza, H5N1-1203
+135	Influenza, high dose seasonal
+197	influenza, high-dose, quadrivalent
+153	Influenza, injectable, MDCK, preservative free
+171	Influenza, injectable, MDCK, preservative free, quadrivalent
+186	Influenza, injectable, MDCK, quadrivalent, preservative
+158	influenza, injectable, quadrivalent
+150	influenza, injectable, quadrivalent, preservative free
+161	Influenza, injectable,quadrivalent, preservative free, pediatric
+166	influenza, intradermal, quadrivalent, preservative free
+111	influenza, live, intranasal
+149	influenza, live, intranasal, quadrivalent
+155	influenza, recombinant, injectable, preservative free
+185	influenza, recombinant, quadrivalent,injectable, preservative free
+141	Influenza, seasonal, injectable
+140	Influenza, seasonal, injectable, preservative free
+144	influenza, seasonal, intradermal, preservative free
+194	Influenza, Southern Hemisphere
+200	influenza, Southern Hemisphere, pediatric, preservative free
+201	influenza, Southern Hemisphere, preservative free
+202	influenza, Southern Hemisphere, quadrivalent, with preservative
+15	influenza, split (incl. purified surface antigen)
+168	influenza, trivalent, adjuvanted
+88	influenza, unspecified formulation
+16	influenza, whole
+10	IPV
+134	Japanese Encephalitis IM
+39	Japanese encephalitis SC
+129	Japanese Encephalitis, unspecified formulation
+63	Junin virus
+64	leishmaniasis
+65	leprosy
+66	Lyme disease
+04	M/R
+67	malaria
+05	measles
+68	melanoma
+191	meningococcal A polysaccharide (non-US)
+192	meningococcal AC polysaccharide (non-US)
+108	meningococcal ACWY, unspecified formulation
+163	meningococcal B, OMV
+162	meningococcal B, recombinant
+164	meningococcal B, unspecified
+103	meningococcal C conjugate
+148	Meningococcal C/Y-HIB PRP
+147	meningococcal MCV4, unspecified formulation
+136	Meningococcal MCV4O
+114	meningococcal MCV4P
+32	meningococcal MPSV4
+203	meningococcal polysaccharide (groups A, C, Y, W-135) TT conjugate
+167	meningococcal, unknown serogroups
+03	MMR
+94	MMRV
+07	mumps
+127	Novel influenza-H1N1-09
+128	Novel Influenza-H1N1-09, all formulations
+125	Novel Influenza-H1N1-09, nasal
+126	Novel influenza-H1N1-09, preservative-free
+02	OPV
+179	OPV ,monovalent, unspecified
+178	OPV bivalent
+182	OPV, Unspecified
+69	parainfluenza-3
+177	PCV10
+11	pertussis
+23	plague
+133	Pneumococcal conjugate PCV 13
+100	pneumococcal conjugate PCV 7
+152	Pneumococcal Conjugate, unspecified formulation
+33	pneumococcal polysaccharide PPV23
+109	pneumococcal, unspecified formulation
+89	polio, unspecified formulation
+70	Q fever
+175	Rabies - IM Diploid cell culture
+176	Rabies - IM fibroblast culture
+40	rabies, intradermal injection
+18	rabies, intramuscular injection
+90	rabies, unspecified formulation
+72	rheumatic fever
+159	Rho(D) - Unspecified formulation
+157	Rho(D) -IG IM
+156	Rho(D)-IG
+73	Rift Valley fever
+34	RIG
+119	rotavirus, monovalent
+116	rotavirus, pentavalent
+74	rotavirus, tetravalent
+122	rotavirus, unspecified formulation
+71	RSV-IGIV
+93	RSV-MAb
+145	RSV-MAb (new)
+06	rubella
+38	rubella/mumps
+206	Smallpox monkeypox vaccine (National Stockpile)
+76	Staphylococcus bacterio lysate
+138	Td (adult)
+09	Td (adult), 2 Lf tetanus toxoid, preservative free, adsorbed
+113	Td (adult), 5 Lf tetanus toxoid, preservative free, adsorbed
+139	Td(adult) unspecified formulation
+196	Td, adsorbed, preservative free, adult use, Lf unspecified
+115	Tdap
+180	tetanus immune globulin
+35	tetanus toxoid, adsorbed
+142	tetanus toxoid, not adsorbed
+112	tetanus toxoid, unspecified formulation
+77	tick-borne encephalitis
+13	TIG
+98	TST, unspecified formulation
+95	TST-OT tine test
+96	TST-PPD intradermal
+97	TST-PPD tine test
+78	tularemia vaccine
+190	Typhoid conjugate vaccine (TCV)
+25	typhoid, oral
+41	typhoid, parenteral
+53	typhoid, parenteral, AKD (U.S. military)
+91	typhoid, unspecified formulation
+101	typhoid, ViCPs
+131	typhus, historical
+75	vaccinia (smallpox)
+105	vaccinia (smallpox) diluted
+79	vaccinia immune globulin
+21	varicella
+81	VEE, inactivated
+80	VEE, live
+92	VEE, unspecified formulation
+36	VZIG
+117	VZIG (IND)
+37	yellow fever
+183	Yellow fever vaccine - alt
+184	Yellow fever, unspecified formulation
+121	zoster live
+187	zoster recombinant
+188	zoster, unspecified formulation

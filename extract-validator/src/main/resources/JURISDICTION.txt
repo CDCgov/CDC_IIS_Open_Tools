@@ -1,0 +1,79 @@
+ALA	Alabama
+ASA	American Samoa
+AZA	Arizona
+ARA	Arkansas
+CAA	California
+CHA	Chicago
+COA	Colorado
+CTA	Connecticut
+DEA	Delaware
+DCA	District of Columbia
+FMA	Federated States of Micronesia
+FLA	Florida
+GAA	Georgia
+GUA	Guam
+HIA	Hawaii
+THA	Houston
+IDA	Idaho
+ILA	Illinois
+IAA	Iowa
+KSA	Kansas
+KYA	Kentucky
+LAA	Louisiana
+MEA	Maine
+MHA	Marshall Islands
+MDA	Maryland
+MAA	Massachusetts
+MIA	Michigan
+MNA	Minnesota
+MSA	Mississippi
+MOA	Missouri
+MTA	Montana
+NEA	Nebraska
+NHA	New Hampshire
+NJA	New Jersey
+NMA	New Mexico
+BAA	New York City
+NYA	New York State
+NCA	North Carolina
+NDA	North Dakota
+MPA	Northern Mariana Islands
+OHA	Ohio
+OKA	Oklahoma
+ORA	Oregon
+PAA	Pennsylvania
+PHA	Philadelphia
+PRA	Puerto Rico
+RPA	Republic of Palau
+RIA	Rhode Island
+TBA	San Antonio
+SCA	South Carolina
+SDA	South Dakota
+TNA	Tennessee
+TXA	Texas
+UTA	Utah
+VTA	Vermont
+VIA	Virgin Islands
+VAA	Virginia
+WAA	Washington State
+WVA	West Virginia
+WIA	Wisconsin
+WYA	Wyoming
+DD2	Department of Defense (DoD)
+HS2	Department of Homeland Security (DHS)
+DS2	Department of State (DoS)
+BP2	Federal Bureau of Prisons (BoP)
+IH2	Indian Health Service (IHS)
+VA2	Veterans’ Health Administration (VHA)
+AD1	Ahold Delhaize/Retail Business Services
+AB1	Albertsons Companies
+CW1	Costco Wholesale Corp
+CV1	CVS Health Corporation
+HE1	H-E-B
+HV1	Hy-Vee Inc
+MG1	Meijer Great Lakes Limited Partnership
+PX1	Publix
+RA1	Rite Aid Corp
+KG1	The Kroger Co
+WG1	Walgreens Boots Alliance
+WM1	Walmart Stores, Inc

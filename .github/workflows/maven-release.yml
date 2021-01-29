@@ -1,0 +1,104 @@
+name: Release Branch
+
+on:
+  push:
+    branches:
+      - 'release*'
+
+jobs:
+
+  test:
+    name: Test - Units & Integrations
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11.0.4
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Maven Install
+        run: mvn -B install:install-file -Dfile=extract-validator/lib/validation-report-1.0.0.jar -DgroupId=com.github.hl7-tools -DartifactId=validation-report -Dversion=1.0.0 -Dpackaging=jar
+
+      - name: Maven Clean, Test and Package
+        run: mvn -B clean test package site
+
+      - name: Upload extract-validator jar
+        uses: actions/upload-artifact@v2
+        with:
+          name: extract-validator
+          path: extract-validator/target/extract-validator.jar
+
+      - name: Upload extract-validator sources
+        uses: actions/upload-artifact@v2
+        with:
+          name: extract-validator-sources
+          path: extract-validator/target/extract-validator-sources.jar
+
+      - name: Upload extract-validator javadoc
+        uses: actions/upload-artifact@v2
+        with:
+          name: extract-validator-javadoc
+          path: extract-validator/target/extract-validator-javadoc.jar
+
+      - name: Upload extract-validator library
+        uses: actions/upload-artifact@v2
+        with:
+          name: extract-validator-lib
+          path: extract-validator/target/lib/
+
+
+      - name: Upload clearinghouse-mock jar
+        uses: actions/upload-artifact@v2
+        with:
+          name: clearinghouse-mock
+          path: clearinghouse-mock/target/clearinghouse-mock.jar
+      - name: Upload clearinghouse-mock sources
+        uses: actions/upload-artifact@v2
+        with:
+          name: clearinghouse-mock-sources
+          path: clearinghouse-mock/target/clearinghouse-mock-sources.jar
+      - name: Upload clearinghouse-mock javadoc
+        uses: actions/upload-artifact@v2
+        with:
+          name: clearinghouse-mock-javadoc
+          path: clearinghouse-mock/target/clearinghouse-mock-javadoc.jar
+      - name: Upload clearinghouse-mock library
+        uses: actions/upload-artifact@v2
+        with:
+          name: clearinghouse-mock-lib
+          path: clearinghouse-mock/target/lib/
+
+      - name: Upload clearinghouse-sender jar
+        uses: actions/upload-artifact@v2
+        with:
+          name: clearinghouse-sender
+          path: clearinghouse-sender/target/clearinghouse-sender.jar
+      - name: Upload clearinghouse-sender sources
+        uses: actions/upload-artifact@v2
+        with:
+          name: clearinghouse-sender-sources
+          path: clearinghouse-sender/target/clearinghouse-sender-sources.jar
+      - name: Upload clearinghouse-sender javadoc
+        uses: actions/upload-artifact@v2
+        with:
+          name: clearinghouse-sender-javadoc
+          path: clearinghouse-sender/target/clearinghouse-sender-javadoc.jar
+      - name: Upload clearinghouse-sender library
+        uses: actions/upload-artifact@v2
+        with:
+          name: clearinghouse-sender-lib
+          path: clearinghouse-sender/target/lib/
+
+      - name: Upload documentation
+        uses: actions/upload-artifact@v2
+        with:
+          name: site
+          path: target/site/
+        
