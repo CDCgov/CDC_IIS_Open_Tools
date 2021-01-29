@@ -6,9 +6,9 @@ to support validation.
 Validator is implemented in the `com.ainq.izgateway.extract.Validator` class.
 
 #[[##]]# Installation
-1. Download extract-validator-${project.version}.jar from the [Releases](https://github.com/CDCGov/CDC_IIS_Open_Tools/releases/extract-validator-${project.version}.jar) page into
+1. Download extract-validator-${project.version}.jar from the [Releases](https://github.com/CDCGov/CDC_IIS_Open_Tools/releases/Release_${project.version}/extract-validator-${project.version}.jar) page into
 a folder [shown as validator-${project.version} below] on your system.
-2. Download extract-validator-lib-${project.version}.zip the [Releases](https://github.com/CDCGov/CDC_IIS_Open_Tools/releases/extract-validator-lib-${project.version}.zip) page into
+2. Download extract-validator-lib-${project.version}.zip the [Releases](https://github.com/CDCGov/CDC_IIS_Open_Tools/releases/Release_${project.version}/extract-validator-lib-${project.version}.zip) page into
 the same folder, and the unzip that file into the validator-${project.version}/lib folder.
 
 #[[##]]# Usage
