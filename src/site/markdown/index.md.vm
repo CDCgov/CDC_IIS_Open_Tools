@@ -50,8 +50,8 @@ testing.
 Value Set tables used for content validation. These are simple space delimited files
 containing the code in the first field and additional helpful data in remaining fields.
 
-  * [Value Set Files](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources)
-  * [FIPS County Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/src/main/resources/COUNTY.txt)
+  * [Value Set Files](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources)
+  * [FIPS County Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/COUNTY.txt)
   * [Facility Type Codes (used during enrollment)](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/DCHTYPE2.txt)
   * [CVX Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/CVX.txt)
   * [MVX Codes](https://github.com/CDCGov/CDC_IIS_Open_Tools/tree/release_${project.version}/extract-validator/src/main/resources/MVX.txt)
