@@ -11,7 +11,7 @@ NOTE: You can also just run install-lib.cmd from a command prompt on Windows.
 
 1. Clone this repository to your local machine.
 ```
-   git clone https://github.com/AudaciousInquiry/CDC_IIS_Open_Tools.git
+   git clone https://github.com/CDCGov/CDC_IIS_Open_Tools.git
 ```
 2. Start Eclipse
 3. Right click on the Project Explorer tab and select Import

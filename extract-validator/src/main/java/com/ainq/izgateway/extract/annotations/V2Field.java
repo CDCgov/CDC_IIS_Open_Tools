@@ -1,7 +1,7 @@
 package com.ainq.izgateway.extract.annotations;
 /*
  * Copyright 2020 Audiacious Inquiry, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -23,6 +23,7 @@ import java.lang.annotation.Target;
 @Inherited
 public @interface V2Field {
     String value();
+    String alternate() default "";
     String system() default "";
     String obx3() default "";
     String[] map() default {};

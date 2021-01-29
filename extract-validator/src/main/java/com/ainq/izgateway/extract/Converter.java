@@ -114,7 +114,11 @@ public class Converter {
                 if (v2Data.obx3() != null && v2Data.obx3().length() != 0) {
                     value = setupObx3(message, v2Data, val);
                 } else {
-                    value = adjustValuesToExtract(terser.get("/." + v2Data.value()), val, v2Data.map());
+                    String content = terser.get("/." + v2Data.value());
+                    if (StringUtils.isEmpty(content) && v2Data.alternate() != null && v2Data.alternate().length() != 0) {
+                        content = terser.get("/." + v2Data.alternate());
+                    }
+                    value = adjustValuesToExtract(content, val, v2Data.map());
                 }
             } catch (HL7Exception e) {
                 throw new RuntimeException("Unexpected HL7Exception", e);
@@ -218,6 +222,28 @@ public class Converter {
                 // At this point, we are certain this won't happen.
             }
         });
+
+        extract.setExt_type(extract.isRedacted() ? "D" : "I");
+
+        if (extract.getExt_type().equalsIgnoreCase("I")) {
+            if (StringUtils.isEmpty(extract.getRecip_middle_name())) {
+                extract.setRecip_middle_name(" ");
+            }
+            if (StringUtils.isEmpty(extract.getRecip_address_street_2())) {
+                extract.setRecip_address_street_2(" ");
+            }
+        }
+
+        // Fix zip codes
+        extract.setRecip_address_zip(fixZipCode(extract.getRecip_address_zip()));
+        extract.setAdmin_address_zip(fixZipCode(extract.getAdmin_address_zip()));
+    }
+
+    private static String fixZipCode(String zipCode) {
+        if (zipCode != null && zipCode.length() > 5 && !zipCode.contains("-")) {
+            zipCode = zipCode.substring(0, 5) + "-" + zipCode.substring(5);
+        }
+        return zipCode;
     }
 
     /**

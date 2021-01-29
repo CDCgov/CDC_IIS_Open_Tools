@@ -1,3 +1,24 @@
+# Release Notes for 2.1.0
+Prepared content for publication to CDC Open Source Site.
+Fixed formatting for nine digit zip-codes to match CVRS Specification when missing hypen (-) character in input HL7 content.
+
+# Release Notes for 2.0.5
+Fixed logic issue for recip_middle_name and recip_street_address_2 not being defaulted correctly for non-redacted inputs
+
+# Release Notes for 2.0.4
+Updated the converter to take responsible_org from MSH-4-1 if MSH-22-1 is empty.
+
+# Release Notes for 2.0.3
+Reverting change to default admin_name and responsible_org value appropriately based on content.
+
+# Release Notes for 2.0.2
+Fixed an issue to default admin_name and responsible_org value appropriately based on content,
+and to replace an empty recip_middle_name or recip_street_address_2 with a single space for identified
+records converted from HL7 V2.
+
+# Release Notes for 2.0.1
+Fixed an issue to default ext_type value appropriately based on content.
+
 # Release Notes for 2.0.0
 Refactored the release into a multi-module project to better support web-based use of validation
 tools.
