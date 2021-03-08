@@ -27,7 +27,7 @@ jobs:
         run: mvn -B install:install-file -Dfile=extract-validator/lib/validation-report-1.0.0.jar -DgroupId=com.github.hl7-tools -DartifactId=validation-report -Dversion=1.0.0 -Dpackaging=jar
 
       - name: Maven Clean, Test and Package
-        run: mvn -B clean test package site
+        run: mvn -B clean test package site -Daggregate=true
 
       - name: Upload extract-validator jar
         uses: actions/upload-artifact@v2
